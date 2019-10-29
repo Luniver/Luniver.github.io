@@ -5,14 +5,17 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>这是一个新的开始 - LCY&#39;s Blog</title>
+    <title>Android app的常见概念 - LCY&#39;s Blog</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Luniver,"> 
     <meta name="description" content="
-建站来之不易啊一直以来就想弄一个属于自己的空间来记录一些我所想记录的东西，终于在刚刚同学的帮助下，终于搭好了自己的Blog小破站(不知道删站重来了多少次)
-开始想去记录随着毕业不久，很快的就投入到,"> 
+Android自动化依赖前提
+Android SDK: Android Studio可辅助安装
+模拟器：
+Android Studio自带的Emulator
+Genymotion,网易MuMu(玩,"> 
     <meta name="author" content="ChenYu Li"> 
     <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -38,7 +41,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
     <div title="播放/暂停" class="icon-play"></div>
-    <h3 class="subtitle">这是一个新的开始</h3>
+    <h3 class="subtitle">Android app的常见概念</h3>
     <div class="social">
         <!--<div class="like-icon">-->
             <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -56,19 +59,77 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">这是一个新的开始</h1>
+        <h1 class="title">Android app的常见概念</h1>
         <div class="stuff">
             <span>十月 29, 2019</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" rel="tag">新的开始</a></li></ul>
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <p><img src="/2019/10/29/%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/start.jpg" alt></p>
-<h3 id="建站来之不易啊"><a href="#建站来之不易啊" class="headerlink" title="建站来之不易啊"></a>建站来之不易啊</h3><p>一直以来就想弄一个属于自己的空间来记录一些我所想记录的东西，终于在刚刚同学的帮助下，终于搭好了自己的Blog小破站(不知道删站重来了多少次)</p>
-<h3 id="开始想去记录"><a href="#开始想去记录" class="headerlink" title="开始想去记录"></a>开始想去记录</h3><p>随着毕业不久，很快的就投入到了充实且有点麻木的社会银生活，在这个物欲横流的时代，身边的事物都走的飞快，不想让自己的日子过了就忘，开始想去记录点啥，无论生活，学习，爱好……</p>
-<h3 id="这是一个新的开始"><a href="#这是一个新的开始" class="headerlink" title="这是一个新的开始"></a>这是一个新的开始</h3><p>emm…..这是我的第一条Blog，这是一个新的开始，不定期更新，但愿我会记得更新😆</p>
+            <p><img src="/2019/10/29/Android-app%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5/%E6%B5%B7%E7%90%B4%E7%83%9F.jpg" alt></p>
+<h3 id="Android自动化依赖前提"><a href="#Android自动化依赖前提" class="headerlink" title="Android自动化依赖前提"></a>Android自动化依赖前提</h3><ul>
+<li>Android SDK: Android Studio可辅助安装</li>
+<li>模拟器：<ul>
+<li>Android Studio自带的Emulator</li>
+<li><a href="http://www.genymotion.net/" target="_blank" rel="noopener">Genymotion</a>,<a href="http://mumu.163.com/" target="_blank" rel="noopener">网易MuMu</a>(玩游戏的话推荐这个),<a href="https://www.bluestacks.cn/" target="_blank" rel="noopener">BlueStacks</a>,<a href="https://www.yeshen.com/" target="_blank" rel="noopener">夜神模拟器</a>(自动化的话推荐这个)</li>
+</ul>
+</li>
+<li>真机</li>
+</ul>
+<h3 id="获取App的信息"><a href="#获取App的信息" class="headerlink" title="获取App的信息"></a>获取App的信息</h3><ul>
+<li>App信息<ul>
+<li>获取当前界面元素: adb shell dumpsys activity top</li>
+<li>获取任务列表: adb shell dumpsys activity activities</li>
+</ul>
+</li>
+<li>App入口<ul>
+<li>过滤当前界面信息： adb logcat | grep displayed (可用来获取启动入口)</li>
+<li>过滤启动页activity: aapt dump badging mobike.apk | grep launchable-activity</li>
+</ul>
+</li>
+<li>启动应用<ul>
+<li>adb shell am start -n com.xueqiu.android/.view.WelcomeActivityAlias -S (“com.xueqiu.android/.view.WelcomeActivityAlias”是通过adb logcat | grep displayed命令获取到的启动入口信息)</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2019/10/29/Android-app%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97.jpg" alt></p>
+<h3 id="Android调试桥adb命令"><a href="#Android调试桥adb命令" class="headerlink" title="Android调试桥adb命令"></a>Android调试桥adb命令</h3><ul>
+<li>Android常用命令<ul>
+<li>查看设备: adb devices</li>
+<li>关闭adb后台进程: adb kill-server</li>
+<li>让Android 脱离USB线的TCP连接方式: adb tcpip</li>
+<li>连接开启TCP连接方式的手机: adb connect</li>
+<li>查看Android日志: adb logcat</li>
+<li>收集日志数据，用于后续的分析，比如耗电量: adb bugreport</li>
+</ul>
+</li>
+<li>adb shell<br>  adb shell本身就是一个Linux的shell，可以调用Android的内置命令，进入手机内部命令行。<ul>
+<li>adb shell : 进入手机或者模拟器的shell内核。</li>
+<li>adb shell dumpsys : 用于打印出当前系统信息可以在命令后面加指定的service name(比如activity,location),如果不加则默认打印出设备中所有service的信息。</li>
+<li>adb shell pm : 用于查询设备上应用包的相关信息，一般测试时大部分使用adb shell pm clear com.demo.android(“com.demo.android”为应用的包名)命令，可以快速清理应用的数据缓存。</li>
+<li>adb shell am : 用于查询设备上所运行的activity。</li>
+<li>adb shell ps : 用于查看手机运行的进程。</li>
+<li>adb shell monkey : 进行Monkey测试，Monkey测试是Android自动化测试的一种手段，Monkey测试本身非常简单，就是模拟用户的按键输入，触摸屏输入，手势输入等，看设备多长时间会出异常。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2019/10/29/Android-app%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%972.jpg" alt></p>
+<h3 id="Android-性能统计-dumpsys"><a href="#Android-性能统计-dumpsys" class="headerlink" title="Android 性能统计 dumpsys"></a>Android 性能统计 dumpsys</h3><ul>
+<li>获取当前的activity: adb shell dumpsys activity top</li>
+<li>获取特定包基本信息: adb shell dumpsys package com.demo.android</li>
+<li>获取系统通知: adb shell dumpsys notification</li>
+<li>获得内存信息: adb shell dumpsys meminfo com.android.settings</li>
+<li>获取cpu信息: adb shell dumpsys cpuinfo</li>
+<li>获取gpu绘制分析: adb shell dumpsys gfxinfo com.android.settings</li>
+</ul>
+<h3 id="简单的自动化工具-input命令"><a href="#简单的自动化工具-input命令" class="headerlink" title="简单的自动化工具 input命令"></a>简单的自动化工具 input命令</h3><ul>
+<li>屏幕的点击: adb shell input tap x y (x,y为获取到的坐标，可以在模拟器中获取到)</li>
+<li>屏幕的滑动: adb shell input swipe x1 y1 x2 y2 (x1,y1为起点坐标,x2,y2为终点坐标)</li>
+<li>模拟输入字符串: adb shell input text “string” </li>
+<li>模拟键盘输入: adb shell input keyevent “what you want input”</li>
+</ul>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
@@ -107,7 +168,7 @@
     </div>
     
         <div class='side'>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#建站来之不易啊"><span class="toc-number">1.</span> <span class="toc-text">建站来之不易啊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始想去记录"><span class="toc-number">2.</span> <span class="toc-text">开始想去记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#这是一个新的开始"><span class="toc-number">3.</span> <span class="toc-text">这是一个新的开始</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android自动化依赖前提"><span class="toc-number">1.</span> <span class="toc-text">Android自动化依赖前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取App的信息"><span class="toc-number">2.</span> <span class="toc-text">获取App的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android调试桥adb命令"><span class="toc-number">3.</span> <span class="toc-text">Android调试桥adb命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-性能统计-dumpsys"><span class="toc-number">4.</span> <span class="toc-text">Android 性能统计 dumpsys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单的自动化工具-input命令"><span class="toc-number">5.</span> <span class="toc-text">简单的自动化工具 input命令</span></a></li></ol>
         </div>
     
 </div>
