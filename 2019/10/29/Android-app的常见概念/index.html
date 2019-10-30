@@ -76,8 +76,9 @@ Genymotion，网易MuMu(玩,">
 <li><a href="http://www.genymotion.net/" target="_blank" rel="noopener">Genymotion</a>，<a href="http://mumu.163.com/" target="_blank" rel="noopener">网易MuMu</a>(玩游戏的话推荐这个)，<a href="https://www.bluestacks.cn/" target="_blank" rel="noopener">BlueStacks</a>，<a href="https://www.yeshen.com/" target="_blank" rel="noopener">夜神模拟器</a>(自动化的话推荐这个)</li>
 </ul>
 </li>
-<li>真机</li>
+<li>真机 </li>
 </ul>
+<hr>
 <h3 id="获取App的信息"><a href="#获取App的信息" class="headerlink" title="获取App的信息"></a>获取App的信息</h3><ul>
 <li>App信息<ul>
 <li>获取当前界面元素: adb shell dumpsys activity top</li>
@@ -94,7 +95,7 @@ Genymotion，网易MuMu(玩,">
 </ul>
 </li>
 </ul>
-<p><img src="/2019/10/29/Android-app%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%97.jpg" alt></p>
+<hr>
 <h3 id="Android调试桥adb命令"><a href="#Android调试桥adb命令" class="headerlink" title="Android调试桥adb命令"></a>Android调试桥adb命令</h3><ul>
 <li>Android常用命令<ul>
 <li>查看设备: adb devices</li>
@@ -115,7 +116,7 @@ Genymotion，网易MuMu(玩,">
 </ul>
 </li>
 </ul>
-<p><img src="/2019/10/29/Android-app%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5/%E4%BD%A0%E7%9A%84%E5%90%8D%E5%AD%972.jpg" alt></p>
+<hr>
 <h3 id="Android-性能统计-dumpsys"><a href="#Android-性能统计-dumpsys" class="headerlink" title="Android 性能统计 dumpsys"></a>Android 性能统计 dumpsys</h3><ul>
 <li>获取当前的activity: adb shell dumpsys activity top</li>
 <li>获取特定包基本信息: adb shell dumpsys package com.demo.android</li>
@@ -124,6 +125,7 @@ Genymotion，网易MuMu(玩,">
 <li>获取cpu信息: adb shell dumpsys cpuinfo</li>
 <li>获取gpu绘制分析: adb shell dumpsys gfxinfo com.android.settings</li>
 </ul>
+<hr>
 <h3 id="简单的自动化工具-input命令"><a href="#简单的自动化工具-input命令" class="headerlink" title="简单的自动化工具 input命令"></a>简单的自动化工具 input命令</h3><ul>
 <li>屏幕的点击: adb shell input tap x y (x,y为获取到的坐标，可以在模拟器中获取到)</li>
 <li>屏幕的滑动: adb shell input swipe x1 y1 x2 y2 (x1,y1为起点坐标,x2,y2为终点坐标)</li>
