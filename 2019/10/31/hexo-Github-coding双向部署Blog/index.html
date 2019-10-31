@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>hexo+Github+coding双向部署Blog - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="
+为啥要这样干Blog小站之前一直是部署在Github Page上，关于如何在Github上搭建Blog这里有小白搭建方法,但无奈从国内访问的速度实在是感人呀，另外从网上搜索的结果来看，Github,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">hexo+Github+coding双向部署Blog</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">hexo+Github+coding双向部署Blog</h1>
+        <div class="stuff">
+            <span>十月 31, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8hs1ookcxj31hc0u0qv5.jpg" alt></p>
+<h2 id="为啥要这样干"><a href="#为啥要这样干" class="headerlink" title="为啥要这样干"></a>为啥要这样干</h2><p>Blog小站之前一直是部署在Github Page上，关于如何在Github上搭建Blog这里有<a href="https://godweiyang.com/2018/04/13/hexo-blog/" target="_blank" rel="noopener">小白搭建方法</a>,但无奈从国内访问的速度实在是感人呀，另外从网上搜索的结果来看，Github博客在国内的SEO情况不太好，不被百度爬虫所青睐，于是另辟蹊径找解决方法，在度娘搜索后找到一个比较好的方案，就是同时将hexo博客部署在Github和Coding上。所以我也想尝试一下，顺带了解一下Coding这个代码托管平台，下面就一起来看如何做吧。</p>
+<h2 id="注册Coding"><a href="#注册Coding" class="headerlink" title="注册Coding"></a>注册Coding</h2><p>点击<a href="https://coding.net/" target="_blank" rel="noopener">Coding官网</a>，完成注册，注册这个环节就不用过多的语言赘述了，相信大家都懂。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8hsjc5fzxj31lu0u04qp.jpg" alt></p>
+<p>注册完成后呢，可以绑定一下手机号和邮箱，貌似就成为银牌会员了，会增加一些空间的大小。(不过估计我用这个代码库也就这一回吧，不过这个可以用做DevOps，应该是可以拿来做容器技术，emm…..等以后学到这一块的时候再做详细了解吧)</p>
+<h2 id="创建一个项目"><a href="#创建一个项目" class="headerlink" title="创建一个项目"></a>创建一个项目</h2><p>注册好之后，我们就可以创建一个项目了，类似于Github里创建仓库一样。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8hsqseno3j31k70u0dl3.jpg" alt></p>
+<p>在创建项目信息填写的界面，要注意项目名称要以xxx.coding.me的格式命名，项目地址要与项目名称保持一致，其余的按照上图所示的进行勾选，填写好点击新建项目即可。</p>
+<h2 id="设置SSH秘钥"><a href="#设置SSH秘钥" class="headerlink" title="设置SSH秘钥"></a>设置SSH秘钥</h2><h3 id="查询公钥"><a href="#查询公钥" class="headerlink" title="查询公钥"></a>查询公钥</h3><p>这里和Github是一样的，使用服务需要验证SSH秘钥。需要在电脑里先找到公钥，Mac的目录一般是这个“~/.ssh”，通过命令行cd到这个目录下，找到id_rsa.pub文件，双击打开，复制里面的内容即可。之前没有生成过ssh秘钥的，可以查阅一下如何生成ssh秘钥。</p>
+<h3 id="设置公钥"><a href="#设置公钥" class="headerlink" title="设置公钥"></a>设置公钥</h3><p>在个人设置中找到SSH公钥，点击新建公钥，公钥名称可以任意，公钥内容粘贴上刚刚复制的id_rsa.pub文件内容，然后点击添加到Coding的账户中。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8ht6thf5rj31vy0t20wq.jpg" alt></p>
+<h3 id="验证SSH服务"><a href="#验证SSH服务" class="headerlink" title="验证SSH服务"></a>验证SSH服务</h3><p>配置完成后，可以验证一下是否可以通过ssh连接coding.net，在git bash中敲入下列命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@git.coding.net</span><br></pre></td></tr></table></figure>
+
+<p>如果运行结果出现类似如下，说明ssh的连接是ok的。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8htdplg7gj30ym04kqa4.jpg" alt></p>
+<h2 id="HEXO配置"><a href="#HEXO配置" class="headerlink" title="HEXO配置"></a>HEXO配置</h2><p>接下来配置Hexo，打开Hexo系统文件根目录下的_config.yml文件，找到下面的deploy字段。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8htu0ggoyj318o06swgm.jpg" alt></p>
+<p>在repository下面添加一个coding，后面的地址就是项目中的ssh url，要注意，.yml文件非常的严格，冒号后面必须要有空格，其地址获取位置如下图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8htwjyc1wj31l10u0n4i.jpg" alt></p>
+<p>然后在git bash中执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+
+<p>现在我们每次执行这个命令的时候，代码会同时提交到Github和Coding上，打开Coding就可以看到我们部署的Hexo项目了，这个一石二鸟很是舒适。</p>
+<h2 id="Coding-Page静态网站部署"><a href="#Coding-Page静态网站部署" class="headerlink" title="Coding Page静态网站部署"></a>Coding Page静态网站部署</h2><p>现在我们找到项目左边👈的工具栏，找到持续部署，下拉菜单中有个静态网站，点击静态网站后选择立即发布发布静态网站。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8hu5qrj2ij31ny0u07e4.jpg" alt></p>
+<p>这里会有一个实名认证，照常来就OK了，在部署信息界面中，网站名称可以任意填，部署来源选择本项目仓库中刚刚我们上传的项目，之后点击保存后会看到我们网站已经部署好了。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8huaqce4aj31j20h6n01.jpg" alt></p>
+<p>生成一个默认的访问地址url，点击立即部署1~2分钟后，点击访问地址就可以访问你的Blog网站了，至此，我们的部署工作正式完成。不过肯定有小伙伴(比如我)不满足这样一个普通的域名，肯定想有一个属于自己的域名，这个就要移步腾讯云，阿里云了，一旦申请好域名后进入上图中的设置。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8huarspuyj31i40nw443.jpg" alt></p>
+<p>在这里可以绑定你在各个云服务器厂商所购买申请的域名绑定了，这里博主也处于域名申请的阶段中，绑定域名成功后，就可以通过你的域名来访问Blog网站了。(域名审核请快一些吧……Thanks♪(･ω･)ﾉ)</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是我进行双部署的过程了，部署完之后国内访问速度可观呀，不用再看转圈圈了。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
