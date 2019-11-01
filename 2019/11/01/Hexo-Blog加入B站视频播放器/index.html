@@ -5,17 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Android app的常见概念 - LCY&#39;s Blog</title>
+    <title>Hexo Blog加入B站视频播放器 - LCY&#39;s Blog</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Luniver,"> 
     <meta name="description" content="
-Android自动化依赖前提
-Android SDK: Android Studio可辅助安装
-模拟器：
-Android Studio自带的Emulator
-Genymotion，网易MuMu(玩,"> 
+emm…..作为B站的重度用户(死宅一族)，写Blog的时候经常有在文章段落中加视频的需求。其实想要在自己的Blog中添加视频很简单，下面就一起来看看如何做吧。另外提一点，插入其他视频的话外链可能,"> 
     <meta name="author" content="ChenYu Li"> 
     <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -41,7 +37,7 @@ Genymotion，网易MuMu(玩,">
     <div class="bar" style="width: 0;"></div>
     <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
     <div title="播放/暂停" class="icon-play"></div>
-    <h3 class="subtitle">Android app的常见概念</h3>
+    <h3 class="subtitle">Hexo Blog加入B站视频播放器</h3>
     <div class="social">
         <!--<div class="like-icon">-->
             <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -59,80 +55,32 @@ Genymotion，网易MuMu(玩,">
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">Android app的常见概念</h1>
+        <h1 class="title">Hexo Blog加入B站视频播放器</h1>
         <div class="stuff">
-            <span>十月 29, 2019</span>
+            <span>十一月 01, 2019</span>
             
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g8h60y9b51j31ao0t649x.jpg" alt></p>
-<h3 id="Android自动化依赖前提"><a href="#Android自动化依赖前提" class="headerlink" title="Android自动化依赖前提"></a>Android自动化依赖前提</h3><ul>
-<li><strong>Android SDK:</strong> Android Studio可辅助安装</li>
-<li><strong>模拟器：</strong><ul>
-<li>Android Studio自带的Emulator</li>
-<li><a href="http://www.genymotion.net/" target="_blank" rel="noopener">Genymotion</a>，<a href="http://mumu.163.com/" target="_blank" rel="noopener">网易MuMu</a>(玩游戏的话推荐这个)，<a href="https://www.bluestacks.cn/" target="_blank" rel="noopener">BlueStacks</a>，<a href="https://www.yeshen.com/" target="_blank" rel="noopener">夜神模拟器</a>(自动化的话推荐这个)</li>
-</ul>
-</li>
-<li><strong>真机</strong> </li>
-</ul>
-<hr>
-<h3 id="获取App的信息"><a href="#获取App的信息" class="headerlink" title="获取App的信息"></a>获取App的信息</h3><ul>
-<li><strong>App信息</strong><ul>
-<li>获取当前界面元素: adb shell dumpsys activity top</li>
-<li>获取任务列表: adb shell dumpsys activity activities</li>
-</ul>
-</li>
-<li><strong>App入口</strong><ul>
-<li>过滤当前界面信息： adb logcat | grep displayed (可用来获取启动入口)</li>
-<li>过滤启动页activity: aapt dump badging mobike.apk | grep launchable-activity</li>
-</ul>
-</li>
-<li><strong>启动应用</strong><ul>
-<li>adb shell am start -n com.xueqiu.android/.view.WelcomeActivityAlias -S (“com.xueqiu.android/.view.WelcomeActivityAlias”是通过adb logcat | grep displayed命令获取到的启动入口信息)</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="Android调试桥adb命令"><a href="#Android调试桥adb命令" class="headerlink" title="Android调试桥adb命令"></a>Android调试桥adb命令</h3><ul>
-<li><strong>Android常用命令</strong><ul>
-<li>查看设备: adb devices</li>
-<li>关闭adb后台进程: adb kill-server</li>
-<li>让Android 脱离USB线的TCP连接方式: adb tcpip</li>
-<li>连接开启TCP连接方式的手机: adb connect</li>
-<li>查看Android日志: adb logcat</li>
-<li>收集日志数据，用于后续的分析，比如耗电量: adb bugreport</li>
-</ul>
-</li>
-<li><strong>adb shell</strong><br>  adb shell本身就是一个Linux的shell，可以调用Android的内置命令，进入手机内部命令行。<ul>
-<li>adb shell : 进入手机或者模拟器的shell内核。</li>
-<li>adb shell dumpsys : 用于打印出当前系统信息可以在命令后面加指定的service name(比如activity,location),如果不加则默认打印出设备中所有service的信息。</li>
-<li>adb shell pm : 用于查询设备上应用包的相关信息，一般测试时大部分使用adb shell pm clear com.demo.android(“com.demo.android”为应用的包名)命令，可以快速清理应用的数据缓存。</li>
-<li>adb shell am : 用于查询设备上所运行的activity。</li>
-<li>adb shell ps : 用于查看手机运行的进程。</li>
-<li>adb shell monkey : 进行Monkey测试，Monkey测试是Android自动化测试的一种手段，Monkey测试本身非常简单，就是模拟用户的按键输入，触摸屏输入，手势输入等，看设备多长时间会出异常。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="Android-性能统计-dumpsys"><a href="#Android-性能统计-dumpsys" class="headerlink" title="Android 性能统计 dumpsys"></a>Android 性能统计 dumpsys</h3><ul>
-<li><strong>获取当前的activity:</strong> adb shell dumpsys activity top</li>
-<li><strong>获取特定包基本信息:</strong> adb shell dumpsys package com.demo.android</li>
-<li><strong>获取系统通知:</strong> adb shell dumpsys notification</li>
-<li><strong>获得内存信息:</strong> adb shell dumpsys meminfo com.android.settings</li>
-<li><strong>获取cpu信息:</strong> adb shell dumpsys cpuinfo</li>
-<li><strong>获取gpu绘制分析:</strong> adb shell dumpsys gfxinfo com.android.settings</li>
-</ul>
-<hr>
-<h3 id="简单的自动化工具-input命令"><a href="#简单的自动化工具-input命令" class="headerlink" title="简单的自动化工具 input命令"></a>简单的自动化工具 input命令</h3><ul>
-<li><strong>屏幕的点击:</strong> adb shell input tap x y (x,y为获取到的坐标，可以在模拟器中获取到)</li>
-<li><strong>屏幕的滑动:</strong> adb shell input swipe x1 y1 x2 y2 (x1,y1为起点坐标,x2,y2为终点坐标)</li>
-<li><strong>模拟输入字符串:</strong> adb shell input text “string” </li>
-<li><strong>模拟键盘输入:</strong> adb shell input keyevent “what you want input”</li>
-</ul>
-<p>以上就是有关Android app的一些常见的概念了。</p>
+            <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8ixvjiva4j30hs08qdfv.jpg" alt></p>
+<p>emm…..作为B站的重度用户(死宅一族)，写Blog的时候经常有在文章段落中加视频的需求。其实想要在自己的Blog中添加视频很简单，下面就一起来看看如何做吧。另外提一点，插入其他视频的话外链可能会有广告，但是！！！B站没有，哔哩哔哩干杯！🍻🍻🍻</p>
+<h2 id="第一步：获取B站视频的外链"><a href="#第一步：获取B站视频的外链" class="headerlink" title="第一步：获取B站视频的外链"></a>第一步：获取B站视频的外链</h2><p>进入B站点开自己想要分享的视频，点击分享按钮后你可以看到有一个“嵌入代码”，点击复制，这个就是视频的外链。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8iy3ojamjj31k00u0b1y.jpg" alt></p>
+<h2 id="第二步：在文章中插入视频外链"><a href="#第二步：在文章中插入视频外链" class="headerlink" title="第二步：在文章中插入视频外链"></a>第二步：在文章中插入视频外链</h2><p>md文档神奇之处就在于可以直接插入HTML代码，但是为了防止一些其他因素的干扰，Hexo动力系统还专门准备了一个raw标签来插入HTML代码。下面就是我们使用raw标签来插入视频外链的示例：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw %&#125;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"position: relative;width: 100%;height: 0;padding-bottom: 75%"</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">"//player.bilibili.com/player.html?aid=73790419&amp;cid=126216386&amp;page=1"</span> <span class="attr">scrolling</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span> <span class="attr">allowfullscreen</span>=<span class="string">"true"</span> &gt;</span></span> </span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其效果如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8iy9fx928j30hs04gt8m.jpg" alt></p>
+<p>是不是感觉不太好看？那当然要进行一定的美化了。</p>
+<h2 id="第三步：修改代码，美化播放样式"><a href="#第三步：修改代码，美化播放样式" class="headerlink" title="第三步：修改代码，美化播放样式"></a>第三步：修改代码，美化播放样式</h2><p>话不多说，直接上代码：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% raw %&#125;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"position: relative;width: 100%;height: 0;padding-bottom: 75%"</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">"//player.bilibili.com/player.html?aid=73790419&amp;cid=126216386&amp;page=1"</span> <span class="attr">scrolling</span>=<span class="string">"no"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">frameborder</span>=<span class="string">"no"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span> <span class="attr">allowfullscreen</span>=<span class="string">"true"</span> <span class="attr">style</span>=<span class="string">"position: absolute;width: 100%;height: 100%;left: 0;top: 0;"</span>&gt;</span></span> </span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">&#123;% endraw %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>啊刚好今天何同学更新啦！！！感觉评测视频里何同学做的是最有特色的，下面我就直接展示何同学视频外链来作为展示吧，喜欢的同学也可以去B站关注一波哟~好了，希望这篇文章能给你带来知识和乐趣，就到这里啦。</p>
+
+
+<div style="position: relative;width: 100%;height: 0;padding-bottom: 75%"><iframe src="//player.bilibili.com/player.html?aid=74166406&cid=126876528&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute;width: 100%;height: 100%;left: 0;top: 0;"></iframe></div>
 
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
