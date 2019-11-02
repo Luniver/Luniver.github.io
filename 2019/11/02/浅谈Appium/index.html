@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>浅谈Appium - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="
+关于目前我所使用的自动化工具中，Appium应该是在做移动端自动化的时候最常使用的一个了，可以说是一个很强大的开源工具了，不过涉及到驱动的内核知识仍旧需要学习和探索（扶我起来~我还能学😆）
+咳咳,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">浅谈Appium</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">浅谈Appium</h1>
+        <div class="stuff">
+            <span>十一月 02, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Appium/" rel="tag">Appium</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8jvhzdn2zj30hl056mxd.jpg" alt></p>
+<p>关于目前我所使用的自动化工具中，Appium应该是在做移动端自动化的时候最常使用的一个了，可以说是一个很强大的开源工具了，不过涉及到驱动的内核知识仍旧需要学习和探索（扶我起来~我还能学😆）</p>
+<p>咳咳~~  言归正传，下面来梳理一下Appium的相关知识吧。</p>
+<h2 id="一、简单介绍"><a href="#一、简单介绍" class="headerlink" title="一、简单介绍"></a>一、简单介绍</h2><h3 id="（一）测试对象"><a href="#（一）测试对象" class="headerlink" title="（一）测试对象"></a>（一）测试对象</h3><p>Appium是一款开源的自动化测试框架，支持iOS和Android平台上的原生应用，web应用和混合应用。</p>
+<ul>
+<li>移动原生应用：单存用iOS或Android开发语言开发编写的应用，简单来说就是App Store或者Google Play里面的应用，例如一些App（Application的简称），可以直接安装在移动设备的应用。</li>
+<li>移动Web应用：在移动端设备上通过浏览器访问的应用（Appium目前已支持Android的Chrome和iOS的Safari），这类应用往往通过浏览器就可以访问，比如一些页游或者一些网页插件应用。</li>
+<li>混合应用：同时使用网页语言与程序语言开发，原生代码和 Web 内容交互的应用，举个例子来说就是很熟悉的淘宝，京东这类应用，既有Web端又有移动端。</li>
+</ul>
+<h3 id="（二）支持平台及语言"><a href="#（二）支持平台及语言" class="headerlink" title="（二）支持平台及语言"></a>（二）支持平台及语言</h3><ul>
+<li>Appium是跨平台的，支持Windows，Linux和OSX系统，它允许测试人员在不同的平台（iOS，Android）使用同一套API来写自动化的测试脚本，这大大提高了iOS和Android测试套件间代码的复用性。</li>
+<li>Appium支持多语言编写，目前支持Java，JavaScript，PHP，Python，Ruby，Objective-C，C#等几款语言并有完整的支持，具体可以看<a href="https://github.com/appium/appium/tree/master/sample-code" target="_blank" rel="noopener">多种不同语言的测试示例</a>。Appium是C/S的设计模式，只要Client能够发送http请求给server，那么的话Client用什么语言来实现都是可以的，这就是Appium及Selenium(WebDriver)如何做到支持多语言的原因；Appium扩展了WebDriver的协议，没有自己重新去实现一套。这样的好处是以前的WebDriver API能够直接被继承过来，以前的Selenium（WebDriver）各种语言的Building都可以拿来就用，省去了为每种语言开发一个Client的工作量。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>语言/框架</th>
+<th>Github地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Python</td>
+<td><a href="https://github\.com/appium/python\-client" target="_blank" rel="noopener">https://github\.com/appium/python\-client</a></td>
+</tr>
+<tr>
+<td>Ruby</td>
+<td><a href="https://github\.com/appium/ruby\_lib" target="_blank" rel="noopener">https://github\.com/appium/ruby\_lib</a></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><a href="https://github\.com/appium/java\-client" target="_blank" rel="noopener">https://github\.com/appium/java\-client</a></td>
+</tr>
+<tr>
+<td>JavaScript（Node.js）</td>
+<td><a href="https://github\.com/admc/wd" target="_blank" rel="noopener">https://github\.com/admc/wd</a></td>
+</tr>
+<tr>
+<td>Objective-C</td>
+<td><a href="https://github\.com/appium/selenium\-objective\-c" target="_blank" rel="noopener">https://github\.com/appium/selenium\-objective\-c</a></td>
+</tr>
+<tr>
+<td>PHP</td>
+<td><a href="https://github\.com/appium/php\-client" target="_blank" rel="noopener">https://github\.com/appium/php\-client</a></td>
+</tr>
+<tr>
+<td>C#（.NET）</td>
+<td><a href="https://github\.com/appium/appium\-dotnet\-driver" target="_blank" rel="noopener">https://github\.com/appium/appium\-dotnet\-driver</a></td>
+</tr>
+<tr>
+<td>RobotFrameWork</td>
+<td><a href="https://github\.com/jollychang/robotframework\-appiumlibrary" target="_blank" rel="noopener">https://github\.com/jollychang/robotframework\-appiumlibrary</a></td>
+</tr>
+</tbody></table>
+<h3 id="（三）Appium哲学"><a href="#（三）Appium哲学" class="headerlink" title="（三）Appium哲学"></a>（三）Appium哲学</h3><p>Appium的<a href="https://github.com/appium/appium/blob/master/docs/en/about-appium/intro.md" target="_blank" rel="noopener">官方介绍文档</a>中写到了有关Appium的四条哲学，原文是这样写的：</p>
+<h3 id="Appium-Philosophy"><a href="#Appium-Philosophy" class="headerlink" title="Appium Philosophy"></a>Appium Philosophy</h3><p>Appium was designed to meet mobile automation needs according to a philosophy outlined by the following four tenets:</p>
+<ol>
+<li>You shouldn’t have to recompile your app or modify it in any way in order to automate it.</li>
+<li>You shouldn’t be locked into a specific language or framework to write and run your tests.</li>
+<li>A mobile automation framework shouldn’t reinvent the wheel when it comes to automation APIs.</li>
+<li>A mobile automation framework should be open source, in spirit and practice as well as in name!</li>
+</ol>
+<p>下面是中文翻译：</p>
+<p>Appium根据以下四个原则概述的理念来满足移动自动化需求：</p>
+<ol>
+<li>您无需重新编译或以任何方式对其进行修改即可使其自动化。</li>
+<li>您不应该被锁定在特定的语言或框架中来编写和运行测试。</li>
+<li>当涉及到自动化API时，移动自动化框架不应重新发明轮子。</li>
+<li>移动自动化框架应该在精神，实践和名称上都是开源的！</li>
+</ol>
+<p>这四个原则统一来说都在说明Appium的开源性，灵活性以及强大的可扩展性，这让它成为了一款强大的测试框架。</p>
+<h3 id="（四）Appium的工作原理"><a href="#（四）Appium的工作原理" class="headerlink" title="（四）Appium的工作原理"></a>（四）Appium的工作原理</h3><p>画图花了10分钟，下图展示了Appium的工作原理图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8k660gu2oj30tv0et0tk.jpg" alt></p>
+<p>（该图是参考了网上的资料以及个人的一些理解后的出，如有错误之处，欢迎指正）</p>
+<p>我们编写的自动化脚本作为Client端，Client端以特定以针对每种语言的库的方式启动Appium-Server的会话（session），但是它们最终都通过一个POST/SESSION称为“desired capabilities”对象的Json对象想服务器发送请求，此时，服务器将启动自动化会话并以会话ID进行响应，该会话ID用于发送其他命令。</p>
+<p>在Server端，Appium针对Mac和Windows两大平台开发了对应的Appium-Server。</p>
+<p>Appium-Server通过调用不同的接口来驱动Apk/Ipa的操作，针对Android设备，Android SDK 版本在17以上的会通过调用Android 系统 UIAutomator 组件的接口来实现相应操作，SDK版本在17以下会通过调用Android系统Senlendroid组件的接口来实现相应操作；针对IOS设备，则通过调用IOS系统Apple Instruments组件的接口来实现相应操作的。</p>
+<p>最后在不同的系统设备上执行自动化的操作，所支持的设备包括真机和一些模拟器。整个Appium的执行过程原理作为刚入行业不久的新人也暂时只能理解到这里了，之前在网上浏览资料的时候曾了解到Appium一些底层的驱动原理，但无奈知识体系的深度1不够并没有完全看懂，总而言之，还是得多用多学多理解。</p>
+<h3 id="（五）需要安装的工具"><a href="#（五）需要安装的工具" class="headerlink" title="（五）需要安装的工具"></a>（五）需要安装的工具</h3><p>1.首先就是我们用来编写自动化脚本的测试语言了，博主目前使用的是Python，以及每个语言所需要依赖的相关库需要自己去了解学习了。</p>
+<p>2.有了编程语言，你必须就得有一个用于“搬砖”（写代码）的IDE，这里博主使用的是pycharm，因为Pycharm对于python依赖库的安装太简单快速了，以及和GIt的联结代码上传功能可以不用在敲命令无缝上传Github，感觉自己在吹水了哈….咳咳，收！这个根据个人喜好不同，都会有不同选择。唯一原则：用着顺手就好。</p>
+<p>3.下载Appium-Server端，在下面的环境搭建中会讲到。</p>
+<p>4.下载Appium-Client端，在下面的环境搭建中会讲到。</p>
+<p>5.你所要测试的移动设备，可以是真机也可以是模拟器，这里模拟器推荐可以参考<a href="[https://luniver.github.io/2019/10/29/Android-app%E7%9A%84%E5%B8%B8%E8%A7%81%E6%A6%82%E5%BF%B5/](https://luniver.github.io/2019/10/29/Android-app的常见概念/)">博主之前的文章</a>中提到的几款模拟器。</p>
+<h2 id="二、环境搭建"><a href="#二、环境搭建" class="headerlink" title="二、环境搭建"></a>二、环境搭建</h2><h3 id="（一）安装Android-SDK"><a href="#（一）安装Android-SDK" class="headerlink" title="（一）安装Android SDK"></a>（一）安装Android SDK</h3><p>1、Android SDK（Software Development Kit，软件开发工具包）提供了 Android API 库和开发工具构建，测试和调试应用程序，可以看做用于开发和运行Android应用的一个软件<br>2、提供小工具，比如adb、aapt、uiautomatorview<br>3、测试设备使用安卓模拟器，这一步决不能跳过</p>
+<h3 id="（二）安装Appium-Server"><a href="#（二）安装Appium-Server" class="headerlink" title="（二）安装Appium-Server"></a>（二）安装Appium-Server</h3><p>1、下载地址：<a href="https://github.com/appium/appium-desktop/releases" target="_blank" rel="noopener">https://github.com/appium/appium-desktop/releases</a><br>2、下载appium安装包（Appium-windows-1.15.1.exe，Appium-mac-1.15.1.dmg等）<br>3、安装appium-desktop，并配置appium环境变量</p>
+<h3 id="（三）安装Appium-Client"><a href="#（三）安装Appium-Client" class="headerlink" title="（三）安装Appium-Client"></a>（三）安装Appium-Client</h3><p>1、先安装编程语言，比如python语言<br>2、安装Appium-Client，python的话可使用pip安装：pip install Appium-Python-Client</p>
+<h2 id="三、应用及操作"><a href="#三、应用及操作" class="headerlink" title="三、应用及操作"></a>三、应用及操作</h2><h3 id="（一）调用Appium过程"><a href="#（一）调用Appium过程" class="headerlink" title="（一）调用Appium过程"></a>（一）调用Appium过程</h3><p>1、配置手机设备参数，告诉server端我想调起的是哪一台手机设备<br>2、抓取手机上应用的控件，指定对应的控件来进行操作<br>3、对抓取到的控件进行操作，比如点击、填写参数等</p>
+<h3 id="（二）配置手机设备参数"><a href="#（二）配置手机设备参数" class="headerlink" title="（二）配置手机设备参数"></a>（二）配置手机设备参数</h3><p>Appium的Desired Capabilities的基本配置如下：</p>
+<p>这里楼主选择的是Page-Object的代码框架模式，做了一些逻辑与数据的分离，将配置信息分离，以yaml脚本的形式进行信息记录，这样的记录方式的好处就是将数据与业务逻辑分离开来，无论是在数据上还是代码逻辑上做修改，都很清晰且容易维护，方便修改配置信息等。</p>
+<p>下面是配置信息的yaml文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">platformName: Android</span><br><span class="line">#模拟器</span><br><span class="line">platformVersion: 8.1.0 (Android系统)</span><br><span class="line">deviceName: 127.0.0.1:62001 (设备名称，可以用adb devices命令查看)</span><br><span class="line">appname: 你的apk文件</span><br><span class="line">noReset: False</span><br><span class="line">unicodeKeyboard: True</span><br><span class="line">resetKeyboard: True</span><br><span class="line">appPackage: com.demo.test (你的应用包名)</span><br><span class="line">appActivity: com.demo.launcher.LauncherActivity (你的应用启动Activity)</span><br><span class="line">#这里说一下，获取appPackage和appActivity的方法是通过下面的一个命令可以获取到：</span><br><span class="line"># 在终端输入 aapt dump badging | grep &quot;你的apk文件路径&quot; 就可以了。</span><br><span class="line">ip: 127.0.0.1</span><br><span class="line">port: 4723</span><br></pre></td></tr></table></figure>
+
+<p>下面是python脚本对yaml文件的引用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> appium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> yaml</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">appium_desired</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'你的yaml文件地址'</span>,<span class="string">'r'</span>,encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> file:</span><br><span class="line">        data = yaml.load(file)</span><br><span class="line"></span><br><span class="line">    desired_caps = &#123;&#125;</span><br><span class="line">    desired_caps[<span class="string">'platformName'</span>] = data[<span class="string">'platformName'</span>]</span><br><span class="line">    desired_caps[<span class="string">'platformVersion'</span>] = data[<span class="string">'platformVersion'</span>]</span><br><span class="line">    desired_caps[<span class="string">'deviceName'</span>] = data[<span class="string">'deviceName'</span>]</span><br><span class="line"></span><br><span class="line">    base_dir = os.path.dirname(os.path.dirname(__file__))</span><br><span class="line">    app_path = os.path.join(base_dir, <span class="string">'app'</span>, data[<span class="string">'appname'</span>])</span><br><span class="line">    desired_caps[<span class="string">'app'</span>] = app_path</span><br><span class="line"></span><br><span class="line">    desired_caps[<span class="string">'appPackage'</span>] = data[<span class="string">'appPackage'</span>]</span><br><span class="line">    desired_caps[<span class="string">'appActivity'</span>] = data[<span class="string">'appActivity'</span>]</span><br><span class="line">    desired_caps[<span class="string">'noReset'</span>] = data[<span class="string">'noReset'</span>]</span><br><span class="line"></span><br><span class="line">    desired_caps[<span class="string">'unicodeKeyboard'</span>] = data[<span class="string">'unicodeKeyboard'</span>]</span><br><span class="line">    desired_caps[<span class="string">'resetKeyboard'</span>] = data[<span class="string">'resetKeyboard'</span>]</span><br><span class="line"></span><br><span class="line">    logging.info(<span class="string">'start app...'</span>)</span><br><span class="line">    driver = webdriver.Remote(<span class="string">'http://'</span> + str(data[<span class="string">'ip'</span>]) + <span class="string">':'</span> + str(data[<span class="string">'port'</span>]) + <span class="string">'/wd/hub'</span>, desired_caps)</span><br><span class="line">    driver.implicitly_wait(<span class="number">8</span>)</span><br><span class="line">    <span class="keyword">return</span> driver</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    appium_desired()</span><br></pre></td></tr></table></figure>
+
+<p>上图是以Android设备为例，iOS设备大同小异，解释一下几个常见的参数吧：</p>
+<p>● deviceName：指定启动设备，比如Android Emulator、iPhone Simulator等<br>● automationName：指定自动化引擎，默认appium<br>● platformName：指定移动平台，Android或者iOS<br>● platformVersion：指定平台的系统版本。例如指定Android系统版本为8.1.0<br>● appActivity：待测试app的Activity，注意，原生app的话要在activity前加个“.”<br>● appPackage：待测试app的包名（package）信息</p>
+<h3 id="（三）抓取手机上的应用控件"><a href="#（三）抓取手机上的应用控件" class="headerlink" title="（三）抓取手机上的应用控件"></a>（三）抓取手机上的应用控件</h3><p><strong>抓取方法一：</strong>通过Android SDK内置工具uiautomatorviewer.bat来查看手机应用的控件参数（该工具位于 /tools/bin/ 目录下）</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8k80h7f5gj310o0u0qgh.jpg" alt></p>
+<p>这是Android SDK自带的工具，使用还是很方便的，就是在连接上针对一些应用会不太稳定。</p>
+<p><strong>抓取方法二：</strong>使用appium-desktop自带的客户端进行抓取。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8k80llvk7j31d20q2tv2.jpg" alt></p>
+<p><strong>抓取方法三：</strong>使用weditor进行元素抓取（浏览器界面）</p>
+<p>weditor的Github地址：<a href="https://github.com/openatx/weditor" target="_blank" rel="noopener">https://github.com/openatx/weditor</a> 具体介绍了weditor的安装以及如何使用。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8k80jea35j31kc0u0e60.jpg" alt></p>
+<p><strong>总结：</strong>目前来说博主用的最多的就是weditor的元素定位了，及其的方便以及查看的信息很多，还可以录制脚本运行自动化（虽然我从来没用过，只是用来定位元素😆），有时候也会使用appium-desktop来查看，三种元素定位的方法任你选择了，罗卜白菜，各有所爱嘛，啥有的顺手用啥。</p>
+<h3 id="（四）操作控件"><a href="#（四）操作控件" class="headerlink" title="（四）操作控件"></a>（四）操作控件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>scroll  </span><br><span class="line">scroll(self, origin_el, destination_el):  </span><br><span class="line"><span class="comment">#从元素origin_el滚动至元素destination_el  </span></span><br><span class="line">举例：driver.scroll(el1, el2)  </span><br><span class="line">用法：driver.scroll(el1,el2)</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>tap  </span><br><span class="line">tap(self, positions, duration=<span class="literal">None</span>):  </span><br><span class="line"><span class="comment">#模拟手指点击（最多五个手指），可设置按住时间长度（毫秒）  </span></span><br><span class="line">举例：driver.tap([(<span class="number">100</span>, <span class="number">20</span>), (<span class="number">100</span>, <span class="number">60</span>), (<span class="number">100</span>, <span class="number">100</span>)], <span class="number">500</span>)  </span><br><span class="line">用法：driver.tap([(x,y),(x1,y1)],<span class="number">500</span>)</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> swipe</span><br><span class="line">swipe(self, start_x, start_y, end_x, end_y, duration=<span class="literal">None</span>):  </span><br><span class="line"><span class="comment">#从A点滑动至B点，滑动时间为毫秒  </span></span><br><span class="line">举例：driver.swipe(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">400</span>)  </span><br><span class="line">用法：driver.swipe(x1,y1,x2,y2,<span class="number">500</span>)</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> keyevent</span><br><span class="line">keyevent(self, keycode, metastate=<span class="literal">None</span>):  </span><br><span class="line"><span class="comment">#发送按键码（安卓仅有），按键码可以上网址中找到  </span></span><br><span class="line">用法：driver.keyevent(‘<span class="number">4</span>’)</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> press_keycode</span><br><span class="line">press_keycode(self, keycode, metastate=<span class="literal">None</span>):  </span><br><span class="line"><span class="comment">#发送按键码（安卓仅有），按键码可以上网址中找到  </span></span><br><span class="line">用法:driver.press_ keycode(‘<span class="number">4</span>’)</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>text</span><br><span class="line">text(self):  </span><br><span class="line"><span class="comment">#返回元素的文本值  </span></span><br><span class="line">用法:element.text</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>click</span><br><span class="line">click(self):  </span><br><span class="line"><span class="comment">#点击元素  </span></span><br><span class="line">用法:element.click()</span><br><span class="line"></span><br><span class="line"><span class="number">8.</span>get_attribute</span><br><span class="line">get_attribute(self, name):   </span><br><span class="line"><span class="comment">#获取某元素的相关值  </span></span><br><span class="line">用法：element.get_attribute(“name”)</span><br><span class="line"></span><br><span class="line"><span class="number">9.</span>size</span><br><span class="line">size(self):  </span><br><span class="line"><span class="comment">#获取元素的大小（高和宽）  </span></span><br><span class="line">用法 driver.element.size</span><br><span class="line"></span><br><span class="line"><span class="number">10.</span> page_source</span><br><span class="line">page_source(self):    </span><br><span class="line"><span class="comment">#获取当前页面的源  </span></span><br><span class="line">用法：driver.page_source</span><br><span class="line"></span><br><span class="line"><span class="number">11.</span>quit</span><br><span class="line">quit(self):   </span><br><span class="line"><span class="comment">#退出脚本运行并关闭每个相关的窗口连接   </span></span><br><span class="line">举例：driver.quit()</span><br></pre></td></tr></table></figure>
+
+<p>上面列举了最基本的一些操作代码了，涉及到一些深度的操作还是得自己封装函数，这个就要看所要实现的操作是什么了。</p>
+<h2 id="四、个人总结"><a href="#四、个人总结" class="headerlink" title="四、个人总结"></a>四、个人总结</h2><p>1.Appium适合做什么样的测试呢？答：适合做UI自动化的测试，但是还是会存在驱动较慢的情况。</p>
+<p>2.Appium跨平台，支持Android和IOS自动化测试。</p>
+<p>3.Appium支持多语言，如java、Object-C、JavaScript、PHP、Python、Ruby、C#等等。</p>
+<p>4.Appium的开源以至于支持多种应用：原生应用，Web应用和混合应用。</p>
+<p>5.Appium是目前我所使用来做UI自动化比较顺手的工具了，还有其他类似的工具，比如网易的<a href="http://airtest.netease.com/" target="_blank" rel="noopener">Airtest</a>，博主也搞来折腾过，确实也是很便利，对于小白来说是个不错的工具，用于游戏APP的脚本录制真的简单快捷，自动化这一块水很深，还是得慢慢学习了解。</p>
+<p>好了，以上就是我对Appium知识的一些梳理了。立个Flag：希望有一天能把Appium的底层吃透，能够自己写一些辅助性工具😆。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
