@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mac下Jenkins+Appium+Python本地自动化构建 - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="
+
+这些天终于把CI这条路走通了，终于可以把自动化脚本部署在Jenkins上，让其每天定时定点运行，并且执行完成后把测试报告通过邮件发送到你的邮箱里。不在需要手动去跑脚本了，解放双手划水😂。
+一些,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Mac下Jenkins+Appium+Python本地自动化构建</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Mac下Jenkins+Appium+Python本地自动化构建</h1>
+        <div class="stuff">
+            <span>十一月 06, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g8ofi2kg2qj308904qq2v.jpg" style="zoom:150%;">
+
+<p>这些天终于把CI这条路走通了，终于可以把自动化脚本部署在Jenkins上，让其每天定时定点运行，并且执行完成后把测试报告通过邮件发送到你的邮箱里。不在需要手动去跑脚本了，解放双手划水😂。</p>
+<h2 id="一些介绍-实不相瞒，这是我在网上查阅的资料"><a href="#一些介绍-实不相瞒，这是我在网上查阅的资料" class="headerlink" title="一些介绍(实不相瞒，这是我在网上查阅的资料)"></a>一些介绍(实不相瞒，这是我在网上查阅的资料)</h2><p>时至今日，越来越多的工程团队开始实行敏捷开发，借以推动更短，更快的发布周期。而代码库的增长与更高的生产构建频率，也带动了持续集成（CI）与持续部署/交付（CD）工具的兴起。</p>
+<p>这篇文章主要是在谈论持续集成以及CI工具的使用，首先我们要弄明白的什么是持续集成？来来来，我们先看看百度的定义：<strong>“持续集成（Continuous integration）是一种软件开发实践，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。”</strong>接下来我们在看看Wikipedia中的定义：<strong>“持续集成，是一种软件工程流程，是整个团队软件工程师对于软件的工作副本持续集成到共享主线的一种举措。”</strong>两个定义中都提到了团队二字，也说明了持续集成是为团队所服务的；之前我们所提到过，持续集成与持续部署通常是与敏捷开发环境齐头并进的。在这类环境中，团队成员们希望在构建完成后将不同的代码段部署到生成环境中，使用CI/CD工具可自动完成构建，测试和部署新代码的过程，并且一旦构建的代码发生了改动，每一位项目成员都可以观察到其反馈情况。如此一来，每位团队成员都可以将他们的代码推送到生产体系当中，而构建，测试和部署的过程则自动完成，以便他们放心大胆地继续处理应用程序的下一部分。</p>
+<p>但在为工作流添加自动化的过程中，将代码部署到生产环境中并不意味着万事大吉。您必须继续追踪错误情况，从而真正让新功能为用户服务。对于大多数团队而言，在生产中进行调试是一项需要手动执行且异常繁琐的任务，需要他们投入数小时甚至数天全程关注日志筛选工作。但是，现在我们可以通过大规模自动化方式实现根本原因分析，了解错误发生的位置、时间以及根本性原因。    </p>
+<h2 id="关于Jenkins-Emm-这也是我在网上查阅的资料"><a href="#关于Jenkins-Emm-这也是我在网上查阅的资料" class="headerlink" title="关于Jenkins(Emm..这也是我在网上查阅的资料)"></a>关于Jenkins(Emm..这也是我在网上查阅的资料)</h2><p><a href="https://jenkins.io/zh/" target="_blank" rel="noopener"><u><strong>Jenkins</strong></u></a>是CI市场中最知名且最常见的名号之一。其最初是由Sun公司的一位工程师打造的一个辅助项目，并迅速扩展为最大的开源CI工具之一，可帮助工程团队实现自动化部署。大多数公司都会使用这样一套工具，但是比较NB一点的公司哈都会自研一套属于公司自己的持续集成工具。</p>
+<p>与其它CI工具一样，Jenkins可以自动构建、测试及部署任务。该工具支持Windows、Mac OSX以及各类Unix系统，可以使用本机系统软件包以及Docker进行安装，也可以在安装了Java Runtime Environment（JRE）的任何机器上独立安装。<br>在实践方面，Jenkins允许团队中的任何成员将他们的代码推送到build当中，并立即获得其准备情况的反馈。当然，在大多数情况下，您的团队需要通过自定义要求对Jenkins进行一些调整和定制。<br>Jenkins的强大之处体现在其丰富的插件生态系统上。它提供超过1000款插件选项，可以集成几乎所有市场上可用的工具和服务。作为一款开源工具，您还可以选择自定义适合自身情况的解决方案——就像我们一样。然而，大家需要投入一定时间与精力来确保它适合您的实际需求。</p>
+<p>咳咳…..开源+插件=社区，如果您正在寻找便宜（免费！）的CI解决方案，并愿意投入精力来定制您的环境并需要用户社区的支持，Jenkins无疑是您的最佳选择。</p>
+<h2 id="我所遇到最难的问题"><a href="#我所遇到最难的问题" class="headerlink" title="我所遇到最难的问题"></a>我所遇到最难的问题</h2><p>之前因为懒癌，所以一直在持续集成上没有过多的学习，前些日子就想一定要搞通这套流程，于是一不做二不休，打算把自己前些日子针对一个项目写的自动化脚本部署上去。当然了，部署并非易事，要不然我也不会特意来写这篇Blog了，主要还是想把自己遇到的一些问题记录下来吧，这里说一说最困扰我的一个问题，就是权限问题。在官网下载了dmg的安装包后，安装完毕后就可以在本机进行构建工作了，<strong>但是！但是！但是！</strong>Jenkins构建的时候默认不会用本地用户去进行构建，任何创建的文件都属于”Jenkins”用户的权限所有，所以在构建的时候报了一堆Permission Dennied的错误，作为小白在看到这些错误的时候我的内心有一万只动物在奔跑，权限拒绝访问就意味着本地到脚本调用不了，执行shell也会提示没有权限的错误。还有一个问题就是python解释器的问题，构建命令里一定要写清楚你要用的python解释器是哪个，否则Jenkins会一直用默认的python解释器运行，说白了也是被自己蠢哭了，看着自己在pycharm中正常执行了很多遍的脚本，挂在上面提示我少库！我丢你蕾姆哦~然后一看报错信息：python2.7  WTF！怎么默认的是Mac自带的python版本了。暂时遇到的就是这两个蛋疼很呆的问题，下面我会在构建过程中讲一讲如何规避或解决掉问题。</p>
+<h2 id="Jenkins规避权限问题安装法"><a href="#Jenkins规避权限问题安装法" class="headerlink" title="Jenkins规避权限问题安装法"></a>Jenkins规避权限问题安装法</h2><p>因为权限问题一直苦恼的我浏览了网上众多大家配置Jenkins的文章后，都发现了一句话：<u><strong>不要从官方下载安装</strong></u>，作为在这个问题折腾了两天的人，就像捡了个偏方一样，没办法，只能死马当做活马医了。</p>
+<p>（1）战术调整，首先卸载原来安装的Jenkins（之前捣鼓不知道卸载重装了多少次）</p>
+<p>Mac的卸载路径(Win或者Linux自行百度一下)：<strong>/Library/Application\ Support/Jenkins/Uninstall.command</strong></p>
+<p>如果卸载不完全可以执行下面的命令：</p>
+<ul>
+<li>删除一些可能遗忘的配置：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /var/root/.jenkins ~/.jenkins</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除文件夹所有内容：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf /&lt;User 自己替代&gt;/Shared/Jenkins</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除User和Group：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dscl . -delete /Users/jenkins</span><br><span class="line">sudo dscl . -delete /Groups/jenkins</span><br></pre></td></tr></table></figure>
+
+<p>这里只整理了一些我觉得有用的命令，其余的可以自行百度or Google一下。</p>
+<p>（2）通过brew来安装Jenkins</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install jenkins</span><br></pre></td></tr></table></figure>
+
+<p>如果未安装brew，请先安装brew</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -e <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>”</span></span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，执行war包（这里的Jenkins版本是2.152，根据自己的Jenkins版本修改）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/Cellar/jenkins/2.152/libexec</span><br><span class="line">java -jar jenkins.war --httpPort=8080</span><br></pre></td></tr></table></figure>
+
+<p>这个命令也是之后启动Jenkins的命令，安装完成后，先不要急着打开Jenkins的Web容器，先去/Library/LaunchDaemons中创建一个<code>org.jenkins-ci.plist</code>文件，注意不能再该路径下的文件夹中直接创建，而且Mac自带的文本编辑不能保存和创建.plist文件，博主这里使用的是sublime编辑的，内容如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8olgsgwu9j31840u00wv.jpg" alt></p>
+<p>可直接拷贝下列文档，然后保存成.plist文件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plist</span> <span class="attr">version</span>=<span class="string">"1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>StandardOutPath<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span>&gt;</span>/var/log/jenkins/jenkins.log<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>StandardErrorPath<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span>&gt;</span>/var/log/jenkins/jenkins.log<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>EnvironmentVariables<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">key</span>&gt;</span>JENKINS_HOME<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">string</span>&gt;</span>/Users/lcy/Documents/FuckingJenkins/Jenkins/Home<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>GroupName<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span>&gt;</span>daemon<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>KeepAlive<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>Label<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span>&gt;</span>org.jenkins-ci<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>ProgramArguments<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">string</span>&gt;</span>/bin/bash<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">string</span>&gt;</span>/Library/Application Support/Jenkins/jenkins-runner.sh<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>RunAtLoad<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>UserName<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">string</span>&gt;</span>jenkins<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>SessionCreate<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里JENKINS_HOME就是你的Jenkins路径。</p>
+<h2 id="Jenkins设置脚本构建"><a href="#Jenkins设置脚本构建" class="headerlink" title="Jenkins设置脚本构建"></a>Jenkins设置脚本构建</h2><p>（1）启动Jenkins</p>
+<p>未避免权限问题，先执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown root /usr/<span class="built_in">local</span>/Cellar/jenkins/2.152/homebrew.mxcl.jenkins.plist</span><br></pre></td></tr></table></figure>
+
+<p>（2）执行完之后就可以打开Jenkins的Web容器了，Jenkins安装默认安装就好了，进入主界面如下图所示，这里我已经创建了一个项目进行构建</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8olpo40z9j31mj0u0jyl.jpg" alt></p>
+<p>然后这里需要设置一个全局属性，选择“系统管理”–&gt;然后选择“系统设置”，进入设置界面后，全局属性下面，勾选环境变量，增加一对键值对，如下图所示：（其中PATH可通过下面命令行获取）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>输出的是一堆环境路径。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8oltarcdtj31kg0u0gtf.jpg" alt></p>
+<p>设置完成后回到主界面，点击“新建任务”，这里设置根据不同人的需求选择不同，以下是我的设置</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8om4c5x3bj31jw0u0ws4.jpg" alt></p>
+<p>设置好后进入项目设置界面，往下找到源码管理，这里如果你的脚本是在本地的话，那你这里选择无，如果你的源码放在Git仓库或是SVN仓库的话可以通过勾选来进行设置，这个设置可以自行百度了，比较简单。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8om6vujifj31go090abd.jpg" alt></p>
+<p>设置完之后往下滑找到构建，选择新增构建，增加构建时(如果你是Mac或者Linux用户，可以选择shell构建，如果是部署在windows用户，可以选择windows命令进行构建)，之后要填写构建的命令，这里有一个坑需要注意，就是在填写执行Python命令时，一定要写路径到你所用的Python解释器才行（针对一台电脑上有不同python版本的建议）否则Python默认的是Mac自带的Python2版本，执行就会报各种错误，所以这里需要注意下。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8omb3b8bgj31ge0i4jtv.jpg" alt></p>
+<p>好了设置完成之后点击保存。</p>
+<p>（3）进行构建</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8omnft4l5j31pk0u0ti8.jpg" alt></p>
+<p>这里点击立即构建，进行构建，待构建完成后，如上图构建栏会是蓝色的标志，点击进去然后点击控制台输出就可以看到具体的构建过程。下图上构建成功的显示</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8omp1s87fj31nr0u0ds8.jpg" alt></p>
+<p>构建已经成功了，并且构建的结果已经通过邮件发送到我们的邮箱了，可以打开邮件查看测试结果了。在这里我使用的是Python的BeautifulReport，如下图所示</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8omre8gvvj30u020whdt.jpg" alt></p>
+<p>这个可视化报告比起Allure还是没那么好看，但是也够用（这里也看个人的需求）。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是Jenkins+Appium自动化构建的整个流程了，目前水平有限，执行脚本的时间有点过于长了，不过可以设置每日定点执行，但是还需要优化脚本的执行效率。可以说Jenkins是一款很棒的CI工具了，就个人现在所写过的项目来说，比起UI自动化，更适合于接口自动化，早晚各执行一遍，保证项目接口的稳定使用。Jenkins水还很深，还需要更多学习。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
