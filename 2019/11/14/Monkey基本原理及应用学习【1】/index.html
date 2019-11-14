@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Monkey基本原理及应用学习[1] - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="Monkey基础知识Monkey概况Android官方对于Monkey的描述是这样的：Monkey是Google提供的一个命令行工具，可运行在模拟器或实际设备中。它想系统发送伪随机的用户事件，模拟用,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Monkey基本原理及应用学习[1]</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Monkey基本原理及应用学习[1]</h1>
+        <div class="stuff">
+            <span>十一月 14, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Monkey/" rel="tag">Monkey</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="Monkey基础知识"><a href="#Monkey基础知识" class="headerlink" title="Monkey基础知识"></a>Monkey基础知识</h2><h3 id="Monkey概况"><a href="#Monkey概况" class="headerlink" title="Monkey概况"></a>Monkey概况</h3><p>Android官方对于Monkey的描述是这样的：Monkey是Google提供的一个命令行工具，可运行在模拟器或实际设备中。它想系统发送伪随机的用户事件，模拟用户的按键输入、触摸屏输入、手势输入等，从而对正在运行的应用程序进行压力测试，<strong>目的是看设备多长时间会出现异常，并观察系统的稳定性和容错性能。</strong></p>
+<p>Monkey是Android自带的，其启动脚本位置：/system/bin目录下的Monkey文件；其jar包的位置：/system/framework目录的Monkey.jar文件，用户主要通过adb命令启动Monkey，Monkey在运行时，会根据命令行参数配置，生成伪随机事件流，并在Android设备上执行对应的测试事件。</p>
+<h3 id="Monkey参数"><a href="#Monkey参数" class="headerlink" title="Monkey参数"></a>Monkey参数</h3><p>Monkey启动的命令行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">monkey [options] &lt;count&gt;</span><br></pre></td></tr></table></figure>
+
+<p>options为Monkey执行的可配置参数，为可选项。count为Monkey执行的事件数，为必选项。</p>
+<p>Options可划分为五类：</p>
+<ul>
+<li>基本配置类参数</li>
+<li>事件类型和频率参数</li>
+<li>约束限制类参数</li>
+<li>调试类参数</li>
+<li>官方隐藏类参数</li>
+</ul>
+<p>下面是针对五种类型参数的详细介绍：</p>
+<h4 id="1-基本配置类参数"><a href="#1-基本配置类参数" class="headerlink" title="1.基本配置类参数"></a>1.基本配置类参数</h4><p>Monkey的基本配置类参数包括帮助参数和日志信息参数。帮助参数用于输出Monkey命令使用指导；日志信息参数将日志分为三个等级，级别越高，日志的信息越详细。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-- help</td>
+<td>输出Monkey命令行使用方法</td>
+</tr>
+<tr>
+<td>-v（Level 0）</td>
+<td>标识反馈信息级别，每增加一个-v参数，反馈信息级别会相应提高。只提供启动提示、测试完成和最终结果。</td>
+</tr>
+<tr>
+<td>-v -v（Level 1）</td>
+<td>提高较为详细测试信息，如逐个发送的Activity事件。</td>
+</tr>
+<tr>
+<td>-v -v -v（Level 2）</td>
+<td>提供更加详细的测试信息，如测试选中或未选中的Activity事件。</td>
+</tr>
+</tbody></table>
+<p>举例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell monkey -v -v 10</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-事件类型和频率参数"><a href="#2-事件类型和频率参数" class="headerlink" title="2.事件类型和频率参数"></a>2.事件类型和频率参数</h4><p>Monkey的事件类参数的作用是对随机事件进行调控，从而遵循设定运行。大部分常用的事件类型如下表：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-s &lt;种子值&gt;</td>
+<td>伪随机数生成的种子值。如果用相同的种子值再次运行Monkey，将生成相同的事件序列。举例：adb shell monkey -s1000 -v 10</td>
+</tr>
+<tr>
+<td>--throttle &lt;毫秒数&gt;</td>
+<td>在事件之间插入固定延迟，通过这个可以减缓Monkey的执行速度。</td>
+</tr>
+<tr>
+<td>--pct-touch &lt;百分比&gt;</td>
+<td>调整触摸事件的百分比</td>
+</tr>
+<tr>
+<td>--pct-motion &lt;百分比&gt;</td>
+<td>调整动作事件的百分比（这里的动作事件是指直线移动，下面的trackball移动包含曲线移动）</td>
+</tr>
+<tr>
+<td>--pct-pinchzoom &lt;百分比&gt;</td>
+<td>调整二指缩放事件的百分比</td>
+</tr>
+<tr>
+<td>--pct-trackball &lt;百分比&gt;</td>
+<td>调整轨迹事件的百分比</td>
+</tr>
+<tr>
+<td>--pct-rotation &lt;百分比&gt;</td>
+<td>调整屏幕旋转事件的百分比</td>
+</tr>
+<tr>
+<td>--pct-nav &lt;百分比&gt;</td>
+<td>调整“基本”导航事件的百分比（导航事件由方向输入设备的上下左右按键所触发的事件组成）</td>
+</tr>
+<tr>
+<td>--pct-majornav &lt;百分比&gt;</td>
+<td>调整“主要”导航事件的百分比（这类导航按键通常引发UI界面的动作，如5-way键盘的中间按键、回退按键、菜单按键）</td>
+</tr>
+<tr>
+<td>--pct-syskeys &lt;百分比&gt;</td>
+<td>调整“系统”按键事件的百分比（如返回，音量，菜单键等等）</td>
+</tr>
+<tr>
+<td>--pct-appswitch &lt;百分比&gt;</td>
+<td>调整启动Activity的百分比</td>
+</tr>
+<tr>
+<td>--pct-flip &lt;百分比&gt;</td>
+<td>调整键盘事件的百分比</td>
+</tr>
+<tr>
+<td>--pct-anyevent &lt;百分比&gt;</td>
+<td>调整其他事件的百分比</td>
+</tr>
+</tbody></table>
+<h4 id="3-约束限制类参数"><a href="#3-约束限制类参数" class="headerlink" title="3.约束限制类参数"></a>3.约束限制类参数</h4><p>Monkey的约束限制参数的作用是将随机事件运行的范围限制在一个或多个包或类中。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p &lt;包名&gt;</td>
+<td>此参数用于指定一个或几个包。要指定多个包需要同时使用多个-p选项，每个-p选项只能用来限制一个包。</td>
+</tr>
+<tr>
+<td>-c &lt;类别名&gt;</td>
+<td>此参数用于指定一个或几个类别。要指定多个类别需要同时使用多个-c选项，每个-c选项只能用来限制一个类别。</td>
+</tr>
+</tbody></table>
+<h4 id="4-调试类参数"><a href="#4-调试类参数" class="headerlink" title="4.调试类参数"></a>4.调试类参数</h4><p>通过调试命令，对Monkey进行简单的调试，可以快速定位一些Monkey执行过程中的问题。如果用户想监控应用程序所调用的包之间的转换，则可以用 –dbg-no-events参数；如果用户想监控内存泄漏，则可以用 –hprof参数。详细参数如下表</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>--dbg-no-events</td>
+<td>设置此选项，Monkey将初始启动，进入一个测试Activity，不会再进一步生成事件。为了得到最佳结果，把它与-v、一个或几个包约束，以及一个保持Monkey运行30秒或更长事件的非零值联合起来，从而提供一个监视应用程序所调用包之间的转换的环境。</td>
+</tr>
+<tr>
+<td>--hprof</td>
+<td>设置此选项，将在Monkey执行之前和执行之后生成内存快照文件存放于手机的data/misc目录。可以协助定位内存泄漏问题。由于内存快照文件较大，要小心使用。</td>
+</tr>
+<tr>
+<td>--ignore-crashes</td>
+<td>通常，Monkey在遇到程序崩溃或异常时，会停止运行。如果设置此选项，Monkey将继续向系统发送事件，直到完成。</td>
+</tr>
+<tr>
+<td>--ignore-timeouts</td>
+<td>通常，Monkey在遇到超时错误时会停止运行，设置选项后，Monkey将继续运行。</td>
+</tr>
+<tr>
+<td>--ignore-security-exceptions</td>
+<td>通常，Monkey在遇到许可错误时会停止运行，设置选项后，Monkey将继续运行。</td>
+</tr>
+<tr>
+<td>--kill-process-after-error</td>
+<td>通常，当Monkey由于一个错误而停止时，出错的应用程序将继续处于运行状态。设置此选项后，将会通知系统停止发送错误的进程。</td>
+</tr>
+<tr>
+<td>--monitor-native-crashes</td>
+<td>监视并报告Android系统中本地代码的崩溃事件。</td>
+</tr>
+<tr>
+<td>--wait-dbg</td>
+<td>停止执行中的Monkey，直到有调试器相连。</td>
+</tr>
+</tbody></table>
+<h4 id="5-官方隐藏类参数"><a href="#5-官方隐藏类参数" class="headerlink" title="5.官方隐藏类参数"></a>5.官方隐藏类参数</h4><p>在Android官网还有三个参数是看不到说明的，即为隐藏参数。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>--pkg-blacklist-file &lt;黑名单文件&gt;</td>
+<td>限制Monkey不测试指定于黑名单文档中记录的包。该命令可限制Monkey的执行范围。黑名单文档每一行只能存一个包名。</td>
+</tr>
+<tr>
+<td>--pkg-whitelist-file &lt;白名单文件&gt;</td>
+<td>限制Monkey只测试指定于白名单文档中记录的包。白名单文档每一行只能存一个包名。</td>
+</tr>
+<tr>
+<td>-f &lt;脚本文件&gt;</td>
+<td>指定Monkey用户执行用户自定义的脚本文件。</td>
+</tr>
+</tbody></table>
+<h3 id="Monkey事件"><a href="#Monkey事件" class="headerlink" title="Monkey事件"></a>Monkey事件</h3><p>Monkey所执行的随机事件流包含11大事件，分别是触摸事件、手势事件、二指缩放事件、轨迹事件、屏幕旋转事件、基本导航事件、主要导航事件、系统按键事件、启动Activity事件、键盘事件、其他类型事件。</p>
+<h4 id="1-触摸事件"><a href="#1-触摸事件" class="headerlink" title="1.触摸事件"></a>1.触摸事件</h4><p>该事件可以通过 –pct-touch参数来配置百分比。该事件由一组Touch(ACTION_DOWN)和Touch(ACTION_UP)事件组成，可以在Monkey输出日志中观察到。</p>
+<h4 id="2-手势事件"><a href="#2-手势事件" class="headerlink" title="2.手势事件"></a>2.手势事件</h4><p>手势事件是指在屏幕某处按下、随机移动、抬起的操作，即直线滑动，可通过 –pct-motion参数来配置百分比。该事件由一个ACTION_DOWN事件、一系列ACTION_MOVE事件和一个ACTION_UP事件组成。</p>
+<h4 id="3-二指缩放事件"><a href="#3-二指缩放事件" class="headerlink" title="3.二指缩放事件"></a>3.二指缩放事件</h4><p>该事件是指在屏幕上的两处同时按下，并同时移动，最后抬起的操作。可通过 –pct-pinchzoom参数来控制其百分比。该事件是一个ACTION_DOWN事件和一个ACTION_POINTER_DOWN事件，即模拟两个手指同时点下，中间是一系列的ACTION_MOVE事件，即两个手指同时在屏幕上直线滑动；结束是由一个ACTION_POINTER_UP事件和一个ACTION_UP事件组成，即两个手指同时放开。</p>
+<h4 id="4-轨迹事件"><a href="#4-轨迹事件" class="headerlink" title="4.轨迹事件"></a>4.轨迹事件</h4><p>轨迹事件是由一个或多个随机移动组成的，有时候会伴随着点击。可通过–pct-trackball参数来配置百分比。该事件由一系列的Trackball(ACTION_MOVE)事件组成。</p>
+<h4 id="5-屏幕旋转事件"><a href="#5-屏幕旋转事件" class="headerlink" title="5.屏幕旋转事件"></a>5.屏幕旋转事件</h4><p>该事件是一个隐藏事件，用于模拟手机的横屏与竖屏的切换。可通过 –pct-rotation参数来配置其事件百分比。该事件由一个rotation事件组成，其中degree表示的是旋转角度，旋转方向为顺时针旋转，0表示旋转90度，1表示旋转180度，2表示旋转270度，3表示旋转360度。</p>
+<h4 id="6-基本导航事件"><a href="#6-基本导航事件" class="headerlink" title="6.基本导航事件"></a>6.基本导航事件</h4><p>该事件指点击方向输入设备的上、下、左、右按键的操作，目前市面上的手机很少有这类按键了，所以该事件用的很少。可通过 –pct-nav参数来设置百分比。该事件由一个Key（ACTION_DOWN）和一个Key（ACTION_UP）组成的。</p>
+<h4 id="7-主要导航事件"><a href="#7-主要导航事件" class="headerlink" title="7.主要导航事件"></a>7.主要导航事件</h4><p>指点击“主要导航”按键的操作，这些按键通常会导致UI界面的动作，如菜单键，回退键等。可通过 –pct-majornav参数来配置百分比。该事件由一个Key（ACTION_DOWN）和一个Key（ACTION_UP）组成的。</p>
+<h4 id="8-系统按键事件"><a href="#8-系统按键事件" class="headerlink" title="8.系统按键事件"></a>8.系统按键事件</h4><p>指点击系统保留使用的按键的操作，如Home键，返回键，音量键等。可通过 –pct-syskeys参数来配置事件的百分比。该事件由一个Key（ACTION_DOWN）和一个Key（ACTION_UP）组成的。</p>
+<h4 id="9-启动Activity时间"><a href="#9-启动Activity时间" class="headerlink" title="9.启动Activity时间"></a>9.启动Activity时间</h4><p>指在手机上启动一个Activity的操作，在随机时间间隔中，Monkey将执行一个startActivity()的方法。可通过 –pct-appswitch参数来配置时间百分比。该事件由一个Switch操作组成。</p>
+<h4 id="10-键盘事件"><a href="#10-键盘事件" class="headerlink" title="10.键盘事件"></a>10.键盘事件</h4><p>主要做一些与键盘相关的操作。比如输入框点击、键盘弹起、点击输入外区域、键盘收回等。可通过 –pct-flip参数来配置事件百分比。</p>
+<h4 id="11-其他类型事件"><a href="#11-其他类型事件" class="headerlink" title="11.其他类型事件"></a>11.其他类型事件</h4><p>该事件是指前面提到的10种事件之外的事件，可通过 –pct-anyevent参数来配置百分比，这个事件一般使用比较少。</p>
+<h3 id="Monkey启动"><a href="#Monkey启动" class="headerlink" title="Monkey启动"></a>Monkey启动</h3><p>通过命令行启动Monkey有两种方式：</p>
+<ul>
+<li>直接PC启动</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell monkey [options] &lt;count&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Shell端启动</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">monkey [options] &lt;count&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这两种的区别就是，通过PC端启动，Monkey日志可以保存在PC上；通过Shell端启动，Monkey运行日志可以保存在手机里。</p>
+<p><strong>注意：</strong>停止Monkey的方法：直接杀掉手机上的Monkey进程，具体做法如下：</p>
+<p>1.获取到 com.android.commands.monkey的进程ID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell ps | grep monkey</span><br></pre></td></tr></table></figure>
+
+<p>2.通过kill命令沙县对应的monkey进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell <span class="built_in">kill</span> &lt;pid值&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Monkey测试方法"><a href="#Monkey测试方法" class="headerlink" title="Monkey测试方法"></a>Monkey测试方法</h2><h3 id="Monkey测试实例"><a href="#Monkey测试实例" class="headerlink" title="Monkey测试实例"></a>Monkey测试实例</h3><h4 id="1-常规的稳定性测试"><a href="#1-常规的稳定性测试" class="headerlink" title="1.常规的稳定性测试"></a>1.常规的稳定性测试</h4><p>测试脚本示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell monkey -p com.xxx.xxx --pct-touch 40 --pct-motion 25 --pct-appswitch 10 --pct-rotation 5 -s 12358 --throttle 400 --ignore-crashes --ignore-timeouts -v 500000</span><br></pre></td></tr></table></figure>
+
+<p><strong>1）使用-p参数来限制测试应用的包名</strong></p>
+<p>如何查找包名呢？通常有几种方法：</p>
+<p>1.通过pm命令查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">pm list package</span><br></pre></td></tr></table></figure>
+
+<p>2.查看APK源码下的AndroidManifest.xml文件</p>
+<p>3.通过aapt命令查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aapt dump badging  &lt;后面跟你的apk路径&gt;</span><br></pre></td></tr></table></figure>
+
+<p>4.通过adb logcat抓取当前Android手机运行的APP包名</p>
+<p><strong>2）使用–pct-xxx来控制事件发生的百分比</strong></p>
+<p>上述脚本可以看到使用了4个 –pct-xxx命令，–pct-touch点击事件的占比调整为40%，–pct-motion手势事件的占比调整为25%, –pct-appswitch Activity切换事件调整为10%，–pct-rotation轨迹事件调整为5%。</p>
+<p><strong>3）使用-s参数来指定命令执行的seed(种子)值</strong></p>
+<p>Monkey根据seed值来生成对应的事件流，同一个seed生成的事件流是完全相同的。这里指定seed值，是为了测试发现问题时，便于问题的复现。</p>
+<p><strong>4）使用 –throttle参数控制Monkey每个操作间时间间隔</strong></p>
+<p>为了避免过于频繁的操作导致系统崩溃，因此需要设定一定的间隔时间。</p>
+<p><strong>5）使用 –ignore-crashes和 –ignore-timeouts参数使Monkey遇到意外能继续执行</strong></p>
+<p>增加此参数为避免在执行测试的过程中不会因为崩溃或超时错误而终止测试。</p>
+<p><strong>6）使用 -v指定log的级别</strong></p>
+<p>通过增加-v 来增加log的显示信息。</p>
+<h4 id="2-自定义脚本的稳定性测试"><a href="#2-自定义脚本的稳定性测试" class="headerlink" title="2.自定义脚本的稳定性测试"></a>2.自定义脚本的稳定性测试</h4><p>Monkey自定义脚本的编写模板和代码清单如下：</p>
+<p>模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#头文件，控制Monkey的参数</span><br><span class="line">#脚本类型，一般不用更改</span><br><span class="line">type =raw events</span><br><span class="line">#脚本执行次数</span><br><span class="line">count=10</span><br><span class="line">#命令执行速率</span><br><span class="line">speed=1.0</span><br><span class="line">#以下为Monkey命令</span><br><span class="line">start data&gt;&gt;</span><br><span class="line">LaunchActivity(pck_name,cl_name)</span><br><span class="line">DispatchPress(KEYCODE_HOME)</span><br><span class="line">.........</span><br></pre></td></tr></table></figure>
+
+<p>清单：</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LaunchActivity(pkg_name,cl_name)</td>
+<td>启动被测应用某个Activity。pkg_name：包名；cl_name：Activity名</td>
+</tr>
+<tr>
+<td>Tap(x,y,tapDuration)</td>
+<td>模拟一次手指点击事件。x：点击的横坐标；y：点击的纵坐标；tapDuration：按下的时长，单位是ms</td>
+</tr>
+<tr>
+<td>DispatchPress(keyName)</td>
+<td>模拟按键点击。keyName：案件的名称</td>
+</tr>
+<tr>
+<td>RotateScreen(rotationDegree,peresist)</td>
+<td>模拟屏幕旋转。rotationDegree：用0~3分别表示顺时针旋转的四个方向；peresist：是否存留</td>
+</tr>
+<tr>
+<td>DispatchFlip(true/false)</td>
+<td>打开或关闭软键盘。</td>
+</tr>
+<tr>
+<td>LongPress()</td>
+<td>长按两秒。</td>
+</tr>
+<tr>
+<td>PressAndHold(x,y,pressDuration)</td>
+<td>模拟长按事件。x：点击横坐标；y：点击纵坐标；pressDuration：点击时长，单位是ms</td>
+</tr>
+<tr>
+<td>DIspatchString(input)</td>
+<td>输入字符串。</td>
+</tr>
+<tr>
+<td>Drag(xStart,yStart,xEnd,yEnd,stepCount)</td>
+<td>模拟拖动操作。xStart：起始横坐标；yStart：起始纵坐标；xEnd：结束横坐标；yEnd：结束纵坐标；stepCount：移动的速度</td>
+</tr>
+<tr>
+<td>PinchZoom(pt1xStart,pt1yStart,pt1xEnd,pt1yEnd,p2xStart,p2yStart,p2xEnd,p2yEnd,stepCount)</td>
+<td>模拟缩放手势。</td>
+</tr>
+<tr>
+<td>UserWait(sleepTime)</td>
+<td>设置等待时间。sleepTime：等待时间，单位是ms。</td>
+</tr>
+<tr>
+<td>DeviceWakeUp()</td>
+<td>唤醒屏幕。</td>
+</tr>
+</tbody></table>
+<p>将编写好的脚本存储为后缀为.script的文件，并且将文件push到手机或模拟器的/sdcard/路径下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push monkey.script  /sdcard/</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell monkey -f /sdcard/monkey.script -v 1</span><br></pre></td></tr></table></figure>
+
+<p>就可以运行Monkey脚本了。</p>
+<h4 id="3-结合辅助命令，获取更多的信息"><a href="#3-结合辅助命令，获取更多的信息" class="headerlink" title="3.结合辅助命令，获取更多的信息"></a>3.结合辅助命令，获取更多的信息</h4><ul>
+<li>获取logcat日志信息：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell logcat -v time&gt;log.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>获取内存信息：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys meminfo &lt;进程名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>获取CPU消耗信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell top -n 1 | find <span class="string">"进程名"</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>获取电量信息：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys battery</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>获取GPU信息：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys gfxinfo &lt;进程名&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>获取流量信息：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell cat /proc/uid_stat/&lt;被测应用uid&gt;/tcp_rcv</span><br></pre></td></tr></table></figure>
+
+<p>如何获取应用的uid呢？下面来看看：</p>
+<p>（1）查看被测应用的进程ID(PID)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell ps | grep &lt;被测应用的包名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>（2）查看应用的用户ID(UID)：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell cat /proc/<span class="variable">$pid</span>/status</span><br></pre></td></tr></table></figure>
+
+<h3 id="Monkey日志分析"><a href="#Monkey日志分析" class="headerlink" title="Monkey日志分析"></a>Monkey日志分析</h3><h4 id="1-Monkey日志保存的方法"><a href="#1-Monkey日志保存的方法" class="headerlink" title="1.Monkey日志保存的方法"></a>1.Monkey日志保存的方法</h4><p>保存的方法有三种，如下：</p>
+<ul>
+<li>保存在PC上：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell monkey [options] &lt;count&gt; &gt;d:\monkey.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>保存在手机上，代码如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">monkey [options] &lt;count&gt; &gt; /mnt/sdcard/monkey.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>标注流与错误流分开保存，代码如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Monkey [options] &lt;count&gt; 1&gt;/sdcard/monkey.txt 2&gt;/sdcard/error.txt</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-Monkey日志分析"><a href="#2-Monkey日志分析" class="headerlink" title="2.Monkey日志分析"></a>2.Monkey日志分析</h4><p>Monkey日志分析bat脚本</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off&amp;<span class="built_in">setlocal</span> enabledelayedexpansion</span><br><span class="line">: 设置所用Monkey日志存放目录</span><br><span class="line"><span class="built_in">set</span> ff=log\*.txt</span><br><span class="line">: 设置查询关键字</span><br><span class="line"><span class="built_in">set</span> str=CRASH crash ANR died</span><br><span class="line">: 设置查询结果存放的目录</span><br><span class="line"><span class="built_in">set</span> fileName=Result.txt</span><br><span class="line">: 开始查询</span><br><span class="line"><span class="built_in">echo</span> 正在统计&amp;<span class="built_in">echo</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">%date%</span> <span class="variable">%time%</span> &gt; <span class="variable">%fileName%</span></span><br><span class="line"><span class="built_in">echo</span> .&gt;&gt;<span class="variable">%fileName%</span></span><br><span class="line"><span class="built_in">echo</span> 分析结果：&gt;&gt;<span class="variable">%fileName%</span></span><br><span class="line"><span class="built_in">echo</span> --------------------------------------------&gt;&gt;<span class="variable">%fileName%</span></span><br><span class="line">: 依次打开目录下的每一个Monkey日志查询关键字并输出个数</span><br><span class="line">(<span class="keyword">for</span> <span class="variable">%%a</span> <span class="keyword">in</span> (<span class="variable">%str%</span>)<span class="keyword">do</span> (</span><br><span class="line">	<span class="built_in">set</span> n<span class="variable">%%a</span>=<span class="number">0</span>&amp;<span class="built_in">set</span>/p=  <span class="variable">%%a</span> : &lt;null&gt;<span class="built_in">con</span></span><br><span class="line">	<span class="keyword">for</span> /f "delims=" <span class="variable">%%b</span> <span class="keyword">in</span> ('<span class="built_in">findstr</span>"<span class="variable">%%a</span>" "<span class="variable">%ff%</span>"')<span class="keyword">do</span> (</span><br><span class="line">		<span class="built_in">set</span> h=<span class="variable">%%b</span></span><br><span class="line">		<span class="keyword">call</span> :yky <span class="variable">%%a</span>)</span><br><span class="line">	<span class="built_in">echo</span> <span class="variable">!n%%a!</span>&gt;com</span><br><span class="line">	<span class="built_in">echo</span> 关键字 <span class="variable">%%a</span>  共有 <span class="variable">!%%a!</span> 处</span><br><span class="line">))&gt;&gt;<span class="variable">%fileName%</span></span><br><span class="line"><span class="built_in">echo</span> .&gt;&gt;<span class="variable">%filename%</span></span><br><span class="line">: 针对崩溃的日志输出其所在文件行数</span><br><span class="line"><span class="built_in">echo</span> 崩溃日志: &gt;&gt;<span class="variable">%fileName%</span></span><br><span class="line"><span class="built_in">findstr</span> "<span class="variable">%str%</span>" "<span class="variable">%ff%</span>"&gt;&gt;<span class="variable">%fileName%</span></span><br><span class="line"><span class="built_in">echo</span> /&amp;<span class="built_in">pause</span>&amp;<span class="keyword">exit</span></span><br><span class="line">:yky</span><br><span class="line"><span class="built_in">set</span> /a n%<span class="number">1</span>+=<span class="number">1</span></span><br><span class="line"><span class="built_in">set</span> h=<span class="variable">!h:*%1=!</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">defined</span> h <span class="keyword">if</span> <span class="keyword">not</span> "<span class="variable">!h:*%1=!</span>"=="<span class="variable">!h!</span>" <span class="keyword">goto</span> :yky</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本后可以得到crash和安然出现的次数，再打开对应日志进行查找，这里给出了一些crash的错误信息：</p>
+<table>
+<thead>
+<tr>
+<th>Crash关键词</th>
+<th>Crash原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>java.lang.NullPointerException</td>
+<td>空指针异常</td>
+</tr>
+<tr>
+<td>java.lang.ArrayIndexOutOfBoundsException</td>
+<td>数组溢出</td>
+</tr>
+<tr>
+<td>java.lang.ClassNotFoundException</td>
+<td>类不存在</td>
+</tr>
+<tr>
+<td>java.lang.ArithmeticException</td>
+<td>数学运算异常</td>
+</tr>
+<tr>
+<td>java.lang.IllegalArgumentException</td>
+<td>方法参数异常</td>
+</tr>
+<tr>
+<td>java.io.FileNotFoundException</td>
+<td>文件未找到</td>
+</tr>
+<tr>
+<td>java.lang.NumberFormatException</td>
+<td>数值转化异常</td>
+</tr>
+<tr>
+<td>java.lang.StackOverflowError</td>
+<td>堆栈异常错误</td>
+</tr>
+<tr>
+<td>java.lang.OutOfMemoryError</td>
+<td>内存溢出错误</td>
+</tr>
+</tbody></table>
+<p>当获取到Crash和ANR日志信息后，理论上可以根据日志信息去定位问题，但是只靠日志去定位还是很困难的，有时候还需要知道问题出现的场景以及操作步骤，通常，可以通过使用speed值再一次执行Monkey来复现问题，但这种方法比较费时，那么问题来了，Monkey出现问题的时候有没有可能及时的截图并记录下操作步骤呢？可以通过Monkey改造来实现，当然了，这个问题放在后面详细讨论。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
