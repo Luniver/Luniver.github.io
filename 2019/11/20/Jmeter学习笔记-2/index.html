@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jmeter学习笔记[2] - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="##Jmeter自定义变量和CSV可变参数实操
+Jmeter用户自定义变量继续使用上次的jmeter线程组，用户自定义变量加入：
+线程组右键，Add–&amp;gt;Config Element–&amp;gt;U,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Jmeter学习笔记[2]</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Jmeter学习笔记[2]</h1>
+        <div class="stuff">
+            <span>十一月 20, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Jmeter/" rel="tag">Jmeter</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>##Jmeter自定义变量和CSV可变参数实操</p>
+<h3 id="Jmeter用户自定义变量"><a href="#Jmeter用户自定义变量" class="headerlink" title="Jmeter用户自定义变量"></a>Jmeter用户自定义变量</h3><p>继续使用上次的jmeter线程组，用户自定义变量加入：</p>
+<p>线程组右键，Add–&gt;Config Element–&gt;User Defind Variables</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94m466thmj31co0u00xl.jpg" alt></p>
+<p>添加量自定义变量后，我们选中自定义变量界面，下面有一个Add，点击添加我们所需要的自定义变量（注意：在此线程组添加的自定义变量只能在此线程中使用）这里我们添加了两个变量：</p>
+<ul>
+<li>Name：ip，Value：127.0.0.1，Description：服务器IP地址</li>
+<li>Name：path，Value：index，Description：服务器url</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94mbyxpjwj31dq0u0408.jpg" alt></p>
+<p>引用方式${XXX}，在接口中变量中使用，这里我们可以在HTTP请求那面引用，如下图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94mgvo0uqj31wk0m8tal.jpg" alt></p>
+<p>之后再在察看结果树中查看到我们的请求成功了，自定义变量的好处就是定义一个变量后，可以在不同的地方分别调用这个变量，提高了一定的效率。</p>
+<h3 id="Jmeter之CSV可变参数测试"><a href="#Jmeter之CSV可变参数测试" class="headerlink" title="Jmeter之CSV可变参数测试"></a>Jmeter之CSV可变参数测试</h3><p>如果是多个参数同时引用的话，还可以通过调用CSV文件参数来实现，这里我以请求自己的Blog地址为例。</p>
+<p>因为Blog地址是https的，所以我们先要进行代理的设置。</p>
+<p>####1、Jmeter进行Https请求</p>
+<p>首先我们要在线程组下添加一个录像控制器</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94mw1dnmpj31mo0u0dk8.jpg" alt></p>
+<p>再添加一个信息头管理器</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94mvz0a8ij31ee0u0af4.jpg" alt></p>
+<p>其中信息头管理器需要添加一个参数</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94n3fargmj31wk0hitab.jpg" alt></p>
+<p>之后在Test Plan下添加一个HTTP代理服务器</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94mvwd6ltj31e40u0tc5.jpg" alt></p>
+<p>然后设置你的端口号，你可以自己定义，这里我设置的是8081</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94n9horo0j31rq0u0dht.jpg" alt></p>
+<p>填写好之后，点击start后出现如下界面会生成一个Jmeter的安全证书文件</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94ndkj513j31d20u0431.jpg" alt></p>
+<p>之后在Jmeter的菜单选项OPtions–&gt;SSL Manager中导入安全证书，如下图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94nexffigj31wc0qijw7.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94neyc5gfj30ya0kugnv.jpg" alt></p>
+<p>导入完成后选择后还需要在HTTP请求那里将请求协议改为https，端口号需要改为443，然后就可以运行了，运行后我们在察看结果中看已经可以成功发送请求了。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94nhb21y7j31cy0qeaaz.jpg" alt></p>
+<h4 id="2、CSV文件参数使用"><a href="#2、CSV文件参数使用" class="headerlink" title="2、CSV文件参数使用"></a>2、CSV文件参数使用</h4><p>首先需要添加一个CSV文件，下面是我的一个简单的参数设置</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94nn9ih6ij31ve0lqwfa.jpg" alt></p>
+<p>里面的参数主要是我Blog的几个页面的path地址。然后保存为.csv文件存放到你指定的路径下。之后回到Jmeter里，在HTTP请求里添加一个CSV Data Set Config，具体位置是：Add–&gt;Config Element–&gt;CSV Data Set Config，点击。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94nqq9cv1j31j40u0q8d.jpg" alt></p>
+<p>进入到CSV Data Set Config里进行配置</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94nwpxsr2j31ek0jwjsl.jpg" alt></p>
+<p>在Filename里找到你存放的CSV文件，之后再变量名那里填入你所要引入的变量名，在之后回到HTTP请求设置端</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94nwoo280j31dg0hkmy2.jpg" alt></p>
+<p>修改Path的地址，填入之前的csv设置的变量名，然后就可以运行请求了，以上是将参数放到CSV文件中进行请求的方法。</p>
+<h2 id="Mysql数据库压测实操"><a href="#Mysql数据库压测实操" class="headerlink" title="Mysql数据库压测实操"></a>Mysql数据库压测实操</h2><h4 id="1、准备工作"><a href="#1、准备工作" class="headerlink" title="1、准备工作"></a>1、准备工作</h4><p>首先需要在线程组下添加JDBC请求</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94ohmymlbj31wo0tqtd1.jpg" alt></p>
+<p>之后还需要在测试计划的设置中添加jar包，作用是用来与数据库进行连接，这是<a href="https://dev.mysql.com/downloads/connector/j/" target="_blank" rel="noopener"><strong>jar包下载地址</strong></a>，对应版本也可以去官网下载。</p>
+<p>在JDBC Request选中状态下右键，Add–&gt;Config Element–&gt;JDBC COnnection Configuration</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94pngrmazj31hq0u0q70.jpg" alt></p>
+<p>####2、压测配置</p>
+<p>之后进入配置界面，进行Mysql的一些连接项的配置。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94pqqhrj9j31px0u0jts.jpg" alt></p>
+<p>核心配置说明：</p>
+<ul>
+<li>Variable Name for created pool：这里是连接池的名称，这里的名称要与JDBC Request中的Variable Name Bound to Pool里面的名称要保持一致，否则后续会导致连接失败。</li>
+<li>Max Number of connections : 最大连接数</li>
+<li>MAX wait :最大等待时间</li>
+<li>Auto Commit: 是否自动提交事务</li>
+<li>DataBase URL : 数据库连接地址 jdbc:mysql://127.0.0.1:3306/guest</li>
+<li>JDBC Driver Class : 数据库驱动，选择对应的mysql</li>
+<li>username:数据库用户名</li>
+<li>password:数据库密码</li>
+</ul>
+<p>之后回到JDBC Request进行配置，加入Mysql的查询语句</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94q9988lxj312u0u0jsv.jpg" alt></p>
+<p>几个参数的说明：</p>
+<ul>
+<li>variable name of pool declared in JDBC connection configuration：与Variable Name for created pool名称保持一致（和配置文件同名）</li>
+<li>Query Type：查询类型</li>
+<li>parameter values：参数值</li>
+<li>parameter types ：参数类型</li>
+<li>variable names ：sql执行结果变量名</li>
+<li>result variable names：所有结果当做一个对象存储</li>
+<li>query timeouts ：查询超时时间</li>
+<li>handle results ：处理结果集</li>
+</ul>
+<p>最后在线程组下添加一个<strong>Debug Sampler</strong>，Add–&gt;Sampler–&gt;Debug Sampler，默认配置不动即可。</p>
+<p>待所有配置好之后就可以执行了，然后我们在察看结果树查看结果。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94qg29qkjj31dk0n6q4h.jpg" alt></p>
+<p>可以观察到请求成功了，并且可以看到返回的Mysql数据。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
