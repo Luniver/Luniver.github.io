@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jmeter学习笔记[1] - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="
+常用的性能测试工具对比目前常用的性能测试工具对比：​    1、loadrunner：性能稳定，压测结果及细粒度大，可自定义脚本进行压测，但软件太过于繁重，功能过于繁多。
+​    2、apach,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Jmeter学习笔记[1]</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Jmeter学习笔记[1]</h1>
+        <div class="stuff">
+            <span>十一月 19, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Jmeter/" rel="tag">Jmeter</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93pqwap0tj30ic07tq31.jpg" alt></p>
+<h2 id="常用的性能测试工具对比"><a href="#常用的性能测试工具对比" class="headerlink" title="常用的性能测试工具对比"></a>常用的性能测试工具对比</h2><h3 id="目前常用的性能测试工具对比："><a href="#目前常用的性能测试工具对比：" class="headerlink" title="目前常用的性能测试工具对比："></a>目前常用的性能测试工具对比：</h3><p>​    <strong>1、loadrunner：</strong>性能稳定，压测结果及细粒度大，可自定义脚本进行压测，但软件太过于繁重，功能过于繁多。</p>
+<p>​    <strong>2、apache ab(单接口压测最方便)：</strong>模拟多线程并发请求,ab命令对发出负载的计算机要求很低，既不会占用很多CPU，        也不会占用太多的内存，但却会给目标服务器造成巨大的负载, 简单DDOS攻击等。</p>
+<p>​    <strong>3、webbench：</strong>webbench首先fork出多个子进程，每个子进程都循环做web访问测试。子进程把访问的结果通过pipe告        诉父进程，父进程做最终的统计结果。</p>
+<h2 id="Jmeter基本介绍和使用场景"><a href="#Jmeter基本介绍和使用场景" class="headerlink" title="Jmeter基本介绍和使用场景"></a>Jmeter基本介绍和使用场景</h2><h3 id="简介："><a href="#简介：" class="headerlink" title="简介："></a>简介：</h3><p>Apache JMeter是Apache组织开发的基于Java的压力测试工具。用于对软件做压力测试，它最初被设计用于Web应用测试，但后来扩展到其他测试领域。 它可以用于测试静态和动态资源，例如静态文件、Java 小服务程序、CGI 脚本、Java 对象、数据库、FTP 服务器， 等等。JMeter 可以用于对服务器、网络或对象模拟巨大的负载，来自不同压力类别下测试它们的强度和分析整体性能。</p>
+<h4 id="1、压测不同的协议及应用"><a href="#1、压测不同的协议及应用" class="headerlink" title="1、压测不同的协议及应用"></a>1、压测不同的协议及应用</h4><p>​            1) Web - HTTP, HTTPS (Java, NodeJS, PHP, ASP.NET, …)<br>​            2) SOAP / REST Webservices<br>​            3) FTP<br>​            4) Database via JDBC<br>​            5) LDAP  轻量目录访问协议<br>​            6) Message-oriented middleware (MOM) via JMS<br>​            7) Mail - SMTP(S), POP3(S) and IMAP(S)<br>​            8) TCP等等</p>
+<h4 id="2、使用场景及优点"><a href="#2、使用场景及优点" class="headerlink" title="2、使用场景及优点"></a>2、使用场景及优点</h4><p>​            1）功能测试<br>​            2）压力测试<br>​            3）分布式压力测试<br>​            4）纯java开发<br>​            5）上手容易，高性能<br>​            4）提供测试数据分析<br>​            5）各种报表数据图形展示</p>
+<h2 id="Jmeter的安装"><a href="#Jmeter的安装" class="headerlink" title="Jmeter的安装"></a>Jmeter的安装</h2><p>1、需要安装JDK8。或者JDK9,JDK10</p>
+<p>2、快速下载<br>         windows： <a href="http://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.zip" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.zip</a><br>         mac或者linux：<a href="http://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.tgz" target="_blank" rel="noopener">http://mirrors.tuna.tsinghua.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.tgz</a></p>
+<p>3、文档地址：<a href="http://jmeter.apache.org/usermanual/get-started.html" target="_blank" rel="noopener">http://jmeter.apache.org/usermanual/get-started.html</a></p>
+<p>4、建议安装JDK环境，虽然JRE也可以，但是压测https需要JDK里面的 keytool工具。</p>
+<h2 id="Jmeter目录文件"><a href="#Jmeter目录文件" class="headerlink" title="Jmeter目录文件"></a>Jmeter目录文件</h2><p>Jmeter下载后其实是一个文件夹，以下是文件夹里包含几个主要内容：</p>
+<p><strong>bin文件夹：</strong>是核心的可执行文件，包含配置。其中有几个常用的文件如下：</p>
+<ul>
+<li>jmeter.bat：Windows下的Jmeter启动文件。</li>
+<li>jmeter：Mac或者Linux下的Jmeter启动文件。</li>
+<li>jmeter-server：Mac或者Linux分布式压测机器上使用的启动文件。</li>
+<li>jmeter-server.bat：Windows分布式压测机器上使用的启动文件。</li>
+<li>jmeter.properties: 核心配置文件。</li>
+</ul>
+<p><strong>extras文件夹：</strong>插件拓展的包，一些Jmeter使用的插件包放在这里面。</p>
+<p><strong>lib文件夹：</strong>核心的依赖包。</p>
+<ul>
+<li>ext:核心包</li>
+<li>junit:单元测试包</li>
+</ul>
+<h2 id="Jmeter基本组件和实操"><a href="#Jmeter基本组件和实操" class="headerlink" title="Jmeter基本组件和实操"></a>Jmeter基本组件和实操</h2><h3 id="1、添加线程组（Thread-Group）"><a href="#1、添加线程组（Thread-Group）" class="headerlink" title="1、添加线程组（Thread Group）"></a>1、添加线程组（Thread Group）</h3><p>首先，打开Jmeter的GUI界面，找到Test Plan，右键，选择Add–&gt;Threads–&gt;Thread Group，点击。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93qk1bsijj31cm0u0gok.jpg" alt></p>
+<p>成功添加上一个线程组后，观察一下里面的配置信息。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93qp7cx4aj31wq0r0q4e.jpg" alt></p>
+<p>在Name那里可以为线程组进行自定义命名，下面的Thread Properties中设置线程组的具体配置：</p>
+<ul>
+<li>Number of Threads （users）：表示虚拟的用户数，一个用户占用一个线程或进程。</li>
+<li>Ramp-Up Period（in seconds）：全部线程的启动时长，比如上图中的10个线程，5秒，则表示要在5秒内这10个线程都要启动完成，每秒启动2个线程。</li>
+<li>Loop Count：每个线程循环发送的次数，前面有一个Forever选项，勾选后线程会一直无限循环启动，比如这里的数值填5，线程组的值为100，则会启动500个线程。</li>
+</ul>
+<h3 id="2、添加HTTP请求"><a href="#2、添加HTTP请求" class="headerlink" title="2、添加HTTP请求"></a>2、添加HTTP请求</h3><p>选中刚刚添加的线程组，右键，点击Add–&gt;Sampler（采样器）–&gt;HTTP Request，点击。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93r2svp2jj31n30u0wir.jpg" alt></p>
+<p>在刚刚的线程组下我们添加另一个HTTP的请求，下面是HTTP请求的基本配置。这里我选择请求的网页是之前用Django搭的一个发布会管理系统，先把服务在本地启动起来。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93rdegizlj31vm0ec40d.jpg" alt></p>
+<p>接下打开浏览器，输入127.0.0.1：8000/index查看发布会管理登录界面</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93rgp4sizj31w80fc3z9.jpg" alt></p>
+<p>我们看服务已经启动了，接下来可以配置Jmeter中的HTTP请求来对网页进行请求了，下面看一下HTTP请求的配置。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93rkzdy0sj31c50u0taz.jpg" alt></p>
+<p>在Name那里可以更改HTTP请求的名称，下面看一下几个主要的配置项：</p>
+<ul>
+<li>Protocol：协议填写，一般不填写默认的是Http</li>
+<li>Server Name or IP：这里填写所要请求目标服务器名称的或P地址</li>
+<li>Port Number：端口号</li>
+<li>Method：请求的方法，有Get，Post……等选项。当使用POST发送请求时需要勾选下面的Use multipart/from-data选项，默认情况下是不选中的状态</li>
+<li>Path：服务器url</li>
+</ul>
+<h3 id="3、查看测试结果"><a href="#3、查看测试结果" class="headerlink" title="3、查看测试结果"></a>3、查看测试结果</h3><p>需要添加一个结果查看器来查看请求是否成功，这里选用的就是察看结果数工具</p>
+<p>选中线程组，右键，Add–&gt;Listener–&gt;View Results Tree，点击。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93sb0086sj31c50u0jvt.jpg" alt></p>
+<p>接下来点击start按钮，就是上面工具栏中的“绿色播放键”，点击后选中察看结果树界面</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93sw07iwtj31cj0u00wr.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g93t0oqcafj31v60rq44m.jpg" alt></p>
+<p>在此界面，可以看到发送的所有请求，之前设置的线程组是10，循环2次，在5秒内执行完成。所以这里一共有20个请求，每秒发送4个请求。这里我们看发送的20个请求全部成功。然后我们观察网页服务器也有请求的相关信息。这就是一个简单的HTTP请求测试。</p>
+<h3 id="4、Jmeter断言的基本使用"><a href="#4、Jmeter断言的基本使用" class="headerlink" title="4、Jmeter断言的基本使用"></a>4、Jmeter断言的基本使用</h3><p><strong>断言的增加：</strong>Add–&gt;Assertions–&gt;Respose Assertion，点击。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94auomat0j31cs0u0ae6.jpg" alt></p>
+<p>然后选中响应断言，查看相关配置。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94autqgu6j31dg0u042u.jpg" alt></p>
+<ul>
+<li><p>Apply to（应用范围）：</p>
+<ul>
+<li>Main sample only：一般默认情况下选择这个。仅当前父取样器进行断言，一般一个请求触发一个。</li>
+<li>Sub-samples only：这个比较少用到。指一个请求可以触发多个断言。</li>
+</ul>
+</li>
+<li><p>Field to Test（测试响应的字段）：</p>
+<ul>
+<li><p>Text Response：响应的文本，即响应的数据，比如json等文本。</p>
+</li>
+<li><p>Response Code：http的响应状态码，比如200，302，404这些。</p>
+</li>
+<li><p>Response Message：http响应代码对应的响应信息，例如：OK, Found。</p>
+</li>
+<li><p>Response Header：响应头</p>
+<p>一般常用的几个响应字段如上所示，也是用的比较多的。</p>
+</li>
+</ul>
+</li>
+<li><p>Patterns to Test（模式匹配规则）：</p>
+<ul>
+<li>Contains：包含，信息包含在内即成功。</li>
+<li>Matches：匹配，响应内容完全匹配，不区分大小写。</li>
+<li>Equals：相等，响应内容完全匹配，区分大小写。</li>
+<li>Substring：也是包括的意思，只不过不匹配正则表达式。</li>
+<li>Not：取反，如果勾选前断言响应结果为TRUE，勾选后的响应结果就位FALSE。</li>
+</ul>
+</li>
+<li><p>Custom failure message（断言匹配失败的提示信息）：当断言响应为FALSE的时候，打印相关的报错信息。</p>
+</li>
+</ul>
+<p><strong>断言结果监听器：</strong>选中线层组，Add–&gt;Listener–&gt;Assertion Results</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94blavwflj31cn0u0gqa.jpg" alt></p>
+<p>里面的内容是sampler采样器的名称，当断言失败，在断言结果界面会打印失败信息，察看结果树任务结果颜色标红(通过结果数里面双击不通过的记录，可以看到错误信息)，如下图所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94bossmivj31do0u0mzp.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94bopz8xrj31cn0u0mze.jpg" alt></p>
+<p>每个sample下面可以加单独的结果树，然后同时加多个断言，最外层可以加个结果树进行汇总。</p>
+<h3 id="5、压测结果的聚合报告"><a href="#5、压测结果的聚合报告" class="headerlink" title="5、压测结果的聚合报告"></a>5、压测结果的聚合报告</h3><p>前面介绍了如何发送请求并且验证请求的成功以及请求失败后的断言，这里介绍评判性能的一个工具：聚合报告。</p>
+<p><strong>聚合报告的添加：</strong>选中线程组，Add–&gt;Listener–&gt;Aggregate Report，点击。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94buyvb6bj31cw0u0aek.jpg" alt></p>
+<p>然后我们线程数改为100，执行时间为5s，循环2次，然后分析聚合报告的信息。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94cfxhm8ij31c60u040q.jpg" alt></p>
+<p>先来看一下上方表栏的意思：</p>
+<ul>
+<li>Label：sampler的名称</li>
+<li>Samples：一共发出去多少个请求，这里我们线程数是100，循环2次，所以是200个</li>
+<li>Average：平均响应时间（单位是ms）</li>
+<li>Median：中位数，也就是 50％ 用户的响应时间</li>
+<li>90%Line：90%用户响应不会超过该时间</li>
+<li>95%Line：95%用户响应不会超过该时间</li>
+<li>99%Line：99%用户响应不会超过该时间</li>
+<li>MIn：最小响应时间</li>
+<li>Max：最大响应时间</li>
+<li>Error%：错误的请求的数量/请求的总数</li>
+<li>Throughput：吞吐量——默认情况下表示每秒完成的请求数（Request per Second) 可类比为qps</li>
+<li>Received KB/sec：每秒接收的数据量</li>
+<li>Sent KB/sec：每秒发送的数据量</li>
+</ul>
+<p>然后我们分析我们的数据，一共发送了200个请求，平均响应时间为11ms，50%用户响应时间为7ms，90%用户响应不会超过23ms，95%用户响应不会超过36ms，99%用户响应不会超过60ms，最小响应时间为4ms，最大响应时间为84ms，错误请求为0，吞吐量约为每秒完成39条的请求，每秒接收的数据量为54.21KB，每秒发送的数据量为9.49KB。以上数据会给你一个性能参考，一般我们主要关注的有几个地方：错误请求率，吞吐量，平均响应时间，最大响应时间。一般要测这个系统的极限的话就在相同事件内将发送的请求数增加，随着请求数的增加，系统的吞吐量也会随之增加，当你增加请求数后发现吞吐量没有再继续增加反而有一点点回退，那就达到这个系统的极限值了，这个时候就可以去记录下数据方便后续对性能的分析。</p>
+<h3 id="6、Jmx脚本的分析"><a href="#6、Jmx脚本的分析" class="headerlink" title="6、Jmx脚本的分析"></a>6、Jmx脚本的分析</h3><p>当我们想保留这个配置的时候，可以save到本地，Jmeter文件为.jmx文件，这里我放在了sublime里来看，你也可以直接用vim编辑器来打开。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94dgqx5wtj314p0u0450.jpg" alt></p>
+<p>上面可以看到关于测试计划，线程组的一些配置，以及HTTP请求的配置，可以在这里直接进行配置。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94dqdj29ij314g0u00y7.jpg" alt></p>
+<p>上面是有关响应断言以及察看结果数的配置，可以直接在代码里寄信配置。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94drhuq2aj318205awfa.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g94dri6qqjj319004gdfz.jpg" alt></p>
+<p>上面是断言结果以及聚合报告的一些配置。</p>
+<h3 id="7、小结一下"><a href="#7、小结一下" class="headerlink" title="7、小结一下"></a>7、小结一下</h3><p>以上介绍了jmeter的一些基本控件的使用以及文件代码的配置，在实际工作中，jmeter都是通过命令行而非GUI界面来启动，是为了更好的利用资源进行测试，所以看懂并配置代码时很重要的。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
