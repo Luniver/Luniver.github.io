@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jmeter学习笔记[3] - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="Jmeter分布式压测基础知识分布式压测介绍看一下分布式压测与普通压测的区别：
+
+普通压测：单台机器对目标机器进行施加压力测试，但是其产生的压力比较小，受控因素比较多，包括设备的硬件性能，CPU，网,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Jmeter学习笔记[3]</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Jmeter学习笔记[3]</h1>
+        <div class="stuff">
+            <span>十一月 21, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Jmeter/" rel="tag">Jmeter</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="Jmeter分布式压测基础知识"><a href="#Jmeter分布式压测基础知识" class="headerlink" title="Jmeter分布式压测基础知识"></a>Jmeter分布式压测基础知识</h2><h3 id="分布式压测介绍"><a href="#分布式压测介绍" class="headerlink" title="分布式压测介绍"></a>分布式压测介绍</h3><p>看一下分布式压测与普通压测的区别：</p>
+<ul>
+<li>普通压测：单台机器对目标机器进行施加压力测试，但是其产生的压力比较小，受控因素比较多，包括设备的硬件性能，CPU，网络，IO等。</li>
+<li>分布式压测：利用多台机器想目标机器进行压力测试，这种压测方式可模拟的用户数更多，量级也更大。</li>
+</ul>
+<h3 id="Jmeter分布式压测原理"><a href="#Jmeter分布式压测原理" class="headerlink" title="Jmeter分布式压测原理"></a>Jmeter分布式压测原理</h3><p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95oztfopfj31c90u0gpa.jpg" alt></p>
+<p>把总控制器叫做master，其他产生压力的机器叫做server，上图创建了三个server，当使用Jmeter进行分布式压测的时候，有三个过程：</p>
+<p><strong>1.</strong>Jmeter会通过master把压测脚本发送到每个server上。</p>
+<p><strong>2.</strong>每个server端在执行脚本的时候不用启动Jmeter，只需要把jmeter-server打开就可以了。</p>
+<p><strong>3.</strong>执行结束后，server端会把压测数据传回到master，然后master汇总输入报告。</p>
+<p>这就是分布式压测的整个过程，另外有几个地方需要配置一下：</p>
+<p><strong>server端：</strong>在server机器上，找到bin目录下的jmeter.properties文件，打开文件进行修改，找到server.rmi.ssl.disable字段，默认设置是false的，这里改成true，然后再找到remote_hosts设置，给IP后面添加一个端口。然后将server端的IP和端口记录下来，server端就设置完了。</p>
+<p><strong>master端：</strong>在master机器上，同样式在jmeter.properties文件里进行设置，server.rmi.ssl.disable同样设置为true，只不过在remote_hosts设置中，里面的IP填写的是server端几台机器的IP地址及端口号，这样才可以控制。</p>
+<p>另外，必须要保证master和server需要处于同一网段下才能进行控制。</p>
+<h3 id="Jmeter非GUI界面参数讲解"><a href="#Jmeter非GUI界面参数讲解" class="headerlink" title="Jmeter非GUI界面参数讲解"></a>Jmeter非GUI界面参数讲解</h3><p>官方配置文件地址 <a href="http://jmeter.apache.org/usermanual/get-started.html" target="_blank" rel="noopener">http://jmeter.apache.org/usermanual/get-started.html</a></p>
+<p>非GUI界面，压测参数讲解：<br>             -h 帮助<br>            -n 非GUI模式<br>            -t 指定要运行的 JMeter 测试脚本文件<br>            -l 记录结果的文件 每次运行之前，(要确保之前没有运行过,即xxx.jtl不存在，不然报错)<br>            -r Jmter.properties文件中指定的所有远程服务器<br>            -e 在脚本运行结束后生成html报告<br>            -o 用于存放html报告的目录（目录要为空，不然报错）</p>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmeter -n -t /Users/jack/Desktop/linux_users_api.jmx -l result.jtl -e -o /Users/jack/Desktop/person/jmeter/temp</span><br></pre></td></tr></table></figure>
+
+<p>如果你的sever端是Linux，你的master端是Mac的话，推荐一个比较好用的传输文件的软件：FileZila（亲测好用）</p>
+<p>上述示例到出了result.jtl文件，这个可以通过jmeter新建线程组–&gt;summary report–&gt;浏览到这个文件来查看，生成的html文件可以通过浏览器来查看。</p>
+<h3 id="关于Jmeter测试的性能优化"><a href="#关于Jmeter测试的性能优化" class="headerlink" title="关于Jmeter测试的性能优化"></a>关于Jmeter测试的性能优化</h3><p>讲解Jmeter压测减少资源使用的一些建议，即压测结果更准确</p>
+<p>1、使用非GUI模式：jmeter -n -t test.jmx -l result.jtl</p>
+<p>2、少使用Listener， 如果使用-l参数，它们都可以被删除或禁用。</p>
+<p>3、在加载测试期间不要使用“查看结果树”或“查看结果”表监听器，只能在脚本阶段使用它们来调试脚本。</p>
+<p>4、包含控制器在这里没有帮助，因为它将文件中的所有测试元素添加到测试计划中。</p>
+<p>5、不要使用功能模式,使用CSV输出而不是XML</p>
+<p>6、只保存你需要的数据,尽可能少地使用断言</p>
+<p>7、如果测试需要大量数据，可以提前准备好测试数据放到数据文件中，以CSV Read方式读取。</p>
+<p>8、用内网压测，减少其他带宽影响压测结果</p>
+<p>9、如果压测大流量，尽量用多几个节点以非GUI模式向服务器施压</p>
+<h2 id="Jmeter压测生成多维度图形化HTML测试报告"><a href="#Jmeter压测生成多维度图形化HTML测试报告" class="headerlink" title="Jmeter压测生成多维度图形化HTML测试报告"></a>Jmeter压测生成多维度图形化HTML测试报告</h2><p>在进行压测指令的时候，使用-e -o指令可以输出html报告。</p>
+<h3 id="Jmeter输出HTML报告里面Dashboard的核心指标"><a href="#Jmeter输出HTML报告里面Dashboard的核心指标" class="headerlink" title="Jmeter输出HTML报告里面Dashboard的核心指标"></a>Jmeter输出HTML报告里面Dashboard的核心指标</h3><p>输的HTML有两栏，分别是Dashboard和Charts，我们先来看看Dashboard界面</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95rgybgx6j31lf0u0gms.jpg" alt></p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95rh1qn8gj31kc0u0dh0.jpg" alt></p>
+<p>上图是模拟了一个Mysql数据库压测的HTML输出报告。</p>
+<h4 id="1、Test-and-Report-informations"><a href="#1、Test-and-Report-informations" class="headerlink" title="1、Test and Report informations"></a>1、Test and Report informations</h4><p>Source file：jtl文件名</p>
+<p>Start Time ：压测开始时间</p>
+<p>End Time ：压测结束时间</p>
+<p>Filter for display：过滤器</p>
+<h4 id="2、APDEX-Application-Performance-Index"><a href="#2、APDEX-Application-Performance-Index" class="headerlink" title="2、APDEX(Application Performance Index)"></a>2、APDEX(Application Performance Index)</h4><p>apdex：应用程序性能指标,范围在0~1之间，1表示达到所有用户均满意</p>
+<p>T(Toleration threshold)：可接受阀值</p>
+<p>F(Frustration threshold)：失败阀值</p>
+<p>Lable：sampler采样器名称    </p>
+<h4 id="3、Request-Summary"><a href="#3、Request-Summary" class="headerlink" title="3、Request Summary"></a>3、Request Summary</h4><p>OK：成功率</p>
+<p>KO：失败率</p>
+<h4 id="4、Statistics"><a href="#4、Statistics" class="headerlink" title="4、Statistics"></a>4、Statistics</h4><p>Lable：sampler采样器名称</p>
+<p>samples：请求总数，并发数*循环次数</p>
+<p>KO：失败次数</p>
+<p>Error%：失败率</p>
+<p>Average：平均响应时间</p>
+<p>Min：最小响应时间</p>
+<p>Max：最大响应时间</p>
+<p>90th pct：90%的用户响应时间不会超过这个值（关注这个就可以了）</p>
+<p>95th pct：95%的用户响应时间不会超过这个值</p>
+<p>99th pct:：99%的用户响应时间不会超过这个值 (存在极端值)</p>
+<p>throughtput：Request per Second吞吐量 qps</p>
+<p>received：每秒从服务器接收的数据量</p>
+<p>send：每秒发送的数据量</p>
+<h4 id="5、Error"><a href="#5、Error" class="headerlink" title="5、Error"></a>5、Error</h4><p>Type of error：错误类型</p>
+<p>Number of errors：错误数</p>
+<p>% in errors：占错误总数的百分比</p>
+<p>% in all samples：占总线程数的百分比</p>
+<h4 id="6、Top-5-errors-by-sampler"><a href="#6、Top-5-errors-by-sampler" class="headerlink" title="6、Top 5 errors by sampler"></a>6、Top 5 errors by sampler</h4><p>错误数排名前五的错误会列举出来</p>
+<h3 id="Jmeter输出HTML报告里面Charts的报表讲解"><a href="#Jmeter输出HTML报告里面Charts的报表讲解" class="headerlink" title="Jmeter输出HTML报告里面Charts的报表讲解"></a>Jmeter输出HTML报告里面Charts的报表讲解</h3><h4 id="1、Over-Time（随着时间的变化）"><a href="#1、Over-Time（随着时间的变化）" class="headerlink" title="1、Over Time（随着时间的变化）"></a>1、Over Time（随着时间的变化）</h4><p><strong>Response Times Over Time：</strong>响应时间的变化趋势</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95s4yz1i2j317c0u0mxz.jpg" alt></p>
+<p><strong>Response Time Percentiles Over Time (successful responses)：</strong>最大，最小，平均，用户响应时间分布</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95s5nz7rqj317y0u0755.jpg" alt></p>
+<p><strong>Active Threads Over Time：</strong>并发用户数趋势</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95s67n39cj317y0u03z3.jpg" alt></p>
+<p><strong>Bytes Throughput Over Time：</strong>每秒接收和请求字节数变化，蓝色表示发送，黄色表示接受</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95s7qm8ulj31890u0gme.jpg" alt></p>
+<p><strong>Latencies Over Time：</strong>平均响应延时趋势</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95s85khfcj31750u0wf8.jpg" alt></p>
+<p><strong>Connect Time Over Time：</strong>连接耗时趋势</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95s93ukc1j317p0u0dgi.jpg" alt></p>
+<h3 id="2、Throughput"><a href="#2、Throughput" class="headerlink" title="2、Throughput"></a>2、Throughput</h3><p><strong>Hits Per Second (excluding embedded resources)：</strong>每秒点击次数</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95sd2t3a9j317q0u0mxz.jpg" alt></p>
+<p><strong>Codes Per Second (excluding embedded resources)：</strong>每秒状态码数量</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95sgdro81j317s0u00tk.jpg" alt></p>
+<p><strong>Transactions Per Second：</strong>即TPS，每秒事务数</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95shkl5jjj31850u0dgn.jpg" alt></p>
+<p><strong>Response Time Vs Request：</strong>响应时间和请求数对比</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95si7c9yqj317p0u0aah.jpg" alt></p>
+<p><strong>Latency Vs Request：</strong>延迟时间和请求数对比</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95sio2lw2j31an0u0dg8.jpg" alt></p>
+<h3 id="3、Response-Times"><a href="#3、Response-Times" class="headerlink" title="3、Response Times"></a>3、Response Times</h3><p><strong>Response Time Percentiles：</strong>响应时间百分比</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95smgak8rj317m0u0gm3.jpg" alt></p>
+<p><strong>Response Time Overview：</strong>响应时间概述</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95smzfl1aj31fs0skmxm.jpg" alt></p>
+<p><strong>Time Vs Threads：</strong>活跃线程数和响应时间</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95snei5hgj317e0u0jt6.jpg" alt></p>
+<p><strong>Response Time Distribution：</strong>响应时间分布图</p>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95snr2srtj31g00sk0t2.jpg" alt></p>
+<h2 id="系统架构图以及需要考量的问题"><a href="#系统架构图以及需要考量的问题" class="headerlink" title="系统架构图以及需要考量的问题"></a>系统架构图以及需要考量的问题</h2><p><img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g95svbxledj31430u012d.jpg" alt></p>
+<p>以上就是这次jmeter的学习笔记。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
