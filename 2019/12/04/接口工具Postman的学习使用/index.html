@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>接口工具Postman的学习使用 - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="
+接口工具Postman的使用Postman使用场景：1.开发接口的时候需要快速的调用接口，以便调试。
+2.测试的时候需要非常方便的调用接口，通过不同的参数去测试接口的输出。
+3.接口调用可以保存下,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">接口工具Postman的学习使用</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">接口工具Postman的学习使用</h1>
+        <div class="stuff">
+            <span>十二月 04, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Postman/" rel="tag">Postman</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9knyfyhctj31rw0ok75j.jpg" alt></p>
+<h2 id="接口工具Postman的使用"><a href="#接口工具Postman的使用" class="headerlink" title="接口工具Postman的使用"></a>接口工具Postman的使用</h2><h3 id="Postman使用场景："><a href="#Postman使用场景：" class="headerlink" title="Postman使用场景："></a>Postman使用场景：</h3><p>1.开发接口的时候需要快速的调用接口，以便调试。</p>
+<p>2.测试的时候需要非常方便的调用接口，通过不同的参数去测试接口的输出。</p>
+<p>3.接口调用可以保存下来进行反复的运行。</p>
+<p>4.在运行过程中增加接口断言。</p>
+<h3 id="Postman的相关资料："><a href="#Postman的相关资料：" class="headerlink" title="Postman的相关资料："></a>Postman的相关资料：</h3><p>官网及下载地址：<a href="https://www.getpostman.com/" target="_blank" rel="noopener">https://www.getpostman.com/</a></p>
+<p>官方文档：<a href="https://learning.getpostman.com/docs/postman/launching-postman/introduction/" target="_blank" rel="noopener">https://learning.getpostman.com/docs/postman/launching-postman/introduction/</a></p>
+<h3 id="Postman安装"><a href="#Postman安装" class="headerlink" title="Postman安装"></a>Postman安装</h3><p>首先进入到官网的下载页面（下图是Mac的下载页面）选择适合于自己系统的版本进行安装，注意核对自己的电脑是x32还是x64的。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kobet7gaj31je0u0mzd.jpg" alt></p>
+<p>下载完成后，双击下载后的文件进行安装。安装过程会花1~2分钟左右。安装完成后会在桌面看到Postman的图标，点击便可打开Postman，首次打开的时候，界面如下所示：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kohhv36uj31bw0u0gmm.jpg" alt></p>
+<p>这里我们不需要进行账号的注册，直接使用免费版的就可以了，点击上图中的“Skip siging in and take me straight to the app”就可以进入到Postman了。</p>
+<h3 id="Postman发送第一个API请求"><a href="#Postman发送第一个API请求" class="headerlink" title="Postman发送第一个API请求"></a>Postman发送第一个API请求</h3><p>这里我们以v2ex里的API为测试对象。</p>
+<p>文档：<a href="https://www.v2ex.com/p/7v9TEc53" target="_blank" rel="noopener">https://www.v2ex.com/p/7v9TEc53</a></p>
+<p>测试对象(API地址)：<a href="https://www.v2ex.com/api/topics/hot.json" target="_blank" rel="noopener">https://www.v2ex.com/api/topics/hot.json</a></p>
+<p>首先在浏览器中进入v2ex的API文档地址，找到我们要请求的接口信息，如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kpmxakodj31440baglr.jpg" alt></p>
+<p>给出了接口API的地址以及请求的方法，接着我们打开Postman，输入请求地址，选择请求方法为GET，如下图：</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kprl595sj31jv0u0wgc.jpg" alt></p>
+<p>输入信息后点击Send，进行模拟请求。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kr0rr6dij31c50u0goy.jpg" alt></p>
+<p>请求是否成功参考上图中红框内的内容，Status表示请求返回的状态码（常见的有200，404，302，其余的状态码自行查阅HTTP知识）Time表示请求的时间，单位是ms，Size表示大小；如果请求成功状态码这里显示200 OK，意味着我们的请求成功，成功后会返回一个json格式的数据回来，这就是我们请求到的这个接口API数据，如果你是测试人员，则可以核对其返回的数据是否与需求一致，是否有数据的信息缺失等等；接下来我们看看还可以获取到哪些信息。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kq21mc3jj315u0b074s.jpg" alt></p>
+<p>这里我们可以选择不同的文件格式。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kqqmpmnaj31h40osmya.jpg" alt></p>
+<p>这里再看到Header栏，可以看到Content-Type默认的是application/json，所以Response默认返回的是json格式。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kqsbynq7j31ho0m8dgq.jpg" alt></p>
+<p>选择Cookies栏，可以看到请求此API接口所使用的Cookie值。</p>
+<h3 id="Postman增加断言"><a href="#Postman增加断言" class="headerlink" title="Postman增加断言"></a>Postman增加断言</h3><p>断言：这里简而言之，就是预期与实际结果的判断</p>
+<ul>
+<li>预期结果 == 实际结果 ：用例通过，写入测试报告中</li>
+<li>预期结果 != 实际结果：用例不通过，写入测试报告中</li>
+</ul>
+<p>这里我们还是用请求第一个API的请求为例子来设置断言，这里我们先设置两个断言目标：</p>
+<p>1.请求返回的状态码是200。</p>
+<p>2.请求返回的内容是10条。</p>
+<p>这里就需要用到Postman的<strong>Test功能</strong>，官方文档点<a href="https://learning.getpostman.com/docs/postman/scripts/test-scripts/" target="_blank" rel="noopener"><strong>这里</strong></a>具体的功能入口如下图所示</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9krsqow3kj31bz0u0whm.jpg" alt></p>
+<p>进入Test功能后，会弹出一个默认的编辑器，这里的断言功能是用JavaScript进行编写的，在编辑器右边有常用的一些断言demo，可以点击使用。</p>
+<p>这里我们用JS写一些代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个断言 验证返回值是否为200</span></span><br><span class="line">pm.test(<span class="string">"Status code is 200"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.response.to.have.status(<span class="number">200</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//将返回值转换为json对象</span></span><br><span class="line"><span class="keyword">var</span> res = <span class="built_in">JSON</span>.parse(responseBody);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(res.length);</span><br><span class="line"><span class="comment">//第二个断言，验证返回内容是否为10条</span></span><br><span class="line">tests[<span class="string">"response's number is 10"</span>] = res.length === <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ks7rzr5mj31yo0sedi0.jpg" alt></p>
+<p>写完之后，我们点击Send，请求成功后下方（Body，Header，Cookies那一栏）会多出一个Test Results，点击Test Results，可以看到我们断言的结果，如下图 </p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ksbsqscoj31hw0huq39.jpg" alt></p>
+<p>我们看到第一个检查点（断言）PASS成功了，第二个检查点失败，说明我们请求的接口返回给我们的内容条数并不是10条，这里回去看了一下Body中的接口内容，数了一下，只有9条，这样就发现了一个接口的BUG，断言是灵活的，这里我们将前面的检查条数从10条改为9条。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ksh9z5hfj31ha0h875e.jpg" alt></p>
+<p>我们再点击send进行请求，查看Test Result</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kskc5ce7j31hw0didg1.jpg" alt></p>
+<p>OK，请求成功了，这里v2ex用来学习的项目API有时候返回的内容条数会有差别，视具体情况而定。当然了关于断言或者其他的API使用学习可以参考Postman官方文档中的<a href="https://learning.getpostman.com/docs/postman/scripts/postman-sandbox-api-reference/" target="_blank" rel="noopener">sandbox API reference</a>，里面有一个chai是针对与断言编写的一种语法，有兴趣可以去看看。</p>
+<h3 id="Postman发送Post请求"><a href="#Postman发送Post请求" class="headerlink" title="Postman发送Post请求"></a>Postman发送Post请求</h3><p>上面介绍了GET的请求方法，这里再来介绍一下如何进行Post请求，这里在网上找了一个可供测试的网站作为测试对象</p>
+<p>测试网站地址：<a href="http://www.testingedu.com.cn:8000/Home/user/login.html" target="_blank" rel="noopener">http://www.testingedu.com.cn:8000/Home/user/login.html</a></p>
+<p>登录这个测试网站，可以看到有提供给你免注册的账号</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ku6kr6hfj30ja0l8q3d.jpg" style="zoom:50%;">
+
+<p>这里如何获取到请求的url呢？使用Chrome内置的检查工具无法完成我的需求，这里就需要使用抓包工具了，我这里使用的是Charles，输入测试账号，密码，验证码后，点击登录。Charles中可以看到刚刚我们进行的请求，如下图</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kufjci4sj31af0u0gqk.jpg" style="zoom:80%;">
+
+<p>上图中的URL即我们要请求的地址，Response Code显示200显示访问没问题，下面的Method中指出了这是一个POST请求，Content-Type为text/html，如果用postman进行请求默认Response是html格式的，接下来再看看Contents栏如下图</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kuj8y5wuj31bt0u0dk8.jpg" style="zoom:80%;">
+
+<p>在Contents中可以看到请求的username（即账号），password（即密码），verify_code（即验证码）的一些数据。因为这是测试网站，所以没有做加密，像百度，京东这种网站不可能通过简单的抓包就能获得账号密码的。获取到这些信息后我们回到Postman。</p>
+<p>首先先填入刚刚获取到的URL</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kuxe6mslj31r80l8ac1.jpg" alt></p>
+<p>然后转到Header栏，填写Header的相关信息，例如Content-Type</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kuyfrlgzj31qw0jgtar.jpg" alt></p>
+<p>之后再转到Body栏，填写请求的Body值，例如username，password，verify_code</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kuzcxvy5j31qo0l4tb1.jpg" alt></p>
+<p>填写的信息都是我们刚刚从Charles中抓包获取到的，然后我们点击Send进行请求。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9kv23ped7j31ac0kyta3.jpg" style="zoom:80%;">
+
+<p>我们可以看到，请求状态码返回200成功，并且Response的数据返回是以html格式返回的，符合我们的请求设置，至此，已完成了整个POST的请求。</p>
+<h3 id="Postman关于获取Cookies的设置与获取"><a href="#Postman关于获取Cookies的设置与获取" class="headerlink" title="Postman关于获取Cookies的设置与获取"></a>Postman关于获取Cookies的设置与获取</h3><p>####获取Postman Echo的demo文件</p>
+<p>这里我们参考Postman官网给出的demo来进行演示，首先，去官网获取demo，其demo地址点击<a href="https://docs.postman-echo.com/?version=latest" target="_blank" rel="noopener">这里</a>，如下图。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9loabrwgtj31jf0u0770.jpg" alt></p>
+<p>然后点击“Run in Postman”就可以加入到postman的collection中去，这是一些请求的demo，可以方便参考学习，下图示加入到postman中的示例</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9loadjrbzj31ty0p0wgr.jpg" alt></p>
+<h4 id="对demo给出的cookie-demo进行分析"><a href="#对demo给出的cookie-demo进行分析" class="headerlink" title="对demo给出的cookie demo进行分析"></a>对demo给出的cookie demo进行分析</h4><p>找到Postman Echo下的Cookie Manipulation文件夹，打开文件夹，会发现下面有三个demo示例，分别是Set Cookies，Get Cookies，Delete Cookies，也就是设置Cookies，获取Cookies以及删除Cookies。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lofeoh4wj30g806st8m.jpg" style="zoom:50%;">
+
+<h5 id="1-Set-Cookies"><a href="#1-Set-Cookies" class="headerlink" title="1.Set Cookies"></a>1.Set Cookies</h5><p>首先点开Set Cookies的demo，这里官方设置了两个Cookies值，分别是foo1和foo2，其value分别是bar1和bar2。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9loxfwr44j31dc0bc0sx.jpg" alt></p>
+<p>然后我们看一下官方这里写的断言，如下图。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9loz36g7vj31d20tmq5h.jpg" alt></p>
+<p>代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pm.test(<span class="string">'response should be 200 or 302'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.expect(pm.response.code).to.be.oneOf([<span class="number">200</span>, <span class="number">302</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第一条断言是关于请求成功与否的断言，这里设置了返回的状态码是200或者是302，则断言成功。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pm.test(<span class="string">'the "foo1" cookie has correct value'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.expect(pm.cookies.toObject()).to.have.property(<span class="string">'foo1'</span>, <span class="string">'bar1'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">pm.test(<span class="string">'the "foo2" cookie has correct value'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.expect(pm.cookies.toObject()).to.have.property(<span class="string">'foo2'</span>, <span class="string">'bar2'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第二，三条断言是关于设置的Cookie值得正确与否的校验。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pm.test(<span class="string">'response body should be valid'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pm.response.code === <span class="number">200</span>) &#123;</span><br><span class="line">        pm.response.to.have.jsonBody(<span class="string">'cookies.foo1'</span>, <span class="string">'bar1'</span>)</span><br><span class="line">            .and.have.jsonBody(<span class="string">'cookies.foo2'</span>, <span class="string">'bar2'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        pm.response.to.have.body(<span class="string">'Found. Redirecting to /cookies'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第四条断言对请求的Body值做判断的校验。</p>
+<h4 id="2-Get-Cookies"><a href="#2-Get-Cookies" class="headerlink" title="2.Get Cookies"></a>2.Get Cookies</h4><p>当我们完成了上一步的Cookies的设定，这里就可以进行Cookies的获取，我们继续来看demo，如下图。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lpbzxulwj31d40tm40t.jpg" alt></p>
+<p>GET的URL写明是请求获取这个页面的Cookies值，我们来分析一下断言的信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pm.test(<span class="string">"response is ok"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.response.to.have.status(<span class="number">200</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第一条断言是验证返回的状态码为200，意味着请求成功。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pm.test(<span class="string">'the "foo1" cookie has correct value'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.expect(pm.cookies.toObject()).to.have.property(<span class="string">'foo1'</span>, <span class="string">'bar1'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">pm.test(<span class="string">'the "foo2" cookie has correct value'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.expect(pm.cookies.toObject()).to.have.property(<span class="string">'foo2'</span>, <span class="string">'bar2'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第二，三条断言校验了返回的Cookies值得正确与否。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pm.test(<span class="string">'response body should be valid'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.response.to.have.jsonBody(<span class="string">'cookies.foo1'</span>, <span class="string">'bar1'</span>);</span><br><span class="line">    pm.response.to.have.jsonBody(<span class="string">'cookies.foo2'</span>, <span class="string">'bar2'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第四条断言针对响应的Body值做一个判断的校验。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(pm.cookies.get(<span class="string">'foo1'</span>));</span><br></pre></td></tr></table></figure>
+
+<p>这条命令是为了在Postman的控制台中打印请求到Cookies“foo1”的值。Postman的控制台在顶部菜单栏找到View–&gt;Show Postman Console就可以打开了。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lpiysymzj319m0b241j.jpg" style="zoom:80%;">
+
+<p>查看到log如我们刚刚打印出了“foo1”的值。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lpixwcqdj31de0ay3yv.jpg" style="zoom:80%;">
+
+<p>以上断言就可以针对我们需求所要获取的Cookies进行断言判断，在结合控制台进行分析，对于我们涉及到Cookies的测试有很大的帮助。</p>
+<h4 id="3-Delete-Cookies"><a href="#3-Delete-Cookies" class="headerlink" title="3.Delete Cookies"></a>3.Delete Cookies</h4><p>其实Delete Cookies和Set Cookies的过程类似，只不过在Set Cookies里设置的Cookies是有值的，在Delete Cookies中我们将之前设置的Cookies赋一次空值就做到了删除原来的Cookies。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lps2zhd3j31cm0igwez.jpg" style="zoom:50%;">
+
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lps4f980j317v0u0dij.jpg" style="zoom:80%;">
+
+<p>上面的断言设置也与之前的Set Cookies类似，这里不做多赘述，将检测值设为空值。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>以上demo针对于Cookies的设置，获取以及删除操作进行了说明，具体使用还是要根据所要测试的接口文档进行设计。</p>
+<h3 id="Postman鉴权"><a href="#Postman鉴权" class="headerlink" title="Postman鉴权"></a>Postman鉴权</h3><p>在进行一些接口测试的时候，有些接口是需要我们输入用户名和密码登录后才可以去测试接口API的，所以说就涉及到了一个鉴权的机制，比如现在测试一个URL为<a href="https://postman-echo.com/basic-auth" target="_blank" rel="noopener">https://postman-echo.com/basic-auth</a> 的接口，我们通过浏览器去访问的时候会弹出输入用户名及密码的弹窗，如下图</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lua17b3dj30og0cedfr.jpg" style="zoom:50%;">
+
+<p>提示我们必须要输入用户名及密码，这个时候Postman里面提供了一个Authorization来解决这个问题，接下来我们看Postman中的配置，这里我们在Postman Echo中可以找到相关的demo。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lud5t7n6j30g608k0sy.jpg" style="zoom:50%;">
+
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9luf8ik2vj31ci0na763.jpg" alt></p>
+<p>在Basic Auth中可以输入你需要登录的用户名及密码，这里的Username是postman，Password是password。输入后点击Send进行请求的发送，看一下请求的结果如下图</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9luidirksj31ck0bodgd.jpg" alt></p>
+<p>返回的Json数据告诉我们authenticated打印一个true，意味着用户名和密码验证成功了，状态码返回200，意味着我们登录也成功了，这是一个简单的鉴权请求的过程。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lum62rvfj31dc0rgjt5.jpg" alt></p>
+<p>在鉴权配置中，找到TYPE栏，点击会弹出一个下拉菜单，刚刚演示的是一个最基本的鉴权请求，下面还有其余的鉴权类型可供选择，现在用的比较多的是类型一般是OAuth2.0，使用该类型的话会对你的用户名和密码做一些加密，使得不会被别人抓包轻易抓到，但是这种鉴权的请求配置需要的信息就会更多一些，需要获取到对应Token值等。</p>
+<h3 id="Postman变量"><a href="#Postman变量" class="headerlink" title="Postman变量"></a>Postman变量</h3><p>我们在Postman中进行一些请求时会需要不断的更改请求的一些信息，这个时候就引入了一个变量的用法。这里介绍Postman中环境变量以及全局变量的配置。这里我们还是以v2ex里的API为例子。</p>
+<p>文档地址：<a href="https://www.v2ex.com/p/7v9TEc53" target="_blank" rel="noopener">https://www.v2ex.com/p/7v9TEc53</a></p>
+<p>测试URL：<a href="https://www.v2ex.com/api/nodes/show.json?name=python" target="_blank" rel="noopener">https://www.v2ex.com/api/nodes/show.json?name=python</a></p>
+<p>这个URL用来获得指定节点的名字，简介，URL以及头像图片的地址</p>
+<h4 id="1-环境变量设置"><a href="#1-环境变量设置" class="headerlink" title="1.环境变量设置"></a>1.环境变量设置</h4><p>新建一个请求，将测试的URL复制进去后，点击Send。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lv7dwmvdj31gu0u0wie.jpg" alt></p>
+<p>这里name的值直接写的是python，请求成功后返回的json字符串中的name对应我们的请求里的name，这里我们将name的值用一个变量来代替，变量的demo：，这里我们name的值设为变量名。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lvbe1au9j31e00hm3zv.jpg" style="zoom:80%;">
+
+<p>这里变量名标红出错，报错信息提示我们无论是全局变量的还是环境变量，变量信息还没有定义，这里我们点击Environment旁边的“眼睛”可以打开添加。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lw3mf0xmj313s0p8dgw.jpg" style="zoom:50%;">
+
+<p>这里我们添加两个环境变量，这里的test_name要与接口URL那里的保持一致，test_environment里的test_name值是python，test_environment2里面的test_name值是java。</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lw5z7rmoj312s0bqjs0.jpg" style="zoom:50%;"><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lw60qyg9j312u0bs750.jpg" alt></p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lw60qyg9j312u0bs750.jpg" style="zoom:50%;">
+
+<p>填写好信息，点击add就添加成功了。之后我们在之前Environment里选择我们添加的环境变量。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lw9z9m7gj31d80hojsl.jpg" style="zoom:50%;">
+
+<p>选择环境变量后，可以观察到之前设置的由红色变成了橘色，鼠标移到我们设定的变量那里会弹出变量可以被使用的信息以及变量相关的配置信息，然后我们点击Send发送请求。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lwgfijpcj31dc0lmdhb.jpg" style="zoom:50%;">
+
+<p>如上图可以看到请求成功，并且name字段和我们变量里配置的字段保持一致，接下来我们切换环境变量，再进行一次请求，再观察请求结果。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lwggietij31cs0l40tz.jpg" style="zoom:50%;">
+
+<p>这里我们可以看到，返回的name字段已经变成了java。这就是环境变量一个简单的配置及使用，这在接口测试中针对不同环境的测试提供了一种便利。</p>
+<h4 id="2-全局变量"><a href="#2-全局变量" class="headerlink" title="2.全局变量"></a>2.全局变量</h4><p>全局变量的设置与环境变量的设置大同小异，还是点击刚刚的“眼睛”</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lwr58oiaj31420lumxw.jpg" style="zoom:50%;">
+
+<p>看到下面有一个Globals字样，点击右面的Edit。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lwspta4bj313i0sit9z.jpg" style="zoom:50%;">
+
+<p>这里的步骤和设置环境变量是一样的，填写完变量名以及与之对应的变量值，点击save就OK了，回到主页面。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lwuipgw7j31dk0hsgmv.jpg" style="zoom:50%;">
+
+<p>这时候我们在没有选择环境的情况下看到也变成了橘色，说明刚刚设置的全局变量已经生效了，我们将鼠标移到test_name字样上，显示的信息已经确认为是全局变量了，并且显示了全局变量的配置信息，设置好之后点击Send，观察响应结果json字段与我们变量里设置的保持一致，响应状态码200没问题，请求也成功了。</p>
+<h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><p>以上是关于Postman中全局变量与环境变量的使用，具体使用的话要结合具体的测试环境来选择配置，进而提高你的测试效率。</p>
+<h3 id="创建collection并使用数据驱动测试"><a href="#创建collection并使用数据驱动测试" class="headerlink" title="创建collection并使用数据驱动测试"></a>创建collection并使用数据驱动测试</h3><p>这里先做一个简单的collection测试。</p>
+<p>####1.创建一个简单的collection测试</p>
+<p>这里我们接着使用配置变量中的demo，首先需要设置断言检测点，这里先贴上断言的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//断言检测状态码为200</span></span><br><span class="line">pm.test(<span class="string">"Status code is 200"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pm.response.to.have.status(<span class="number">200</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//将responseBody获取的数据赋给jsonData</span></span><br><span class="line"><span class="keyword">var</span> jsonData = <span class="built_in">JSON</span>.parse(responseBody);</span><br><span class="line"><span class="comment">//获取环境变量里配置的test_name</span></span><br><span class="line"><span class="keyword">var</span> test_name = pm.environment.get(<span class="string">"test_name"</span>);</span><br><span class="line"><span class="comment">//在控制行中打印出test_name</span></span><br><span class="line"><span class="built_in">console</span>.log(test_name);</span><br><span class="line"><span class="comment">//检测Response中的name值与环境变量里设置的name值是否一致</span></span><br><span class="line">pm.test(<span class="string">"返回值name与参数中的name相等"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    jsonData.value === test_name;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>点击Send后，可以请求成功，断言也PASS，接下来我们将其保存为collection。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lyx7mocgj31ci0ng3zy.jpg" style="zoom:50%;">
+
+<p>点击Save选项，弹出储存信息设置</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lyxz6rh6j30pw07iq2w.jpg" style="zoom:50%;">
+
+<p>这里的Request name和Request description可以自己定义，并且Request description支持Markdown语言语法。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lyzchpo5j30pm046q2s.jpg" style="zoom:50%;">
+
+<p>之前没有创建过collection，这里可以新建一个collection，命名为v2ex。创建完成之后点击左边的collections，就可以找到我们创建的collection了。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lz5bqkmsj313g0jsq3x.jpg" style="zoom:50%;">
+
+<p>找到我们创建的collection，选中后可以看见右面有一个小三角，点击小三角后会弹出这个collection得具体信息，这里我们点击Run，进入到collection Runner，下面依次来介绍collection Runner的配置信息</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lzakmaewj31ds0u0myn.jpg" style="zoom:50%;">
+
+<ul>
+<li>Environment：配置的环境变量选择，这里选择对应的环境变量。</li>
+<li>Iterations：设置执行的循环次数，这里默认为1。</li>
+<li>Delay：每次循环次数执行间隔，默认为0ms，可以自行设置。</li>
+<li>Log Response：这里指响应的log，这里我们选默认的For all requests，打印所有的log。</li>
+<li>Data：可以从外部选择测试数据文件进行驱动，这也后面我们要介绍的数据驱动。</li>
+</ul>
+<p>这里环境变量选择我们配置好的，点击Run。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lzmriwxyj31w00fy0th.jpg" style="zoom:50%;">
+
+<p>这里显示测试结果中，2个断言都通过，测试通过。</p>
+<h4 id="2-数据驱动运行collection"><a href="#2-数据驱动运行collection" class="headerlink" title="2.数据驱动运行collection"></a>2.数据驱动运行collection</h4><p>之前的介绍中，在collection Runner中可以引用外部的测试数据，这里我们新建一个json的测试数据文件test_data.json。</p>
+<p>在文件中写入测试数据</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123;<span class="attr">"test_name"</span>:<span class="string">"python"</span>&#125;,&#123;<span class="attr">"test_name"</span>:<span class="string">"java"</span>&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>之后我们进入到collection Runner中，选择Select File，找到存放测试数据的文件。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9lzxt0h3pj31e00u0abx.jpg" style="zoom:50%;">
+
+<p>当我们引入测试数据文件后，Environment默认就可以不选择环境了，因为Postman会自动读取文件中的测试数据来覆盖环境变量里设置的数据，因为有两个数据，这里我们循环2次，将2个数据都打印出来，在Data File Type里，因为测试数据文件保存的格式是json，所以这里选择application/json，点击旁边的preview，可以看到我们的数据。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9m02xcqpij312o0a4dfq.jpg" style="zoom:50%;">
+
+<p>设置好之后就可以点击Run进行运行了，下图为运行结果。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9m048ku0fj31w20nwdh0.jpg" style="zoom:50%;">
+
+<p>这里看到两次运行都成功了，所有断言判断都通过，这就是运用测试数据来驱动测试的一个简单的校demo。</p>
+<h3 id="Postman在命令行运行并且生成测试报告"><a href="#Postman在命令行运行并且生成测试报告" class="headerlink" title="Postman在命令行运行并且生成测试报告"></a>Postman在命令行运行并且生成测试报告</h3><p>我们这里之前v2ex的demo为示范，先在Postman中将collection进行导出</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9m2kxouauj313q0l4wf0.jpg" style="zoom:50%;">
+
+<p>导出设置如上图所示，导出格式设置为Collection v2</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9m2n322vmj30q00bsaad.jpg" style="zoom:50%;">
+
+<p>导出的文件路径与之前设置的test_data保持在一个路径中。这里要在命令行中运行的话需要安装一个newman的插件，具体安装命令如下图：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g newman</span><br></pre></td></tr></table></figure>
+
+<p>这里npm命令需要自行安装Node.js进行配置，由于国内无法翻墙，所以可以使用cnpm命令，需要安装一个淘宝镜像，这里不再过多赘述，请自行查阅资料。安装成功后会有如下信息弹出。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9m2z4kojbj30t003qq4g.jpg" style="zoom:50%;">
+
+<p>这里可以执行如下命令来进行命令行测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newman run v2ex.postman_collection.json -d test_data.json -r html,json</span><br></pre></td></tr></table></figure>
+
+<p>其中v2ex.postman_collection.json是刚刚从Postman导出的文件，test_data是测试数据，-d命令指定了所需要的测试数据，-r命令用来指定需要导出的报告格式。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9m34cqh7fj30rm0gmtex.jpg" style="zoom:50%;">
+
+<p>执行结束后命令行也会有相关的结果反馈。接下来查看我们导出的测试报告（这里以html报告为例）</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9m3i72150j31sy0quaau.jpg" style="zoom:50%;">
+
+<p>命令行执行的方式在后期测试可以集成在CI工具（例如Jenkins）中去，以自动化构建的形式进行自动化测试，构建更为长期稳定的客观监控。</p>
+<h4 id="Postman导出Code"><a href="#Postman导出Code" class="headerlink" title="Postman导出Code"></a>Postman导出Code</h4><p>Postman可以将配置好的请求以代码的方式导出，这种方法在某种程度上是比较便利的，在配置栏的最右边找到“Code”字样，然后点击。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9mzfzbun1j31d20c20tr.jpg" style="zoom:50%;">
+
+<p>点击后可以预览生成的代码，以及可以选择想要的语言进行导出。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9mzh71iqmj312m0rqgmy.jpg" style="zoom:50%;">
+
+<p>这里我们选择Python，当然你也可以选择其它的语言；选择完成后点击右上角的“Copy to Clipboard”就可以复制代码了，下面是之前的demo导出的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">"https://www.v2ex.com/api/nodes/show.json"</span></span><br><span class="line">querystring = &#123;<span class="string">"name"</span>:<span class="string">"java"</span>&#125;</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">'cache-control'</span>: <span class="string">"no-cache"</span>,</span><br><span class="line">    <span class="string">'Postman-Token'</span>: <span class="string">"d474add6-7fae-40ea-bab3-96bcd74607ed"</span></span><br><span class="line">    &#125;</span><br><span class="line">response = requests.request(<span class="string">"GET"</span>, url, headers=headers, params=querystring)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p>这里我们对代码做一些小小的改动，引入Python里自带的unittest来对这个接口进行一个测试，改动后的代码如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestV2ex</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">test_java_api</span><span class="params">(self)</span>:</span>	</span><br><span class="line"></span><br><span class="line">		url = <span class="string">"https://www.v2ex.com/api/nodes/show.json"</span></span><br><span class="line">		<span class="keyword">for</span> test_name <span class="keyword">in</span> [<span class="string">'python'</span>,<span class="string">'java'</span>,<span class="string">'php'</span>]:</span><br><span class="line">			response = requests.request(<span class="string">"GET"</span>, url, params=&#123;<span class="string">"name"</span>:test_name&#125;).json()</span><br><span class="line">			self.assertEqual(response[<span class="string">"name"</span>], test_name)</span><br><span class="line">			print(response)</span><br><span class="line">			print(test_name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	unittest.main()</span><br></pre></td></tr></table></figure>
+
+<p>上述代码采用了数据驱动遍历的方式，分别对test_name为python，java，php进行接口请求，最后对每一次获取到的response以及test_name进行一个输出，接着我们运行代码，下图为运行结果：</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9mzsxlx1mj31te0hu41c.jpg" style="zoom:50%;">
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>综上所述，对Postman接口工具有了一个简单的使用介绍，主要介绍了Postman的安装、发送GET和POST请求、如何使用断言对请求结果做一个检查、关于Cookies的设置和获取、鉴权的使用、变量的配置、如何创建一个简单的collection并使用数据驱动进行测试、在命令行中使用Postman测试并生成测试报告以及导出Code等内容。</p>
+<p>在学习使用的过程中，Postman是一款比较强大的接口测试工具，当然还有一些高级用法这里就不再过多介绍了，需大家自己探索学习。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
