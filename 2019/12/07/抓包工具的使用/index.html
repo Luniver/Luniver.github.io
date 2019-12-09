@@ -1,0 +1,436 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>抓包工具的使用 - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="抓包工具是拦截查看网络数据包内容的软件。抓包工具由于其可以对数据通信过程中的所有lP报文实施捕获并进行逐层拆包分析，一直是传统固网数通维护工作中罐常用的故障排查工具，目前普及度高且应用的比较多的抓包,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">抓包工具的使用</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">抓包工具的使用</h1>
+        <div class="stuff">
+            <span>十二月 07, 2019</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7/" rel="tag">抓包工具</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>抓包工具是拦截查看网络数据包内容的软件。抓包工具由于其可以对数据通信过程中的所有lP报文实施捕获并进行逐层拆包分析，一直是传统固网数通维护工作中罐常用的故障排查工具，目前普及度高且应用的比较多的抓包工具有Fiddler、Charles、WireShark，本文主要介绍Charles、Fiddler两款抓包工具下的主要使用方法。</p>
+<h2 id="Charles的使用"><a href="#Charles的使用" class="headerlink" title="Charles的使用"></a>Charles的使用</h2><h3 id="Charles介绍"><a href="#Charles介绍" class="headerlink" title="Charles介绍"></a>Charles介绍</h3><p>Charles 是 macOS 平台下最好用的抓包分析工具之一，提供GUI界面，界面简洁，基本功能包括HTTP、HTTPS请求抓包，支持请求参数的修改，最新的 Charles 4 还支持 HTTP/2。当然，也同时支持Windows 和 Linux， 下面是官方的下载地址：<a href="https://www.charlesproxy.com/download" target="_blank" rel="noopener">https://www.charlesproxy.com/download</a> ，这款软件不是免费的，下面教大家如何进行破解。</p>
+<p>Charles的主要功能：</p>
+<p>1.支持SSL代理。可以截取分析SSL的请求。</p>
+<p>2.支持流量控制。可以模拟慢速网络以及等待时间（latency）较长的请求。</p>
+<p>3.支持AJAX调试。可以自动将json或xml数据格式化，方便查看。</p>
+<p>4.支持AMF调试。可以将Flash Remoting 或 Flex Remoting信息格式化，方便查看。</p>
+<p>5.支持重发网络请求，方便后端调试。</p>
+<p>6.支持修改网络请求参数。</p>
+<p>7.支持网络请求的截获并动态修改。</p>
+<p>8.检查HTML，CSS和RSS内容是否符合W3C标准。</p>
+<h3 id="Charles的安装及破解"><a href="#Charles的安装及破解" class="headerlink" title="Charles的安装及破解"></a>Charles的安装及破解</h3><p>首先从官网下载对应自己系统的安装包，双击解压后进行安装，然后对其进行解压，解压文件的下载地址：<a href="https://pan.baidu.com/s/1jgjPLas_-r6S-mzWri0mOw" target="_blank" rel="noopener">https://pan.baidu.com/s/1jgjPLas_-r6S-mzWri0mOw</a> ，解压密码6tva，下载后替换掉原来文件夹里的charles.jar，安装破解过程还是非常容易的。</p>
+<ul>
+<li>Mac下的地址：/Applications/Charles.app/Contents/Java/charles.jar</li>
+<li>Windows下的地址：C:\Program Files\Charles\lib\charles.jar</li>
+</ul>
+<h3 id="Charles的操作"><a href="#Charles的操作" class="headerlink" title="Charles的操作"></a>Charles的操作</h3><h4 id="1-设置系统代理"><a href="#1-设置系统代理" class="headerlink" title="1.设置系统代理"></a>1.设置系统代理</h4><p>首先，需要给青花瓷设置系统代理的权限，选择菜单中的“Proxy”–&gt;“mac OS Proxy”，将Charles设置成系统代理。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qaivwvsfj31400kg107.jpg" style="zoom:50%;">
+
+<ul>
+<li>将Charles 设置系统代理的权限后，就会看到源源不断的接口请求在主界面显示出来。</li>
+<li>需要注意的是，Chrome 和 Firefox 浏览器默认并不使用系统的代理服务器设置，而 Charles 是通过将自己设置成代理服务器来完成封包截取的，所以在默认情况下无法截取 Chrome 和 Firefox 浏览器的网络通讯内容。如果你需要截取的话，在 Chrome 中设置成使用系统的代理服务器设置即可，或者直接将代理服务器设置成 127.0.0.1:8888 也可达到相同效果。</li>
+</ul>
+<h4 id="2-设置端口"><a href="#2-设置端口" class="headerlink" title="2.设置端口"></a>2.设置端口</h4><p>其次就是配置端口，选择菜单中的“Proxy”–&gt;“Proxy Setting”进行端口配置。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qbl5mc0hj317e0j0wl1.jpg" style="zoom:50%;">
+
+<p>一般默认设置端口都是8888，也可以根据自己的需求进行配置。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qbls8djuj30wa0oywf0.jpg" style="zoom:50%;">
+
+<h4 id="3-主界面介绍"><a href="#3-主界面介绍" class="headerlink" title="3.主界面介绍"></a>3.主界面介绍</h4><p>界面有两种查看方式，一种是以接口类型进行查看，另外一种是按照时间的顺序进行查看，如下图所示：</p>
+<ul>
+<li>以接口类型展示</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qae8xdujj31bz0u0dio.jpg" alt></p>
+<ul>
+<li>以时间顺序进行展示</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qaf5aqgej31cr0u076x.jpg" alt></p>
+<h4 id="3-设置过滤方式"><a href="#3-设置过滤方式" class="headerlink" title="3.设置过滤方式"></a>3.设置过滤方式</h4><ul>
+<li>第一种过滤方式：这种过滤方式也是最常用的过滤方式，比较简单快捷，就是直接在过滤器里输入关键字进行过滤。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qavtzpo9j31cr0u0gou.jpg" alt></p>
+<ul>
+<li>第二种过滤方式：选中想要过滤的网站，运用Focus进行过滤。</li>
+</ul>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qb43lin5j31ti0qsgu1.jpg" style="zoom:50%;">
+
+<ul>
+<li>第三种过滤方式：选择菜单中的“Proxy”–&gt;“SSL Proxying Settings”–&gt;“Add”。</li>
+</ul>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qbc37zxgj31820j6dnm.jpg" style="zoom:50%;">
+
+<p>在设置中加入你所想要过滤的网站，以及配置其对应的端口。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qbf6qgh8j30wc0l2dga.jpg" style="zoom:50%;">
+
+<p>以上设置全是在电脑上抓包的设置，主要是通过设置代理后，就可以抓取电脑请求的数据包。 移动端开发需要抓取手机端数据包，需要一些额外的设置。</p>
+<h4 id="4-Charles设置代理，手机进行抓包"><a href="#4-Charles设置代理，手机进行抓包" class="headerlink" title="4.Charles设置代理，手机进行抓包"></a>4.Charles设置代理，手机进行抓包</h4><p>1.这一步的目的是为了让移动设备连接到Charles，通过Charles来抓取移动设备中的所有请求，首先需要在Proxy Setting中对其端口进行设置，这里可以参考下面的端口设置图片样例，并且需要勾选“Enable transparent HTTP proxying”，这样就完成了Charles的设置。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qc5gz64oj30wa0oy750.jpg" style="zoom:50%;">
+
+<p>2.在手机端进行代理设置的话，首先需要获取到Charles运行所在电脑的IP地址，选择菜单中的“Help”–&gt;“Local IP Address”打开查看本机IP地址。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qfvogpd9j31320d00x4.jpg" style="zoom:50%;">
+
+<p>打开后可以查看到本机的IP地址。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qfxvpwg9j30qg08a3yv.jpg" style="zoom:50%;">
+
+<p>3.之后需要将手机与电脑保证连接在同一局域网下，并且给手机网络设置代理 ，这里以iphone为例进行说明，选择代理设置为手动模式，在服务器那里填入电脑上获取的本机IP，在连接端里填写Charles里设置的端口。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qg35k56aj30ku11277k.jpg" style="zoom:30%;">
+
+<p>4.代理设置完成后需要在Charles上进行证书的安装</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qg6u5urfj31hs0iyqbb.jpg" style="zoom:50%;">
+
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qg760y6lj31hu0isai9.jpg" style="zoom:50%;">
+
+<p>在安装证书的时候会弹出如下图所示的提示，提示手机端也需要安装一个证书，会展示出你手机的代理设置地址，并且提供了证书下载的一个地址chls.pro/ssl，下载安装证书完成后需要在手机的设置–&gt;关于本机–&gt;凭证信任设定中将信任证书的开关打开。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qg92643rj316w092gmd.jpg" style="zoom:50%;">
+
+<p>在设置完这个证书后，Charles就可以抓到手机里的Https的请求了，这里抓取了微信的结果作为示范，如下图所示：</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qgj55q3nj31cv0u042i.jpg" style="zoom:50%;">
+
+<p>可以看到已经可以成功在手机端进行信息抓取了。以上，Charles的抓包使用就介绍到这了，抓包工具还是要结合具体的业务需求具体使用，还有一些高级功能本文没有提到，有需要请自行查阅资料。</p>
+<h2 id="Fiddler的使用"><a href="#Fiddler的使用" class="headerlink" title="Fiddler的使用"></a>Fiddler的使用</h2><h3 id="Fiddler抓包原理"><a href="#Fiddler抓包原理" class="headerlink" title="Fiddler抓包原理"></a>Fiddler抓包原理</h3><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qhy6xs4oj30yc0fm0v0.jpg" style="zoom:50%;">
+
+<p>Fiddler是以代理Web服务器的形式进行工作的，默认使用的地址是127.0.0.1，默认端口号是8888，。每次当Fiddler退出的时候会自动注销，把占用的端口及地址释放出来，这样就不会影响到别的程序。但如果Fiddler没有进行正常退出的话，它是不会自动进行注销的，可能会引起一些网页或者端口的无法访问，解决办法就是重启一下Fiddler即可。</p>
+<h3 id="Fiddler的配置"><a href="#Fiddler的配置" class="headerlink" title="Fiddler的配置"></a>Fiddler的配置</h3><p>首先打开Fiddler后，选择菜单栏中的“Tool”–&gt;“Fiddler Options”–&gt;“HTTPS”。（配置完后需要重启Fiddler生效）</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qi38fglej30us0kgwfj.jpg" style="zoom:50%;">
+
+<p>选中”Decrpt HTTPS traffic”,   Fiddler就可以截获HTTPS请求，第一次会弹出证书安装提示，若没有弹出提示，勾选Actions-&gt; Trust Root Certificate；另外，如果你要监听的程序访问的 HTTPS 站点使用的是不可信的证书，则请接着把下面的 “Ignore servercertificate errors” 勾选上。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qi7kogu6j317o0iajsm.jpg" style="zoom:50%;">
+
+<p>证书安装提示：</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qi830futj30u40hemy5.jpg" style="zoom:50%;">
+
+<p>点击Yes，留意一下红框里面的内容，DO_NOT_TRUST_FiddlerRoot ，这个就是证书的名称。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qi8v58k6j30u40k8gn4.jpg" style="zoom:50%;">
+
+<p>然后点击确定，一直到出现下面的界面就证明Fiddler的证书安装成功了。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qi9qkqp5j30u60i4dgl.jpg" style="zoom:50%;">
+
+<p>查看一下证书，Actions—&gt;open windows certificate Manager 。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qinregk1j31560eyq43.jpg" style="zoom:50%;">
+
+<p>可以证书已经添加进去了，证书名称就是之前提醒大家留意的，【DO_NOT_TRUST_FiddlerRoot】</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qioby3frj30ye0cm75f.jpg" style="zoom:50%;">
+
+<h3 id="Fiddler手机端配置"><a href="#Fiddler手机端配置" class="headerlink" title="Fiddler手机端配置"></a>Fiddler手机端配置</h3><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qipckcu3j30ug0jqdh1.jpg" style="zoom:50%;">
+
+<p>Fiddler的监听端口默认是8888，你可以设置成任何你想要的端口，只要不引起冲突就好。勾选上 “Allow remote computersto connect” ，允许远程设备连接。</p>
+<p>为了减少干扰，可以去掉 “Act assystem proxy on startup” 。</p>
+<h4 id="手机客户端代理设置"><a href="#手机客户端代理设置" class="headerlink" title="手机客户端代理设置"></a>手机客户端代理设置</h4><p>首先需要查看电脑的IP地址，Windows下在命令行输入ipconfig，Mac OS或者Linux下输入ifconfig命令进行查看即可。</p>
+<p>确认好IP地址后，将Fiddler代理服务器的证书导到手机上才可以抓一些APP的包。（要保证手机和电脑处于同一局域网下）导入的过程：在手机上打开浏览器，在地址栏中输入代理服务器的IP地址以及端口号（即电脑的IP加fiddler的端口），会看到一个Fiddler 提供的页面，然后确定安装就好了。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qiycrfn8j30ue0h0wh8.jpg" style="zoom:50%;">
+
+<p>打开 WiFi 设置页面，选择要连接的 wifi ，并且长按，在弹出的对话框中，选择“修改网络”。在接下来弹出的对话框中，勾选“显示高级选项”。在接下来显示的页面中，点击“代理”，选择“手动”。代理服务器主机名设为 PC 的 IP ，代理服务器端口设为 Fiddler 上配置的端口 8888，点”保存”。iphone上的配置与Android基本上是一样的。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qj914sh8j30du0fy751.jpg" style="zoom:50%;">
+
+<p>至此所有的Fiddler配置已完成。</p>
+<h3 id="Fiddler主界面介绍"><a href="#Fiddler主界面介绍" class="headerlink" title="Fiddler主界面介绍"></a>Fiddler主界面介绍</h3><p>会话的概率：一次请求和一次响应就是一个会话。</p>
+<p>Fiddler主界面</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qjcjhvfuj317g0u00x8.jpg" style="zoom:50%;">
+
+<p>下面挑几个快捷功能进行解释，其他功能请自行探索</p>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qjdlirwhj318g01ujrn.jpg" alt></p>
+<p>快捷功能区：</p>
+<ol>
+<li>给会话添加备注信息。</li>
+<li>重新加载当前会话。</li>
+<li>删除会话选项。</li>
+<li>放行，和断点对应。</li>
+<li>响应模式。即是，当Fiddler拿到远程的Response后是缓存起来一次响应给客户端还是以stream的方式直接响应。</li>
+<li>解码。有些请求是被编码的，点击这个按钮后可以根据响应的编码格式自动进行解码。</li>
+<li>查找会话。</li>
+<li>保存会话。</li>
+<li>截屏。截屏后会以会话的方式返回一个截图。</li>
+</ol>
+<p>接下来看看会话列表</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qjn3nq6kj30ik0d8jsg.jpg" style="zoom:50%;">
+
+<ul>
+<li>【#】–HTTP Request的顺序，从1开始，按照页面加载请求的顺序递增。</li>
+<li>【Result】–HTTP响应的状态，可以参考这里。</li>
+<li>【Protocol】–请求使用的协议（如HTTP、HTTPS、FTP）</li>
+<li>【Host】–请求地址的域名</li>
+<li>【URL】–请求的服务器路径和文件名，也包括Get参数</li>
+<li>【BODY】–请求的大小，以Byte为单位</li>
+<li>【Caching】–请求的缓存过期时间或缓存控制Header值</li>
+<li>【Content-Type】–请求响应的类型</li>
+<li>【Process】–发出此请求的进程ID</li>
+<li>【Comments】–用户通过脚本或者右键菜单给此session增加的备注</li>
+<li>【Custom】–用户可通过脚本设置的自定义值</li>
+</ul>
+<h3 id="Fiddler功能介绍"><a href="#Fiddler功能介绍" class="headerlink" title="Fiddler功能介绍"></a>Fiddler功能介绍</h3><h4 id="1-Statistic"><a href="#1-Statistic" class="headerlink" title="1.Statistic"></a>1.Statistic</h4><p>一般常用来观察关于Http请求的性能和其他数据的分析，可以从中看到一些基本性能数据，如DNS的解析时间，建立TCP/IP连接的时间消耗等信息。</p>
+<h4 id="2-Inspector"><a href="#2-Inspector" class="headerlink" title="2.Inspector"></a>2.Inspector</h4><p>提供headers、textview、hexview,Raw等多种方式查看单条http请求的请求报文的信息,分为上下两个部分，上半部分是请求头部分，下半部分是响应头部分。对于每一部分，提供了多种不同格式查看每个请求和响应的内容。</p>
+<ul>
+<li>ImageVIew标签</li>
+</ul>
+<p>JPG 格式使用 ImageView 就可以看到图片,选择一条Content-Type是image/jpeg的回话,点击TextView</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9ql8re0evj30vy0bsaaq.jpg" style="zoom:50%;">
+
+<ul>
+<li>Text/View标签</li>
+</ul>
+<p>HTML/JS/CSS 使用 TextView 可以看到响应的内容。选择一条Content-Type是text/html的回话,点击TextView</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qla6pfkdj30vc0e0mxq.jpg" style="zoom:50%;">
+
+<ul>
+<li>Raw标签</li>
+</ul>
+<p>Raw标签可以查看响应报文和响应正文,但是不包含请求报文</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qlarez7rj30ue0aegm6.jpg" style="zoom:50%;">
+
+<ul>
+<li>Auth标签</li>
+</ul>
+<p>Auth则可以查看授权Proxy-Authorization 和 Authorization的相关信息</p>
+<ul>
+<li>Cookies标签</li>
+</ul>
+<p>Cookies标签可以看到请求的cookie和响应的set-cookie头信息。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qlo4548lj30wu0imdgz.jpg" style="zoom:50%;">
+
+<h4 id="3-Composer"><a href="#3-Composer" class="headerlink" title="3.Composer"></a>3.Composer</h4><p>Composer允许自定义请求发送服务器，可以手动创建一个新的请求，也可以在会话列表中，拖拽一个现有的请求。</p>
+<p>Parsed模式下你只需要提供简单的URL地址即可。（如下图，也可以在RequestBody定制一些属性，如模拟浏览器User-Agent）</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qmlcxd2dj31820ns0ul.jpg" style="zoom:50%;">
+
+<h4 id="4-断点请求-响应"><a href="#4-断点请求-响应" class="headerlink" title="4.断点请求/响应"></a>4.断点请求/响应</h4><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qmmtll3jj310k0a6aby.jpg" style="zoom:50%;">
+
+<p>如上图，箭头所指的位置时可以点击的。共三种状态：</p>
+<p>空白：不设置断点。</p>
+<p>箭头向上：表示断点请求。此时客户端的请求是无法直接到达目标服务器的，需要手动控制。</p>
+<p>箭头向下：表示断点响应。此时目标服务器的响应是无法直接到达客户端的，需要手动控制。</p>
+<p>还有一种打断点的方式</p>
+<p>在命令行中输入命令: </p>
+<p>bpu <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> （断点请求）</p>
+<p>bpuafter <a href="http://www.baidu.com（断点响应）" target="_blank" rel="noopener">www.baidu.com（断点响应）</a></p>
+<p>这种方法只会中断<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
+<h4 id="断点请求并修改"><a href="#断点请求并修改" class="headerlink" title="断点请求并修改"></a>断点请求并修改</h4><img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qmoobzuuj317s0jutcp.jpg" style="zoom:50%;">
+
+<p>如上图，操作步骤:</p>
+<ol>
+<li>设置断点请求，访问网页</li>
+<li>点击对应的会话</li>
+<li>查看请求报文信息</li>
+<li>修改请求内容</li>
+<li>完成断点，放行，把该请求发送给目标服务器。</li>
+</ol>
+<p>图中Break On Response表示把请求发给服务器，但是服务器的响应被fiddler拦截，此时可以修改响应内容（和断点响应类似）。</p>
+<h4 id="断点响应并修改"><a href="#断点响应并修改" class="headerlink" title="断点响应并修改"></a>断点响应并修改</h4><p>和断点请求操作类似，只是在响应区域修改报文信息即可。在断点响应时，请注意超时时间。</p>
+<h4 id="5-Filter过滤域名"><a href="#5-Filter过滤域名" class="headerlink" title="5.Filter过滤域名"></a>5.Filter过滤域名</h4><p>Fiddler抓包可以完成我们移动开发者的调试测试需求。但是多余的网页请求和手机的其他链接影响我们手机开发的需求。所以我们需要排除其他无用的包，只关注我们指定的域名的请求包。</p>
+<p>打开fiddler，找到Filters选项并点击打开。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qn6fueuej31880iqjst.jpg" style="zoom:50%;">
+
+<p>默认情况下，这个页面是灰色的，代表默认不过滤任何请求。现在我们勾选 Use Filters。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qn75m9tej30wm0bwt97.jpg" style="zoom:50%;">
+
+<p>一般常用的有三种过滤条件：</p>
+<p>1.域名过滤，只显示特定域名的记录</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qn8evgfjj30ww0b4wf1.jpg" style="zoom:50%;">
+
+<p>百度一级域名+二级域名的会话：*.baidu.com，设置完成后点击Action使其生效。</p>
+<p>2.类型过滤，一般对各种图片、CSS、JS这类的静态素材也不需要看的情况下，直接全部过滤掉</p>
+<p>.*.(bmp|css|js|gif|ico|jp?g|png|swf|woff) </p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qnbmwhk9j30sa0n6q43.jpg" style="zoom:50%;">
+
+<p>3.根据返回状态码，比如只想显示200的状态，其他的不显示。</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1g9qncbsm9ej30u20u0jt4.jpg" style="zoom:50%;">
+
+<h3 id="Fiddler内置命令"><a href="#Fiddler内置命令" class="headerlink" title="Fiddler内置命令"></a>Fiddler内置命令</h3><p><strong>“?”</strong></p>
+<p>问号后边跟一个字符串，Fiddler将所有会话中存在该字符串的匹配全部高亮显示（例：?baidu.com）所匹配的字符串是Protocol，Host，URL中的任何字符串。</p>
+<p><strong>“&gt;”和”&lt;”</strong></p>
+<p>大于号（&gt;）和小于号（&lt;）后加一个数值，表示高亮所有数值都大于或小于该数值的session。这个数值表示请求大小。</p>
+<p><strong>“=”</strong></p>
+<p>等于号（=）后边可以接Http状态码或Http方法，比如=200表示高亮所有请求正常响应的session，=POST表示高亮所有请求方法时POST方法的session。</p>
+<p><strong>“@”</strong></p>
+<p>@后边跟的是Host，表示会高亮此Host的session。</p>
+<p><strong>下边 bpafter、bps、bpv、bpm 和 bpu 用于设置断点，会话被中断下来之后，点击页面上方的 Go 按钮放行当前中断下来的会话，但新的匹配内容还是会被断下来，输入命令但不带参数表示取消之前设置的断点。</strong></p>
+<p><strong>“bpafter”</strong></p>
+<p>bpafter 后边跟一个字符串，表示中断所有包含该字符串的会话。</p>
+<p><strong>“bps”</strong></p>
+<p>bps 后边跟的是 HTTP 状态码，表示中断所有为该状态码的会话。</p>
+<p><strong>“bpv或bpm”</strong></p>
+<p>bpv 或 bpm 后边跟的是 HTTP 方法，表示中断所有为该方法的会话。</p>
+<p><strong>“bpu”</strong></p>
+<p>跟 bpafter 类似，区别：bpu 是在发起请求时中断，而 bpafter 是在收到响应后中断。</p>
+<p><strong>“cls或clear”</strong></p>
+<p>将所有的会话打包成 .zip 压缩包的形式保存到 C 盘根目录下。</p>
+<p><strong>“g或go”</strong></p>
+<p>放行所有中断下来的会话。</p>
+<p><strong>“hide”</strong></p>
+<p>将Fiddler隐藏。</p>
+<p><strong>“show”</strong></p>
+<p>将Fiddler恢复</p>
+<p><strong>“urlreplace”</strong></p>
+<p>urlreplace 后边跟两个字符串，表示替换 URL 中的字符串。比如 urlreplace baidu fishc 表示将所有 URL 的 baidu 替换成 fishc；直接输入 urlreplace 不带任何参数表示恢复原来的样子。</p>
+<p><strong>“start”</strong></p>
+<p>Fiddler开始工作</p>
+<p><strong>“stop”</strong></p>
+<p>Fiddler停止工作</p>
+<p><strong>“quit”</strong></p>
+<p>关闭Fiddler</p>
+<p><strong>“select”</strong></p>
+<p>select 后边跟响应的类型（Content-Type），表示选中所有匹配的会话。</p>
+<p>比如希望 Fiddler 选中所有的图片，可以使用 select image；</p>
+<p>而 select css 则选中所有的 css 文件；</p>
+<p>当然，select htm 就是选中所有的 html 文件。</p>
+<p><strong>“allbut或keeponly”</strong></p>
+<p>跟select类似，不过allbut和keeponly会将所有无关的会话删除。keeponly image表示我只想看图片，其他的就会删除。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上针对Charles和Fiddler两款工具的使用做了一个简单的介绍，请结合具体业务情景使用。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1396943133.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1393616061.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1372631641.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
