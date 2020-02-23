@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Python爬取王者荣耀英雄皮肤壁纸 - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="
+运用Python爬取王者荣耀官网的壁纸最近疫情席卷了整个中国，无奈作为普通人能做的只有呆在家里给祖国做贡献，闲来无事在家里打王者荣耀，单排表示上坟真的很难，皮肤真好看但我不舍得花钱，索性去官网爬一,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Python爬取王者荣耀英雄皮肤壁纸</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Python爬取王者荣耀英雄皮肤壁纸</h1>
+        <div class="stuff">
+            <span>二月 23, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6p1uo0jxj31hc0oi786.jpg" alt></p>
+<h2 id="运用Python爬取王者荣耀官网的壁纸"><a href="#运用Python爬取王者荣耀官网的壁纸" class="headerlink" title="运用Python爬取王者荣耀官网的壁纸"></a>运用Python爬取王者荣耀官网的壁纸</h2><p>最近疫情席卷了整个中国，无奈作为普通人能做的只有呆在家里给祖国做贡献，闲来无事在家里打王者荣耀，单排表示上坟真的很难，皮肤真好看但我不舍得花钱，索性去官网爬一套皮肤壁纸下来自己用吧，一个简单的爬虫小程序，下面开始👇</p>
+<h3 id="官网英雄池抓包分析"><a href="#官网英雄池抓包分析" class="headerlink" title="官网英雄池抓包分析"></a>官网英雄池抓包分析</h3><p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6p41w7gzj31k10u0at6.jpg" alt></p>
+<p>首先我们进入官网，点击英雄资料，进入到荣耀里所有英雄资料池，在英雄池页面的右键点击检查，会弹出浏览器的一些设置选项（这里我选用的是Chrome浏览器）如下图所示</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6p9o9g0aj31lc0u0k0e.jpg" alt></p>
+<p>在network设置中可以看到整个网页加载的瀑布流（记得Comand/Ctrl+R一下），在下方找到herplist.json，进行点击，可以在右侧看见数据请求的相关信息，这里的Request URL则是我们要请求的URL地址，之后再往下滑动找到另一个所需要的参数headers</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6pe0ap0jj31vw0m877d.jpg" alt></p>
+<p>这个时候网页请求的url和headers信息都获取到了，接下来我们就可以开始写代码了，这里博主使用的pycharm，需要引用到的库是requests库，下面是代码片段</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">base_url = <span class="string">'https://pvp.qq.com/web201605/js/herolist.json'</span></span><br><span class="line">headers = &#123;<span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36'</span>&#125;</span><br><span class="line"></span><br><span class="line">resp = requests.get(base_url,headers=headers)</span><br><span class="line">data_str = resp.text</span><br><span class="line">print(data_str)</span><br></pre></td></tr></table></figure>
+
+<p>我们将获取到的数据进行text转换后打印出来，结果如下图</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6pk2zd7sj31tw0ocqe1.jpg" alt></p>
+<p>接下来需要将获取到的从json类型转换为python的数据类型才可以进行处理，这里需要import json</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_list = json.loads(data_str)</span><br><span class="line">print(data_list)</span><br></pre></td></tr></table></figure>
+
+<p>我们再打印一下看一下数据</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6ppspsdbj31sg0o2k6d.jpg" alt></p>
+<p>这里我们用for循环进行一下整理，方便后面的数据处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> data_list:</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
+
+<p>打印出来的结果如下图</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6pswwdudj31si0ocgz3.jpg" alt></p>
+<p>数据已经变的有序很多了。</p>
+<p>好了，英雄列表的数据我们已经可以获得了，接下来随便点击一个英雄进去，这里我选的是明世隐，进去之后可以看到右下角可以切换皮肤，我们右键点击那里，选择检查，如下图</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6q1i01j6j31l70u0tgm.jpg" alt></p>
+<p>下图红框选中的地址，复制之后，在浏览器中输入就可以看到下面的皮肤壁纸了</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6q2v62ulj31fr0u0nd8.jpg" alt></p>
+<p>这里我们观察图片地址，其中“501”和之前请求的data中的“ename”所对应，英雄的名字则与“cname”所对应，而皮肤所对应的字段是“skin_name”，并且每个皮肤名字间用“|”来分隔，这里我们可以通过split将我们所要的需要的skin_name分离出来，下面是代码片段</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> data_list:</span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line">    ename = data[<span class="string">'ename'</span>] <span class="comment">#英雄编号</span></span><br><span class="line">    cname = data[<span class="string">'cname'</span>] <span class="comment">#英雄名称</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        skin_name = data[<span class="string">'skin_name'</span>].split(<span class="string">'|'</span>) <span class="comment">#英雄皮肤数量，切割皮肤名字，计算出多少个皮肤</span></span><br><span class="line">        print(ename, cname, skin_name)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(e)</span><br></pre></td></tr></table></figure>
+
+<p>这里写了一个异常捕获是因为在处理曜这个英雄的皮肤数据时会有异常。这里我们打印出来的结果如下图</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6qb5jl3qj31sg0o6gyd.jpg" alt></p>
+<p>接下来我们对每个皮肤进行获取处理，这里每个英雄的皮肤个数是不一样的，所以这里还需要使用for循环去遍历每个英雄的每个皮肤，代码段如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> skin_num <span class="keyword">in</span> range(<span class="number">1</span>,len(skin_name)+<span class="number">1</span>):</span><br><span class="line">    skin_url =  <span class="string">'http://game.gtimg.cn/images/yxzj/img201606/skin/hero-info/'</span>+str(ename)+<span class="string">'/'</span>+str(ename)+<span class="string">'-bigskin-'</span>+str(skin_num)+<span class="string">'.jpg'</span></span><br><span class="line">    print(skin_url)</span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6qeqnxa2j31so0miwqt.jpg" alt></p>
+<p>这里可以看我们已经获取到每个英雄每个皮肤的图片源了，接下来只需要只需将图片源爬取下来即可，代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 发送图片的数据请求</span></span><br><span class="line">    skin_data = requests.get(skin_url,headers=headers).content</span><br><span class="line"></span><br><span class="line">    <span class="comment">#保存数据到文件夹</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'img/'</span> + cname +<span class="string">'-'</span>+skin_name[skin_num<span class="number">-1</span>] + <span class="string">'.jpg'</span>,<span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        print(<span class="string">'正在下载图片：'</span>,cname +<span class="string">'-'</span>+skin_name[skin_num<span class="number">-1</span>])</span><br><span class="line">        f.write(skin_data)</span><br></pre></td></tr></table></figure>
+
+<p>在项目文件下新建一个文件夹img，预计将图片保存在这个文件夹内，这里我们import time做一个时间的记录，接下来我们运行进行图片的爬取</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6qo7u9ykj31pu0lm7en.jpg" alt></p>
+<p>可以看到爬取所有的图片花费了76秒左右，我们再看文件夹里已经有爬取下来的图片壁纸了</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6qpoupj8j31j40u0ndx.jpg" alt></p>
+<p>好了这就是整个爬虫过程了，下面放完整的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">start_time = time.time() <span class="comment">#开始时间</span></span><br><span class="line">base_url = <span class="string">'https://pvp.qq.com/web201605/js/herolist.json'</span></span><br><span class="line">headers = &#123;<span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36'</span>&#125;</span><br><span class="line"></span><br><span class="line">resp = requests.get(base_url,headers=headers)</span><br><span class="line">data_str = resp.text</span><br><span class="line"><span class="comment"># print(data_str)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data_list = json.loads(data_str)</span><br><span class="line"><span class="comment"># print(data_list)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> data <span class="keyword">in</span> data_list:</span><br><span class="line">    <span class="comment"># print(data)</span></span><br><span class="line">    ename = data[<span class="string">'ename'</span>] <span class="comment">#英雄编号</span></span><br><span class="line">    cname = data[<span class="string">'cname'</span>] <span class="comment">#英雄名称</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        skin_name = data[<span class="string">'skin_name'</span>].split(<span class="string">'|'</span>) <span class="comment">#英雄皮肤数量，切割皮肤名字，计算出多少个皮肤</span></span><br><span class="line">        <span class="comment"># print(ename, cname, skin_name)</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print(e)</span><br><span class="line">    <span class="keyword">for</span> skin_num <span class="keyword">in</span> range(<span class="number">1</span>,len(skin_name)+<span class="number">1</span>):</span><br><span class="line">        skin_url =  <span class="string">'http://game.gtimg.cn/images/yxzj/img201606/skin/hero-info/'</span>+str(ename)+<span class="string">'/'</span>+str(ename)+<span class="string">'-bigskin-'</span>+str(skin_num)+<span class="string">'.jpg'</span></span><br><span class="line">        <span class="comment"># print(skin_url)</span></span><br><span class="line">        <span class="comment"># 发送图片的数据请求</span></span><br><span class="line">        skin_data = requests.get(skin_url,headers=headers).content</span><br><span class="line"></span><br><span class="line">        <span class="comment">#保存数据到文件夹</span></span><br><span class="line">        <span class="keyword">with</span> open(<span class="string">'img/'</span> + cname +<span class="string">'-'</span>+skin_name[skin_num<span class="number">-1</span>] + <span class="string">'.jpg'</span>,<span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            print(<span class="string">'正在下载图片：'</span>,cname +<span class="string">'-'</span>+skin_name[skin_num<span class="number">-1</span>])</span><br><span class="line">            f.write(skin_data)</span><br><span class="line"></span><br><span class="line">end_time = time.time() <span class="comment">#结束时间</span></span><br><span class="line">all_time = end_time - start_time</span><br><span class="line">print(<span class="string">'共花费时间：'</span>,all_time,<span class="string">'秒'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>好了，买不起也可以爬下来当壁纸，enjoy it~</p>
+<p><img src="https://tva1.sinaimg.cn/large/0082zybpgy1gc6qquk0fmj31cj0u0aqb.jpg" alt></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://music.163.com/song/media/outer/url?id=466079196.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
