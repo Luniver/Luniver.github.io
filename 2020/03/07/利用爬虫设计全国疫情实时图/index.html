@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>利用爬虫设计全国疫情实时图 - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="
+聊一聊2020年可以说是一个特殊的年份了，应该也是有很多人和博主一样在家里宅了快两个月了，每天醒来的第一件事就是打开手机查看疫情每日新增了多少病例，全国的病例累积数又达到了多少，在B站上也看到了有,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">利用爬虫设计全国疫情实时图</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">利用爬虫设计全国疫情实时图</h1>
+        <div class="stuff">
+            <span>三月 07, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcldpw5vp5j31hc0u0kjn.jpg" alt></p>
+<h2 id="聊一聊"><a href="#聊一聊" class="headerlink" title="聊一聊"></a>聊一聊</h2><p>2020年可以说是一个特殊的年份了，应该也是有很多人和博主一样在家里宅了快两个月了，每天醒来的第一件事就是打开手机查看疫情每日新增了多少病例，全国的病例累积数又达到了多少，在B站上也看到了有大佬up主用java做了病例扩散的模型图来告诉人们防控病毒的必要性，在微博和各大新闻平台都看见了疫情的地图趋势图，我们现在就用爬虫来做一个简单的疫情地图吧</p>
+<h3 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h3><p>这里我们的数据来源选用了腾讯新闻的疫情实时图，这里选用的浏览器是Chrome，按F12查看network相关信息。</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gclda7txoej31nh0u00vx.jpg" alt></p>
+<p>这里的请求地址url获取到是：<a href="https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5。" target="_blank" rel="noopener">https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5。</a></p>
+<h3 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h3><p>这里我们在network左侧找到getOnsinfo?name=diease_h5，在右侧点击Preview，就可以查看到其json数据。</p>
+<p> <img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcldk93hlkj31w40mmdhd.jpg" alt></p>
+<p>这里的json数据不太好看，我们用json格式器将其做一下转换，如下图所示。</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcldmfrsuaj31k00u03zq.jpg" alt></p>
+<p>观察整个数据分析，我们要找的是areTree中的第一个数据源，也就是中国，在其子数据下面有一个children子数据展示的是中国各个省份的信息</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcldydazj2j31je0u0jsi.jpg" alt></p>
+<p>展示的信息主要有以下几个：“confirm”也就是“确诊”，“suspect”也就是“疑似病例”，“dead”也就是“死亡”，“heal”也就是“治愈”，我们的地图主要获取的也是这几个信息，有了我们所需要的目标信息，接下来可以动手写脚本了</p>
+<h3 id="爬虫脚本设计"><a href="#爬虫脚本设计" class="headerlink" title="爬虫脚本设计"></a>爬虫脚本设计</h3><p>这里使用的是python，引入的库是requests和json，脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">"https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5"</span></span><br><span class="line"></span><br><span class="line">data = json.loads((requests.get(url).json())[<span class="string">'data'</span>])</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+
+<p>获取的数据如下图所示</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcle763uegj31pq0pkwtf.jpg" alt></p>
+<p>获取到的是整个data数据，这里我们其实只需要的是中国里各省份的数据，所以这里在脚本里做一下调整</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">"https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5"</span></span><br><span class="line"></span><br><span class="line">data = json.loads((requests.get(url).json())[<span class="string">'data'</span>])</span><br><span class="line"><span class="comment">#print(data)</span></span><br><span class="line">china = data[<span class="string">'areaTree'</span>][<span class="number">0</span>][<span class="string">'children'</span>]</span><br><span class="line">print(china)</span><br></pre></td></tr></table></figure>
+
+<p>这里运行一下把获取到的数据打印出来，可以看出我们现在获取到的是中国的相关信息了</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcle96fzk8j31qe0kk4b0.jpg" alt></p>
+<p>现在我们需要把我们所需要的信息提取出来，这里我们用一个for循环来实现，脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">"https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5"</span></span><br><span class="line"></span><br><span class="line">data = json.loads((requests.get(url).json())[<span class="string">'data'</span>])</span><br><span class="line"><span class="comment">#print(data)</span></span><br><span class="line">china = data[<span class="string">'areaTree'</span>][<span class="number">0</span>][<span class="string">'children'</span>]</span><br><span class="line"><span class="comment">#print(china)</span></span><br><span class="line">china_total = <span class="string">"确诊："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'confirm'</span>]) + \</span><br><span class="line">              <span class="string">"疑似："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'suspect'</span>]) + \</span><br><span class="line">              <span class="string">"死亡："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'dead'</span>]) + \</span><br><span class="line">              <span class="string">"治愈："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'heal'</span>]) + \</span><br><span class="line">              <span class="string">"更新日期："</span> + data[<span class="string">'lastUpdateTime'</span>]</span><br><span class="line"></span><br><span class="line">data = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(china)):</span><br><span class="line">    data.append([china[i][<span class="string">'name'</span>],china[i][<span class="string">'total'</span>][<span class="string">'confirm'</span>]])</span><br><span class="line"></span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+
+<p>这样我们就把我们所需的信息提取出来了，我们在打印一下看一下结果</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcleemrigrj31ps07sq7d.jpg" alt></p>
+<p>okay，我们已经获取到想要的数据了，接下来时如何将其导入的地图中，python中有一个pyecharts的库可以供其调用地图，可以去官网查看相关的调用API，里面有很多的图表模型API</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gclen9ocpij31jm0u0goi.jpg" alt></p>
+<p>下面是导入以及代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Map,Geo</span><br><span class="line"><span class="keyword">from</span> pyecharts <span class="keyword">import</span> options <span class="keyword">as</span> opts</span><br><span class="line"><span class="keyword">from</span> pyecharts.globals <span class="keyword">import</span> GeoType,RenderType</span><br><span class="line"></span><br><span class="line">url = <span class="string">"https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5"</span></span><br><span class="line"></span><br><span class="line">data = json.loads((requests.get(url).json())[<span class="string">'data'</span>])</span><br><span class="line"><span class="comment"># print(data)</span></span><br><span class="line"></span><br><span class="line">china = data[<span class="string">'areaTree'</span>][<span class="number">0</span>][<span class="string">'children'</span>]</span><br><span class="line"><span class="comment"># print(china)</span></span><br><span class="line"></span><br><span class="line">china_total = <span class="string">"确诊："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'confirm'</span>]) + \</span><br><span class="line">              <span class="string">"疑似："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'suspect'</span>]) + \</span><br><span class="line">              <span class="string">"死亡："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'dead'</span>]) + \</span><br><span class="line">              <span class="string">"治愈："</span> + str(data[<span class="string">'chinaTotal'</span>][<span class="string">'heal'</span>]) + \</span><br><span class="line">              <span class="string">"更新日期："</span> + data[<span class="string">'lastUpdateTime'</span>]</span><br><span class="line"></span><br><span class="line">data = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(china)):</span><br><span class="line">    data.append([china[i][<span class="string">'name'</span>],china[i][<span class="string">'total'</span>][<span class="string">'confirm'</span>]])</span><br><span class="line"></span><br><span class="line">print(data)</span><br><span class="line"></span><br><span class="line">geo =Geo(init_opts=opts.InitOpts(width=<span class="string">"1200px"</span>,height=<span class="string">"600px"</span>,bg_color=<span class="string">"#f1f3f6"</span>,page_title=<span class="string">"全国疫情实时报告"</span>,renderer=RenderType.SVG,theme=<span class="string">"white"</span>))</span><br><span class="line">geo.add_schema(maptype=<span class="string">"china"</span>,itemstyle_opts=opts.ItemStyleOpts(color=<span class="string">"rgb(241,243,246)"</span>,border_color=<span class="string">"rgb(0,0,0)"</span>))</span><br><span class="line">geo.add(series_name=<span class="string">"geo"</span>,data_pair=data,type_=GeoType.EFFECT_SCATTER)</span><br><span class="line">geo.set_series_opts(label_opts=opts.LabelOpts(is_show=<span class="literal">False</span>),effect_opts=opts.EffectOpts(scale=<span class="number">6</span>))</span><br><span class="line">geo.set_global_opts(visualmap_opts=opts.VisualMapOpts(min_=<span class="number">0</span>,max_=<span class="number">349</span>),title_opts=opts.TitleOpts(title=<span class="string">"全国疫情地图"</span>,                                                                                               subtitle=china_total,                                                                                                pos_left=<span class="string">"center"</span>,                                                                           pos_top=<span class="string">"10px"</span>))</span><br><span class="line">geo.render(<span class="string">"render.html"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行后会生成html文件，然后将其用浏览器打开看看结果吧</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gcletgnvsmj31l60u0q6d.jpg" alt></p>
+<p>以上。一个简单的爬虫小程序就完成了，也构造了自己的疫情实时地图。</p>
+<h3 id="几句瞎扯淡"><a href="#几句瞎扯淡" class="headerlink" title="几句瞎扯淡"></a>几句瞎扯淡</h3><p>在这个疫情期间，请大家做好防护，多多呆在家里吧，和我一样的宅起来，减少人的流动就是在扼杀病毒的传递，那些奋斗在前线的医护工作者，我没有什么太多要说的，只能说作为一个普普通通的地球人，唯一要说的也只有感谢，唯一要抱有的就是感恩的心，祝安好！</p>
+<p>希望这个疫情早日被消灭啊，我好想出门拍照呀！！！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://music.163.com/song/media/outer/url?id=1420575583.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
