@@ -2,7 +2,7 @@ var Home = location.href,
     Pages = 4,
     xhr,
     xhrUrl = '';
-
+    
 var Diaspora = {
     L: function(url, f, err) {
         if (url == xhrUrl) {
