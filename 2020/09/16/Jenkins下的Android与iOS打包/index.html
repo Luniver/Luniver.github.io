@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jenkins下的Android与iOS打包 - LCY&#39;s Blog</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Luniver,"> 
+    <meta name="description" content="引入Jenkins进行App打包的缘由在完整的App开发流程中，在以往的流程体系中，测试工程师要想获得最新代码版本的App包，必须要找研发进行打包，随着敏捷开发在App测试流程中运用的越来越广泛，效,"> 
+    <meta name="author" content="ChenYu Li"> 
+    <link rel="alternative" href="atom.xml" title="LCY&#39;s Blog" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+</head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">LCY&#39;s Blog</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://luniver.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Jenkins下的Android与iOS打包</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Jenkins下的Android与iOS打包</h1>
+        <div class="stuff">
+            <span>九月 16, 2020</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Study/" rel="tag">Study</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="引入Jenkins进行App打包的缘由"><a href="#引入Jenkins进行App打包的缘由" class="headerlink" title="引入Jenkins进行App打包的缘由"></a>引入Jenkins进行App打包的缘由</h2><p>在完整的App开发流程中，在以往的流程体系中，测试工程师要想获得最新代码版本的App包，必须要找研发进行打包，随着敏捷开发在App测试流程中运用的越来越广泛，效率越来越被重视，因此为了提高效率，减少研发与测试间的沟通成本，引入了CI/CD持续集成进行打包，当然，到现在这已经是非常成熟的技术，在此记录一下真正投入的生成环境中的Jenkins App打包，包含Android和iOS两端。</p>
+<h3 id="App打包（Android）"><a href="#App打包（Android）" class="headerlink" title="App打包（Android）"></a>App打包（Android）</h3><p>首先来介绍一下Android端下的打包的大致流程，在Jenkins中进行配置，首先需要设置打包的版本号（VersionCode）以及版本名（VersionName）首先在General中的parameterized中增加String Parameter和Choice Parameter，增加的一些参数如下图所示：</p>
+<p>Choice Parameter选项参数设置，BUILD_TYPE可与研发人员确认打包的分支中的字段，即可控制build出的是Debug的apk还是Release的apk包</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrniw3etsj31dk0u0abh.jpg" alt></p>
+<p>版本号（VERSION_CODE）</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrjkvon25j318e0biglu.jpg" alt></p>
+<p>版本名（VERSION_NAME）</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrjl7lf2lj31840bm0sz.jpg" alt></p>
+<p>Jenkins-CRUMB值</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrjn58h5kj31820bcwes.jpg" alt></p>
+<p>以及需要设置Git Parameter，设置此选项可以在打包的时候提供代码分支选择</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrjyyj4rbj317w0d2glx.jpg" alt>这里的所填写的Name要与下方源码管理中的指定分支保持一致，的在Parameter Type那里选择Branch or Tag，这里设置的默认分支为origin/master，当然可以设置为你默认要选择的分支。</p>
+<p>之后再Build Environment中可设置打包的Build-Name，每次进行Build构建时就可以显示每次打包对应的编号，方便出现问题时进行索引寻找。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrnynig3jj31ey0kmab3.jpg" alt></p>
+<p>在构建中加入shell命令来设置每次打包时的版本号，因为拉到Jenkins workspace中的代码文件夹目录因人而异，所以具体可以对应到自己Jenkins构建的文件夹，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i '' "s/JENKINS_BUILD_NUMBER.*/JENKINS_BUILD_NUMBER=\ \"-$&#123;BUILD_NUMBER&#125;\"/g" /var/root/.jenkins/项目文件夹/gradle.properties</span><br></pre></td></tr></table></figure>
+
+<p>主要的作用就是在编译前替换编译项目中gradle.properties中的配置项。然后需要引入一下Jenkins安装的gradle，版本适用于脚本即可，Gradle在Jenkins设置中的Global Tool Configuration中安装即可。</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrnzilmtcj31dm0920sz.jpg" alt></p>
+<p>构建后需要将打好的apk输出到本地并且支持在console output中打印下载链接，这里默认文件夹地址以Mac为例，若在本地文件夹中没有此版本名的文件夹时，会默认创建文件夹及该版本名文件夹下的debug文件夹和release文件夹，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if [ ! -d "/Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;" ];then</span><br><span class="line">	mkdir -p "/Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/debug"</span><br><span class="line">    mkdir -p "/Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/release"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>然后会分为两种情况，一个是build的是debug包，另外构建的是release包，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">if [ $&#123;BUILD_TYPE&#125; != Debug ];then</span><br><span class="line">	cp /private/var/root/.jenkins/workspace/项目文件夹/app/build/outputs/apk/release/app-release.apk /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/release/</span><br><span class="line">    echo "APKSize:"`ls -l /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/release/app-release.apk | awk '&#123;print $5&#125;'`</span><br><span class="line">    mv /private/var/root/.jenkins/workspace/项目文件夹/app/build/outputs/apk/release/app-release.apk /private/var/root/.jenkins/workspace/项目文件夹/apk/release.apk2</span><br><span class="line">	mv /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/release/app-release.apk /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/release/$&#123;JOB_NAME&#125;-$&#123;BUILD_NUMBER&#125;-$&#123;BUILD_TYPE&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;-$&#123;SVN_VERSION&#125;-$&#123;BUILD_TIMESTAMP&#125;.apk</span><br><span class="line">    echo downloadAPK:http://你的本地ip地址/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/release/$&#123;JOB_NAME&#125;-$&#123;BUILD_NUMBER&#125;-$&#123;BUILD_TYPE&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;-$&#123;SVN_VERSION&#125;-$&#123;BUILD_TIMESTAMP&#125;.apk</span><br><span class="line">    echo $&#123;VERSION_NAME&#125;/release/$&#123;JOB_NAME&#125;-$&#123;BUILD_TYPE&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;-$&#123;SVN_VERSION&#125;-$&#123;BUILD_TIMESTAMP&#125;.apk &gt; /Users/dev-debug/Desktop/Jenkins/apkdownloadurl.txt</span><br><span class="line">else</span><br><span class="line">	cp /private/var/root/.jenkins/workspace/项目文件夹/app/build/outputs/apk/debug/app-debug.apk /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/debug/</span><br><span class="line">    echo "APKSize:"`ls -l /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/debug/app-debug.apk | awk '&#123;print $5&#125;'`</span><br><span class="line">    mv /private/var/root/.jenkins/workspace/项目文件夹/app/build/outputs/apk/debug/app-debug.apk /private/var/root/.jenkins/workspace/项目文件夹/apk/debug.apk2</span><br><span class="line">	mv /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/debug/app-debug.apk /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/debug/$&#123;JOB_NAME&#125;-$&#123;BUILD_NUMBER&#125;-$&#123;BUILD_TYPE&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;-$&#123;SVN_VERSION&#125;-$&#123;BUILD_TIMESTAMP&#125;.apk</span><br><span class="line">    echo downloadAPK:http://你的本地ip地址/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/debug/$&#123;JOB_NAME&#125;-$&#123;BUILD_NUMBER&#125;-$&#123;BUILD_TYPE&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;-$&#123;SVN_VERSION&#125;-$&#123;BUILD_TIMESTAMP&#125;.apk</span><br><span class="line">    echo $&#123;VERSION_NAME&#125;/debug/$&#123;JOB_NAME&#125;-$&#123;BUILD_TYPE&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;-$&#123;SVN_VERSION&#125;-$&#123;BUILD_TIMESTAMP&#125;.apk &gt; /Users/dev-debug/Desktop/Jenkins/apkdownloadurl.txt</span><br><span class="line">fi</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<p>以上，Android打包操作就大体完成了。</p>
+<h3 id="app打包（iOS）"><a href="#app打包（iOS）" class="headerlink" title="app打包（iOS）"></a>app打包（iOS）</h3><p>其实iOS端的打包过程与Android端的大体流程是一致的，只是在设置钥匙串的时候比较头疼一点，需要导入iPhone Developer的开发证书，在执行xcodebuild时需要先引入证书才可进行打包，之前关于String Parameter和Choice Parameter与Android的是大体一致的，这里就不再过多的赘述，下面为例：</p>
+<p>版本号（VERSION_CODE）</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrqc4tlkej314g0bw3yp.jpg" alt></p>
+<p>版本名（VERSION_NAME）</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrqcdnoi5j314k0c0mxd.jpg" alt></p>
+<p>Git Parameter，这里的设置和Android的可以理解为一致</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrqdlj2qvj314m0dejro.jpg" alt></p>
+<p>这里需要注意的是，iOS打包时需要引入开发者证书的，这里Jenkins下的设置如下：</p>
+<p><img src="https://tva1.sinaimg.cn/large/008eGmZEgy1gnrqfv0kmxj31fg0je3zq.jpg" alt></p>
+<p>因为每次拉取的archive文件过大，导致占了很多的空间，所以在每次构建之前都加入命令对archive文件进行清理，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if [ ! -d "/Library/WebServer/Documents/workspaces/项目文件夹/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;" ];then</span><br><span class="line">	mkdir -p "/Library/WebServer/Documents/workspaces/项目文件夹/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;"</span><br><span class="line">fi</span><br><span class="line">if [ -d "archive/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;" ];then</span><br><span class="line">	touch archive/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;/test.txt</span><br><span class="line">	rm -r archive/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;/*</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>之后对info.plist文件中的配置项进行一些替换</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION_CODE" "/Users/dev-debug/.jenkins/workspace/项目文件夹/info.plist"</span><br><span class="line">/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION_NAME" "/Users/dev-debug/.jenkins/workspace/项目文件夹/info.plist"</span><br></pre></td></tr></table></figure>
+
+<p>然后执行xcodebuild操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">echo "start build VoiceChat"</span><br><span class="line">export LANG=en_US.UTF-8</span><br><span class="line">export LANGUAGE=en_US.UTF-8</span><br><span class="line">export LC_ALL=en_US.UTF-8</span><br><span class="line">security unlock-keychain -p “设置的root密码” ~/Library/Keychains/login.keychain</span><br><span class="line"></span><br><span class="line">workspace_path=.</span><br><span class="line">project_name=项目名</span><br><span class="line"></span><br><span class="line">xcodebuild clean</span><br><span class="line">xcodebuild archive -workspace $project_name.xcworkspace -scheme $project_name -configuration Debug -archivePath archive/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;/$project_name-$&#123;BUILD_NUMBER&#125;.xcarchive CODE_SIGN_IDENTITY="开发者证书名称" -quiet</span><br><span class="line">xcodebuild -exportArchive -exportOptionsPlist archive/archiveOpt.plist -archivePath archive/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;/$project_name-$&#123;BUILD_NUMBER&#125;.xcarchive -exportPath ./export/ -configuration Debug -quiet</span><br><span class="line">mv ./export/app.ipa /Library/WebServer/Documents/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;/$&#123;JOB_NAME&#125;-$&#123;BUILD_NUMBER&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;.ipa</span><br><span class="line">echo DownloadIPA:http://你的ip地址/workspaces/本地文件夹/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;/$&#123;JOB_NAME&#125;-$&#123;BUILD_NUMBER&#125;-$&#123;VERSION_NAME&#125;-$&#123;VERSION_CODE&#125;.ipa</span><br></pre></td></tr></table></figure>
+
+<p>最后，在执行完打包操作后，因项目接入了Firebase来监控app的质量，而iOS接入Firebase的话需要上传对应版本的dSYM文件，下面是上传dSYM命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Users/dev-debug/.jenkins/workspace/项目文件夹/Pods/FirebaseCrashlytics/upload-symbols -gsp /Users/dev-debug/.jenkins/workspace/项目文件夹/GoogleService-Info.plist -p ios /Users/dev-debug/.jenkins/workspace/项目文件夹/archive/$&#123;VERSION_NAME&#125;/$&#123;VERSION_CODE&#125;/项目名-$&#123;BUILD_NUMBER&#125;.xcarchive/dSYMs/SoulFa.app.dSYM</span><br></pre></td></tr></table></figure>
+
+<p>至此，整个iOS的打包过程就完成了，测试工程师可以在不影响研发工程师的情况下自行进行对应分支的代码进行打包了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在APP测试中，打包是一个很基础也是比较关键的一个过程，将打包过程接入Jenkins，对于打包效率起到了提升作用，也减少了研发与测试之间沟通成本，现在大部分的APP开发流程都引用了这种方式。</p>
+<p>以上是对这次持续集成学习的记录。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://music.163.com/song/media/outer/url?id=1430085028.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://music.163.com/song/media/outer/url?id=1418698236.mp3'></li>
+                        
+                    
+                        
+                            <li title='2' data-url='http://music.163.com/song/media/outer/url?id=1428038847.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci='6ca3b4cc310895f235c4'
+        data-cs='8d86243fb6d20b289670cd75a760598976067b72'
+        data-r='luniver.github.io'
+        data-o='Luniver'
+        data-a='Luniver'
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
