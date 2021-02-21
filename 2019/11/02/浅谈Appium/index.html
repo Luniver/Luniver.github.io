@@ -76,7 +76,7 @@
 </ul>
 <h3 id="（二）支持平台及语言"><a href="#（二）支持平台及语言" class="headerlink" title="（二）支持平台及语言"></a>（二）支持平台及语言</h3><ul>
 <li>Appium是跨平台的，支持Windows，Linux和OSX系统，它允许测试人员在不同的平台（iOS，Android）使用同一套API来写自动化的测试脚本，这大大提高了iOS和Android测试套件间代码的复用性。</li>
-<li>Appium支持多语言编写，目前支持Java，JavaScript，PHP，Python，Ruby，Objective-C，C#等几款语言并有完整的支持，具体可以看<a href="https://github.com/appium/appium/tree/master/sample-code" target="_blank" rel="noopener">多种不同语言的测试示例</a>。Appium是C/S的设计模式，只要Client能够发送http请求给server，那么的话Client用什么语言来实现都是可以的，这就是Appium及Selenium(WebDriver)如何做到支持多语言的原因；Appium扩展了WebDriver的协议，没有自己重新去实现一套。这样的好处是以前的WebDriver API能够直接被继承过来，以前的Selenium（WebDriver）各种语言的Building都可以拿来就用，省去了为每种语言开发一个Client的工作量。</li>
+<li>Appium支持多语言编写，目前支持Java，JavaScript，PHP，Python，Ruby等几款语言并有完整的支持，具体可以看<a href="https://github.com/appium/appium/tree/master/sample-code" target="_blank" rel="noopener">多种不同语言的测试示例</a>。Appium是C/S的设计模式，只要Client能够发送http请求给server，那么的话Client用什么语言来实现都是可以的，这就是Appium及Selenium(WebDriver)如何做到支持多语言的原因；Appium扩展了WebDriver的协议，没有自己重新去实现一套。这样的好处是以前的WebDriver API能够直接被继承过来，以前的Selenium（WebDriver）各种语言的Building都可以拿来就用，省去了为每种语言开发一个Client的工作量。</li>
 </ul>
 <table>
 <thead>
@@ -87,35 +87,27 @@
 </thead>
 <tbody><tr>
 <td>Python</td>
-<td><a href="https://github\.com/appium/python\-client" target="_blank" rel="noopener">https://github\.com/appium/python\-client</a></td>
+<td><a href="https://github.com/appium/appium/tree/master/sample-code/python" target="_blank" rel="noopener">Python样例</a></td>
 </tr>
 <tr>
 <td>Ruby</td>
-<td><a href="https://github\.com/appium/ruby\_lib" target="_blank" rel="noopener">https://github\.com/appium/ruby\_lib</a></td>
+<td><a href="https://github.com/appium/appium/tree/master/sample-code/ruby" target="_blank" rel="noopener">Ruby样例</a></td>
 </tr>
 <tr>
 <td>Java</td>
-<td><a href="https://github\.com/appium/java\-client" target="_blank" rel="noopener">https://github\.com/appium/java\-client</a></td>
+<td><a href="https://github.com/appium/appium/tree/master/sample-code/java" target="_blank" rel="noopener">Java样例</a></td>
 </tr>
 <tr>
 <td>JavaScript（Node.js）</td>
-<td><a href="https://github\.com/admc/wd" target="_blank" rel="noopener">https://github\.com/admc/wd</a></td>
-</tr>
-<tr>
-<td>Objective-C</td>
-<td><a href="https://github\.com/appium/selenium\-objective\-c" target="_blank" rel="noopener">https://github\.com/appium/selenium\-objective\-c</a></td>
-</tr>
-<tr>
-<td>PHP</td>
-<td><a href="https://github\.com/appium/php\-client" target="_blank" rel="noopener">https://github\.com/appium/php\-client</a></td>
-</tr>
-<tr>
-<td>C#（.NET）</td>
-<td><a href="https://github\.com/appium/appium\-dotnet\-driver" target="_blank" rel="noopener">https://github\.com/appium/appium\-dotnet\-driver</a></td>
+<td><a href="https://github.com/appium/appium/tree/master/sample-code/javascript-wd" target="_blank" rel="noopener">JavaScript样例</a></td>
 </tr>
 <tr>
 <td>RobotFrameWork</td>
-<td><a href="https://github\.com/jollychang/robotframework\-appiumlibrary" target="_blank" rel="noopener">https://github\.com/jollychang/robotframework\-appiumlibrary</a></td>
+<td><a href="https://github.com/appium/appium/tree/master/sample-code/robotframework" target="_blank" rel="noopener">RobotFrameWork样例</a></td>
+</tr>
+<tr>
+<td>PHP</td>
+<td><a href="https://github.com/appium/appium/tree/master/sample-code/php" target="_blank" rel="noopener">PHP样例</a></td>
 </tr>
 </tbody></table>
 <h3 id="（三）Appium哲学"><a href="#（三）Appium哲学" class="headerlink" title="（三）Appium哲学"></a>（三）Appium哲学</h3><p>Appium的<a href="https://github.com/appium/appium/blob/master/docs/en/about-appium/intro.md" target="_blank" rel="noopener">官方介绍文档</a>中写到了有关Appium的四条哲学，原文是这样写的：</p>
